@@ -8,7 +8,7 @@ function kjg_ticketing_admin_display() {
         <?php wp_nonce_field('kjg-ticketing-admin-display') ?>
         <label>
             Test Setting input:
-            <input type="text"/>
+            <input type="text" name="testText"/>
         </label>
         <input type="submit" value="Submit">
     </form>

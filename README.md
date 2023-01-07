@@ -29,7 +29,20 @@ When using PHPStorm as IDE, please refer to [this page](https://www.jetbrains.co
 
 
 # Create a release
+## Set release numbers
 TODO
 
-# Upload a released version to a WebServer
+## Create a .zip-file containing the plugin
+In the plugin directory, execute following command:
+````shell
+tar -a -c -f kjg-ticketing.zip  admin includes languages public index.php kjg-ticketing.php LICENSE
+````
+
+Then you should find a `kjg-ticketing.zip` file with the correct content.
+
+## Upload a released version to a WebServer
+On the `Plugins -> install` page in the admin dashboard, there is the possibility to upload a plugin as a .zip-file.
+Pass the .zip-file from the previous step here.
+
+## Upload a released version to the WordPress archive
 TODO

@@ -99,5 +99,7 @@ class KjG_Ticketing_Admin {
         }
 
         check_admin_referer('kjg-ticketing-admin-display');
+
+        // here comes validation and sanitization
     }
 }
