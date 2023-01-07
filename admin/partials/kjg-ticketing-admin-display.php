@@ -1,16 +1,17 @@
 <?php
 
-/**
- * Provide a admin area view for the plugin
- *
- * This file is used to markup the admin-facing aspects of the plugin.
- *
- * @link       http://example.com
- * @since      1.0.0
- *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin/partials
- */
-?>
+function kjg_ticketing_admin_display() {
+    ?>
+    <h1>This plugin is under construction</h1>
 
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
+    <form action="<?php menu_page_url('kjg-ticketing-admin-display') ?>" method="post">
+        <?php wp_nonce_field('kjg-ticketing-admin-display') ?>
+        <label>
+            Test Setting input:
+            <input type="text"/>
+        </label>
+        <input type="submit" value="Submit">
+    </form>
+
+    <?php
+}
