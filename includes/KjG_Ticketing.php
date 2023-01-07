@@ -90,13 +90,13 @@ class KjG_Ticketing {
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/KjG_Ticketing_admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/KjG_Ticketing_Admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/KjG_Ticketing_public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/KjG_Ticketing_Public.php';
 
 		$this->loader = new KjG_Ticketing_Loader();
 
