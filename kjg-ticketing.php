@@ -55,7 +55,7 @@ register_uninstall_hook(__FILE__, 'uninstall_kjg_ticketing' );
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name.php';
+require plugin_dir_path( __FILE__ ) . 'includes/KjG_Ticketing.php';
 
 /**
  * Begins execution of the plugin.
