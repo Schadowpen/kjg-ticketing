@@ -20,7 +20,7 @@ TODO
 ## Install this plugin
 Open a terminal and go to the root of your WordPress installation, which should be `server_root/wordpress` if you followed the previous steps. There, execute
 ```
-git clone https://github.com/Schadowpen/kjgTicketing.git ./wp-content/plugins/kjg-ticketing
+git clone https://github.com/Schadowpen/kjg-ticketing.git ./wp-content/plugins/kjg-ticketing
 ```
 Then the plugin should already occur on the WordPress Plugins Dashboard, where you can activate and deactivate it.
 
