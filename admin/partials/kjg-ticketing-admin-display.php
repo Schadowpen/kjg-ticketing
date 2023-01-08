@@ -14,7 +14,7 @@ function kjg_ticketing_admin_display() {
     </form>
     <br/>
 
-    <?php _e("Seating plan", "kjg-ticketing"); ?>
+    <?php esc_html_e('Seating plan', 'kjg-ticketing'); ?>
 
     <?php
 }
