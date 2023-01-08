@@ -8,6 +8,8 @@
  * Author: Philipp
  * Requires PHP: 7.4
  * License: GPL2
+ * Text Domain: kjg-ticketing
+ * Domain Path: /languages
  */
 
 // If this file is called directly, abort.

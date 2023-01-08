@@ -12,6 +12,9 @@ function kjg_ticketing_admin_display() {
         </label>
         <input type="submit" value="Submit">
     </form>
+    <br/>
+
+    <?php _e("Seating plan", "kjg-ticketing"); ?>
 
     <?php
 }

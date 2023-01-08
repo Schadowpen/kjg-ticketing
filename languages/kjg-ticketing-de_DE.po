@@ -1,0 +1,93 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: KjG Ticketing\n"
+"POT-Creation-Date: 2023-01-08 19:00+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: KjG Theater <info@kjg-theater.de>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;"
+"_nx_noop:4c,1,2;_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;"
+"__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Generator: Poedit 3.0.1\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "Seating plan"
+msgstr "Sitzplan"
+
+msgid "Ticket"
+msgstr "Eintrittskarte"
+
+msgid "Entrance"
+msgstr "Eingang"
+
+msgid "Block"
+msgstr "Block"
+
+msgid "Row"
+msgstr "Reihe"
+
+msgid "Seat"
+msgstr "Platz"
+
+msgid "available"
+msgstr "frei"
+
+msgid "reserved"
+msgstr "reserviert"
+
+msgid "booked"
+msgstr "gebucht"
+
+msgid "blocked"
+msgstr "gesperrt"
+
+msgid "present"
+msgstr "anwesend"
+
+msgid "Visitor"
+msgstr "Zuschauer"
+
+msgid "Event"
+msgstr "Veranstaltung"
+
+msgid "Show"
+msgstr "Vorstellung"
+
+msgid "Process"
+msgstr "Vorgang"
+
+msgid "Process ID"
+msgstr "Vorgangsnummer"
+
+msgid "Payment method"
+msgstr "Bezahlart"
+
+msgid "Cash"
+msgstr "Bar"
+
+msgid "Bank"
+msgstr "Überweisung"
+
+msgid "Box Office"
+msgstr "Abendkasse"
+
+msgid "Shipping"
+msgstr "Versandart"
+
+msgid "Pick up"
+msgstr "Abholung"
+
+msgid "Mail"
+msgstr "Post"
+
+msgid "E-Mail"
+msgstr "E-Mail"
