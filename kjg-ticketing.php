@@ -24,6 +24,8 @@ if (!defined('WPINC')) {
  */
 define('KJG_TICKETING_VERSION', '0.1.1');
 
+// TODO autoload.php
+
 /**
  * The code that runs during plugin activation.
  */
