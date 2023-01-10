@@ -78,5 +78,37 @@ class KjG_Ticketing_Activator {
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
 			) $charset_collate;");
 		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_ticket_image_config (event_id);");
+
+		dbDelta("CREATE TABLE kjg_ticketing_seating_plan_areas (
+			id int NOT NULL AUTO_INCREMENT,
+			event_id int NOT NULL,
+			position_x float NOT NULL,
+			position_y float NOT NULL,
+			width float NOT NULL,
+			length float NOT NULL,
+			color char(7) NOT NULL,
+			text varchar(1023),
+			text_position_x float,
+			text_position_y float,
+			text_color char(7),
+			PRIMARY KEY  (id),
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
+			) $charset_collate;");
+		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seating_plan_areas (event_id);");
+
+		dbDelta("CREATE TABLE kjg_ticketing_seats(
+			event_id int NOT NULL,
+			block char(50) NOT NULL,
+			row char(2) NOT NULL,
+			seat int NOT NULL,
+			position_x float NOT NULL,
+			position_y float NOT NULL,
+			rotation float NOT NULL,
+			entrance_id int,
+			PRIMARY KEY  (event_id, block, row, seat),
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
+			) $charset_collate;");
+		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seats (event_id);");
+		// TODO foreign key to kjg_ticketing_entrances
 	}
 }
