@@ -30,8 +30,6 @@ class KjG_Ticketing_Activator {
 			shipping_price decimal(6,2) DEFAULT 2.5 NOT NULL,
 			seating_plan_width float NOT NULL,
 			seating_plan_length float NOT NULL,
-			seat_width float NOT NULL,
-			seat_length float NOT NULL,
 			seating_plan_length_unit char(32) NOT NULL,
 			ticket_template blob NOT NULL,
 			ticket_seating_plan_seat_numbers_visible bit DEFAULT 0 NOT NULL,
@@ -104,6 +102,8 @@ class KjG_Ticketing_Activator {
 			position_x float NOT NULL,
 			position_y float NOT NULL,
 			rotation float NOT NULL,
+			width float NOT NULL,
+			length float NOT NULL,
 			entrance_id int,
 			PRIMARY KEY  (event_id, block, row, seat),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
