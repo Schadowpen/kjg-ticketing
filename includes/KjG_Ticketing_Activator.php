@@ -94,6 +94,27 @@ class KjG_Ticketing_Activator {
 			) $charset_collate;");
 		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seating_plan_areas (event_id);");
 
+		dbDelta("CREATE TABLE kjg_ticketing_entrances(
+			id int NOT NULL AUTO_INCREMENT,
+			event_id int NOT NULL,
+			x0 float NOT NULL,
+			y0 float NOT NULL,
+			x1 float NOT NULL,
+			y1 float NOT NULL,
+			x2 float NOT NULL,
+			y2 float NOT NULL,
+			x3 float NOT NULL,
+			y3 float NOT NULL,
+			text varchar(1023),
+			text_position_x float,
+			text_position_y float,
+			entrance_id int,
+			PRIMARY KEY  (id),
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id),
+			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_entrances(id)
+			) $charset_collate;");
+		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_entrances (event_id);");
+
 		dbDelta("CREATE TABLE kjg_ticketing_seats(
 			event_id int NOT NULL,
 			block char(50) NOT NULL,
@@ -106,9 +127,28 @@ class KjG_Ticketing_Activator {
 			length float NOT NULL,
 			entrance_id int,
 			PRIMARY KEY  (event_id, block, row, seat),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id),
+			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_entrances(id)
 			) $charset_collate;");
 		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seats (event_id);");
-		// TODO foreign key to kjg_ticketing_entrances
+
+		dbDelta("CREATE TABLE kjg_ticketing_processes(
+			id int NOT NULL CHECK (id BETWEEN 1 and 999999999),
+			event_id int NOT NULL,
+			first_name varchar(255),
+			last_name varchar(255),
+			address varchar(1000),
+			phone varchar(31),
+			email varchar(255),
+			ticket_price decimal(6,2),
+			payment_method enum('cash', 'bank', 'box_office') NOT NULL,
+			payment_state enum('open', 'paid', 'box_office') NOT NULL,
+			shipping enum('pick_up', 'mail', 'email') NOT NULL,
+			comment varchar(2000),
+			ticket_url varchar(255),
+			PRIMARY KEY  (id, event_id),
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id),
+			) $charset_collate;");
+		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_processes (event_id);");
 	}
 }
