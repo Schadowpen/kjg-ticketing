@@ -5,7 +5,7 @@
  * Plugin URI: https://github.com/Schadowpen/kjgTicketing
  * Description: WordPress Plugin to provide a ticketing system for the KjG theater
  * Version: 0.1.1
- * Author: Philipp
+ * Author: Philipp Horwat
  * Requires PHP: 7.4
  * License: GPL2
  * Text Domain: kjg-ticketing

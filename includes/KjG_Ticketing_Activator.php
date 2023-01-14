@@ -150,5 +150,30 @@ class KjG_Ticketing_Activator {
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
 			) $charset_collate;");
 		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_processes (event_id);");
+
+        dbDelta("CREATE TABLE kjg_ticketing_process_additional_fields (
+            id int NOT NULL AUTO_INCREMENT,
+            event_id int NOT NULL,
+            description varchar(255) NOT NULL,
+            data_type enum('integer', 'float', 'string', 'longString', 'boolean') NOT NULL,
+            required bit NOT NULL DEFAULT 0,
+            PRIMARY KEY  (id),
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
+        ) $charset_collate;");
+        dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_process_additional_fields (event_id);");
+
+        dbDelta("CREATE TABLE kjg_ticketing_process_additional_entries (
+            event_id int NOT NULL,
+            process_id int NOT NULL,
+            field_id int NOT NULL,
+            integer_value int,
+            float_value float,
+            string_value varchar(2000),
+            boolean_value bit,
+            PRIMARY KEY  (event_id, process_id, field_id),
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id),
+			FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes(id),
+			FOREIGN KEY  (field_id) REFERENCES kjg_ticketing_process_additional_fields(id)
+        ) $charset_collate;");
 	}
 }
