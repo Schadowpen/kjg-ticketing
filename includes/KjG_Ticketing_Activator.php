@@ -115,25 +115,23 @@ class KjG_Ticketing_Activator {
 			) $charset_collate;");
 		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_entrances (event_id);");
 
-		// TODO table not in database
 		dbDelta("CREATE TABLE kjg_ticketing_seats (
 			event_id int NOT NULL,
-			block char(50) NOT NULL,
-			row char(2) NOT NULL,
-			seat int NOT NULL,
+			seat_block char(50) NOT NULL,
+			seat_row char(2) NOT NULL,
+			seat_number int NOT NULL,
 			position_x float NOT NULL,
 			position_y float NOT NULL,
 			rotation float NOT NULL,
 			width float NOT NULL,
 			length float NOT NULL,
 			entrance_id int,
-			PRIMARY KEY  (event_id, block, row, seat),
+			PRIMARY KEY  (event_id, seat_block, seat_row, seat_number),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id),
 			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_entrances(id)
 			) $charset_collate;");
 		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seats (event_id);");
 
-		// TODO table not in database
 		dbDelta("CREATE TABLE kjg_ticketing_processes (
 			id int NOT NULL CHECK (id BETWEEN 1 and 999999999),
 			event_id int NOT NULL,
@@ -149,7 +147,7 @@ class KjG_Ticketing_Activator {
 			comment varchar(2000),
 			ticket_url varchar(255),
 			PRIMARY KEY  (id, event_id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id),
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
 			) $charset_collate;");
 		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_processes (event_id);");
 	}
