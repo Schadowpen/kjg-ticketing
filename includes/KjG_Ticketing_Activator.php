@@ -145,7 +145,7 @@ class KjG_Ticketing_Activator {
 			payment_state enum('open', 'paid', 'box_office') NOT NULL,
 			shipping enum('pick_up', 'mail', 'email') NOT NULL,
 			comment varchar(2000),
-			ticket_url varchar(255),
+			ticket_generated bit DEFAULT 0 NOT NULL,
 			PRIMARY KEY  (id, event_id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
 			) $charset_collate;");

@@ -6,3 +6,4 @@ This version is similar to what was previously installed on the KjG Theater Webs
 - The source code is now completely in english
 - Translation support was added
 - The width and length of a seat are now stored per seat and not per event
+- Tickets are now created on request and not stored in a folder on the server
