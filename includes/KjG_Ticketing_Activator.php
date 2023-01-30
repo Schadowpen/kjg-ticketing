@@ -175,5 +175,31 @@ class KjG_Ticketing_Activator {
 			FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes(id),
 			FOREIGN KEY  (field_id) REFERENCES kjg_ticketing_process_additional_fields(id)
         ) $charset_collate;");
+        dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_process_additional_entries (event_id);");
+
+		dbDelta("CREATE TABLE kjg_ticketing_shows (
+			id int NOT NULL AUTO_INCREMENT,
+			event_id int NOT NULL,
+			show_date date NOT NULL,
+			show_time char(5) NOT NULL,
+            PRIMARY KEY  (id),
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
+		) $charset_collate;");
+        dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_shows (event_id);");
+		
+		dbDelta("CREATE TABLE kjg_ticketing_seat_state (
+			event_id int NOT NULL,
+			seat_block char(50) NOT NULL,
+			seat_row char(2) NOT NULL,
+			seat_number int NOT NULL,
+			show_id int NOT NULL,
+			state enum('available', 'reserved', 'booked', 'blocked', 'present') DEFAULT 'available' NOT NULL,
+			process_id int,
+			PRIMARY KEY  (event_id, seat_block, seat_row, seat_number, show_id),
+			FOREIGN KEY  (event_id, seat_block, seat_row, seat_number) REFERENCES kjg_ticketing_seats(event_id, seat_block, seat_row, seat_number),
+			FOREIGN KEY  (show_id) REFERENCES kjg_ticketing_shows(id),
+			FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes(id)
+		) $charset_collate;");
+        dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seat_state (event_id);");
 	}
 }
