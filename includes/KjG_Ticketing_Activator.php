@@ -172,7 +172,7 @@ class KjG_Ticketing_Activator {
             boolean_value bit,
             PRIMARY KEY  (event_id, process_id, field_id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id),
-			FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes(id),
+			FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes(id) ON DELETE CASCADE,
 			FOREIGN KEY  (field_id) REFERENCES kjg_ticketing_process_additional_fields(id)
         ) $charset_collate;");
         dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_process_additional_entries (event_id);");
@@ -187,6 +187,7 @@ class KjG_Ticketing_Activator {
 		) $charset_collate;");
         dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_shows (event_id);");
 		
+		// TODO Foreign key referencing kjg_ticketing_seats is not created
 		dbDelta("CREATE TABLE kjg_ticketing_seat_state (
 			event_id int NOT NULL,
 			seat_block char(50) NOT NULL,
@@ -198,7 +199,7 @@ class KjG_Ticketing_Activator {
 			PRIMARY KEY  (event_id, seat_block, seat_row, seat_number, show_id),
 			FOREIGN KEY  (event_id, seat_block, seat_row, seat_number) REFERENCES kjg_ticketing_seats(event_id, seat_block, seat_row, seat_number),
 			FOREIGN KEY  (show_id) REFERENCES kjg_ticketing_shows(id),
-			FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes(id)
+			FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes(id) ON DELETE CASCADE
 		) $charset_collate;");
         dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seat_state (event_id);");
 	}
