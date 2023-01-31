@@ -1,6 +1,10 @@
 <?php
 require_once get_home_path() . 'wp-admin/includes/upgrade.php';
 
+// TODO move to correct file
+global $kjg_ticketing_db_version;
+$kjg_ticketing_db_version = '1.0';
+
 /**
  * Fired during plugin activation.
  *
@@ -19,10 +23,15 @@ class KjG_Ticketing_Activator {
 
 	private static function create_database_tables() {
 		global $wpdb;
+		global $kjg_ticketing_db_version;
+
 		$charset_collate = $wpdb->get_charset_collate();
 
 		self::create_database_tables_active($charset_collate);
 		self::create_database_tables_template($charset_collate);
+
+		// TODO this option is not set correctly
+		add_option( 'kjg_ticketing_db_version', $kjg_ticketing_db_version );
 	}
 
 	private static function create_database_tables_active($charset_collate) {
@@ -55,7 +64,7 @@ class KjG_Ticketing_Activator {
 			color_green tinyint NOT NULL,
 			color_blue tinyint NOT NULL,
 			PRIMARY KEY  (id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id)
 			) $charset_collate;");
 		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_ticket_text_config (event_id);");
 		
@@ -78,7 +87,7 @@ class KjG_Ticketing_Activator {
 			fontSize float,
 			line_width float,
 			PRIMARY KEY  (id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id)
 			) $charset_collate;");
 		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_ticket_image_config (event_id);");
 
@@ -95,7 +104,7 @@ class KjG_Ticketing_Activator {
 			text_position_y float,
 			text_color char(7),
 			PRIMARY KEY  (id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id)
 			) $charset_collate;");
 		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seating_plan_areas (event_id);");
 
@@ -115,8 +124,8 @@ class KjG_Ticketing_Activator {
 			text_position_y float,
 			entrance_id int,
 			PRIMARY KEY  (id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id),
-			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_entrances(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id),
+			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_entrances (id)
 			) $charset_collate;");
 		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_entrances (event_id);");
 
@@ -132,8 +141,8 @@ class KjG_Ticketing_Activator {
 			length float NOT NULL,
 			entrance_id int,
 			PRIMARY KEY  (event_id, seat_block, seat_row, seat_number),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id),
-			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_entrances(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id),
+			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_entrances (id)
 			) $charset_collate;");
 		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seats (event_id);");
 
@@ -152,7 +161,7 @@ class KjG_Ticketing_Activator {
 			comment varchar(2000),
 			ticket_generated bit DEFAULT 0 NOT NULL,
 			PRIMARY KEY  (id, event_id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id)
 			) $charset_collate;");
 		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_processes (event_id);");
 
@@ -163,7 +172,7 @@ class KjG_Ticketing_Activator {
             data_type enum('integer', 'float', 'string', 'longString', 'boolean') NOT NULL,
             required bit NOT NULL DEFAULT 0,
             PRIMARY KEY  (id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id)
         ) $charset_collate;");
         dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_process_additional_fields (event_id);");
 
@@ -176,9 +185,9 @@ class KjG_Ticketing_Activator {
             string_value varchar(2000),
             boolean_value bit,
             PRIMARY KEY  (event_id, process_id, field_id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id),
-			FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes(id) ON DELETE CASCADE,
-			FOREIGN KEY  (field_id) REFERENCES kjg_ticketing_process_additional_fields(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id),
+			FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes (id) ON DELETE CASCADE,
+			FOREIGN KEY  (field_id) REFERENCES kjg_ticketing_process_additional_fields (id)
         ) $charset_collate;");
         dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_process_additional_entries (event_id);");
 
@@ -188,7 +197,7 @@ class KjG_Ticketing_Activator {
 			show_date date NOT NULL,
 			show_time char(5) NOT NULL,
             PRIMARY KEY  (id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id)
 		) $charset_collate;");
         dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_shows (event_id);");
 		
@@ -202,9 +211,9 @@ class KjG_Ticketing_Activator {
 			state enum('available', 'reserved', 'booked', 'blocked', 'present') DEFAULT 'available' NOT NULL,
 			process_id int,
 			PRIMARY KEY  (event_id, seat_block, seat_row, seat_number, show_id),
-			FOREIGN KEY  (event_id, seat_block, seat_row, seat_number) REFERENCES kjg_ticketing_seats(event_id, seat_block, seat_row, seat_number),
-			FOREIGN KEY  (show_id) REFERENCES kjg_ticketing_shows(id),
-			FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes(id) ON DELETE CASCADE
+			CONSTRAINT FK_seat FOREIGN KEY  (event_id, seat_block, seat_row, seat_number) REFERENCES kjg_ticketing_seats (event_id, seat_block, seat_row, seat_number),
+			FOREIGN KEY  (show_id) REFERENCES kjg_ticketing_shows (id),
+			FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes (id) ON DELETE CASCADE
 		) $charset_collate;");
         dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seat_state (event_id);");
 	}
@@ -238,7 +247,7 @@ class KjG_Ticketing_Activator {
 			color_green tinyint NOT NULL,
 			color_blue tinyint NOT NULL,
 			PRIMARY KEY  (id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id)
 			) $charset_collate;");
 		
 		dbDelta("CREATE TABLE kjg_ticketing_template_ticket_image_config (
@@ -260,7 +269,7 @@ class KjG_Ticketing_Activator {
 			fontSize float,
 			line_width float,
 			PRIMARY KEY  (id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id)
 			) $charset_collate;");
 
 		dbDelta("CREATE TABLE kjg_ticketing_template_seating_plan_areas (
@@ -276,7 +285,7 @@ class KjG_Ticketing_Activator {
 			text_position_y float,
 			text_color char(7),
 			PRIMARY KEY  (id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id)
 			) $charset_collate;");
 		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seating_plan_areas (event_id);");
 
@@ -296,8 +305,8 @@ class KjG_Ticketing_Activator {
 			text_position_y float,
 			entrance_id int,
 			PRIMARY KEY  (id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events(id),
-			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_template_entrances(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id),
+			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_template_entrances (id)
 			) $charset_collate;");
 
 		dbDelta("CREATE TABLE kjg_ticketing_template_seats (
@@ -312,8 +321,8 @@ class KjG_Ticketing_Activator {
 			length float NOT NULL,
 			entrance_id int,
 			PRIMARY KEY  (event_id, seat_block, seat_row, seat_number),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events(id),
-			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_template_entrances(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id),
+			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_template_entrances (id)
 			) $charset_collate;");
 		
 		dbDelta("CREATE TABLE kjg_ticketing_template_seat_groups (
@@ -333,8 +342,8 @@ class KjG_Ticketing_Activator {
 			seat_length float NOT NULL,
 			entrance_id int,
 			PRIMARY KEY  (id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events(id),
-			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_template_entrances(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id),
+			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_template_entrances (id)
 			) $charset_collate;");
 
         dbDelta("CREATE TABLE kjg_ticketing_template_process_additional_fields (
@@ -344,7 +353,7 @@ class KjG_Ticketing_Activator {
             data_type enum('integer', 'float', 'string', 'longString', 'boolean') NOT NULL,
             required bit NOT NULL DEFAULT 0,
             PRIMARY KEY  (id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id)
         ) $charset_collate;");
 
 		dbDelta("CREATE TABLE kjg_ticketing_template_shows (
@@ -353,7 +362,7 @@ class KjG_Ticketing_Activator {
 			show_date date NOT NULL,
 			show_time char(5) NOT NULL,
             PRIMARY KEY  (id),
-			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events(id)
+			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id)
 		) $charset_collate;");
 	}
 
