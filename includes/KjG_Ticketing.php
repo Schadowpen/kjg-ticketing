@@ -1,5 +1,7 @@
 <?php
 
+namespace KjG_Ticketing;
+
 /**
  * The core plugin class.
  *
