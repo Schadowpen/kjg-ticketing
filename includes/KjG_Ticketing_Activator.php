@@ -1,4 +1,6 @@
 <?php
+namespace KjG_Ticketing;
+
 require_once get_home_path() . 'wp-admin/includes/upgrade.php';
 
 // TODO move to correct file
@@ -17,11 +19,11 @@ class KjG_Ticketing_Activator {
 	 *
 	 * Long Description.
 	 */
-	public static function activate() {
+	public static function activate(): void {
 		self::create_database_tables();
 	}
 
-	private static function create_database_tables() {
+	private static function create_database_tables(): void {
 		global $wpdb;
 		global $kjg_ticketing_db_version;
 
@@ -34,7 +36,7 @@ class KjG_Ticketing_Activator {
 		add_option( 'kjg_ticketing_db_version', $kjg_ticketing_db_version );
 	}
 
-	private static function create_database_tables_active($charset_collate) {
+	private static function create_database_tables_active($charset_collate): void {
 
 		dbDelta("CREATE TABLE kjg_ticketing_events (
 			id int NOT NULL AUTO_INCREMENT,
@@ -218,7 +220,7 @@ class KjG_Ticketing_Activator {
         dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seat_state (event_id);");
 	}
 
-	private static function create_database_tables_template($charset_collate) {
+	private static function create_database_tables_template($charset_collate): void {
 
 		dbDelta("CREATE TABLE kjg_ticketing_template_events (
 			id int NOT NULL AUTO_INCREMENT,

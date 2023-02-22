@@ -14,7 +14,7 @@ class KjG_Ticketing_Admin {
      * @access   private
      * @var      string $plugin_name The ID of this plugin.
      */
-    private $plugin_name;
+    private string $plugin_name;
 
     /**
      * The version of this plugin.
@@ -22,7 +22,7 @@ class KjG_Ticketing_Admin {
      * @access   private
      * @var      string $version The current version of this plugin.
      */
-    private $version;
+    private string $version;
 
     /**
      * Initialize the class and set its properties.
@@ -30,7 +30,7 @@ class KjG_Ticketing_Admin {
      * @param string $plugin_name The name of this plugin.
      * @param string $version The version of this plugin.
      */
-    public function __construct($plugin_name, $version) {
+    public function __construct(string $plugin_name, string $version) {
 
         $this->plugin_name = $plugin_name;
         $this->version = $version;
@@ -40,7 +40,7 @@ class KjG_Ticketing_Admin {
     /**
      * Register the stylesheets for the admin area.
      */
-    public function enqueue_styles() {
+    public function enqueue_styles(): void {
 
         /**
          * This function is provided for demonstration purposes only.
@@ -61,7 +61,7 @@ class KjG_Ticketing_Admin {
     /**
      * Register the JavaScript for the admin area.
      */
-    public function enqueue_scripts() {
+    public function enqueue_scripts(): void {
 
         /**
          * This function is provided for demonstration purposes only.
@@ -79,7 +79,7 @@ class KjG_Ticketing_Admin {
 
     }
 
-    public function add_menu_pages() {
+    public function add_menu_pages(): void {
         require 'partials/kjg-ticketing-admin-display.php';
         $hookname = add_menu_page(
             "KjG Ticketing",
@@ -93,7 +93,7 @@ class KjG_Ticketing_Admin {
         add_action('load-' . $hookname, array($this, 'admin_display_submit_callback'));
     }
 
-    public function admin_display_submit_callback() {
+    public function admin_display_submit_callback(): void {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             return;
         }

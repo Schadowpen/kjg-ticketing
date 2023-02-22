@@ -1,4 +1,5 @@
 <?php
+namespace KjG_Ticketing;
 
 /**
  * Fired during plugin deactivation.
@@ -12,7 +13,7 @@ class KjG_Ticketing_Deactivator {
 	 *
 	 * Long Description.
 	 */
-	public static function deactivate() {
+	public static function deactivate(): void {
 
 	}
 

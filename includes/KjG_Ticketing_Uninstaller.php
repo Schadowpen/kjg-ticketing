@@ -1,4 +1,5 @@
 <?php
+namespace KjG_Ticketing;
 
 /**
  * Fired during plugin uninstall.
@@ -12,18 +13,18 @@ class KjG_Ticketing_Uninstaller {
 	 *
 	 * Long Description.
 	 */
-	public static function uninstall() {
+	public static function uninstall(): void {
 		self::delete_database_tables();
 	}
 
-	private static function delete_database_tables() {
+	private static function delete_database_tables(): void {
 		self::delete_database_tables_active();
 		self::delete_database_tables_template();
 
 		delete_option( 'kjg_ticketing_db_version' );
 	}
 
-	private static function delete_database_tables_active() {
+	private static function delete_database_tables_active(): void {
 		global $wpdb;
 
 		$wpdb->query( "DROP TABLE IF EXISTS kjg_ticketing_seat_state" );
@@ -39,7 +40,7 @@ class KjG_Ticketing_Uninstaller {
 		$wpdb->query( "DROP TABLE IF EXISTS kjg_ticketing_events" );
 	}
 
-	private static function delete_database_tables_template() {
+	private static function delete_database_tables_template(): void {
 		global $wpdb;
 
 		$wpdb->query( "DROP TABLE IF EXISTS kjg_ticketing_template_shows" );

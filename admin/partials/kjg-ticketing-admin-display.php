@@ -1,6 +1,6 @@
 <?php
 
-function kjg_ticketing_admin_display() {
+function kjg_ticketing_admin_display(): void {
     ?>
     <h1>This plugin is under construction</h1>
 
