@@ -5,13 +5,22 @@
  * If a class is located in a sub folder of "includes", this should be added to the namespace definition.
  */
 
-spl_autoload_register('kjg_ticketing_autoloader');
-function kjg_ticketing_autoloader( $class_name ): void {
-    if ( strncmp( $class_name, 'KjG_Ticketing', 13 ) === 0 ) {
-        $classes_dir = realpath( plugin_dir_path( __FILE__ ) ) . "/includes";
-        $path = str_replace("\\", "/", substr($class_name, 13)) . ".php";
-        require_once $classes_dir . $path;
-    }
-}
+defined( 'WPINC' ) || exit;
 
-// TODO load files that are no classes
+spl_autoload_register( function ( $class_name ): void {
+	$namespaces = [
+		'KjG_Ticketing\\' => __DIR__ . '/includes/',
+	];
+	foreach ( $namespaces as $prefix => $baseDir ) {
+		$len = strlen( $prefix );
+		if ( 0 !== strncmp( $prefix, $class_name, $len ) ) {
+			continue;
+		}
+		$file = $baseDir . str_replace( '\\', '/', substr( $class_name, $len ) ) . '.php';
+		if ( ! file_exists( $file ) ) {
+			continue;
+		}
+		require $file;
+		break;
+	}
+} );
