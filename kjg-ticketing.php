@@ -6,7 +6,7 @@
  * Description: WordPress Plugin to provide a ticketing system for the KjG theater
  * Version: 0.1.1
  * Author: Philipp Horwat
- * Requires PHP: 7.4
+ * Requires PHP: 8.0
  * License: GPL2
  * Text Domain: kjg-ticketing
  * Domain Path: /languages

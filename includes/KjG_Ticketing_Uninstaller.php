@@ -1,4 +1,5 @@
 <?php
+
 namespace KjG_Ticketing;
 
 /**
@@ -15,6 +16,7 @@ class KjG_Ticketing_Uninstaller {
 	 */
 	public static function uninstall(): void {
 		\KjG_Ticketing\database\DatabaseUninstaller::delete_database_tables();
+		\KjG_Ticketing\Options::delete_all_options();
 	}
 
 }

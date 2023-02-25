@@ -7,8 +7,6 @@ class DatabaseUninstaller {
 	public static function delete_database_tables(): void {
 		self::delete_database_tables_active();
 		self::delete_database_tables_template();
-
-		delete_option( 'kjg_ticketing_db_version' );
 	}
 
 	private static function delete_database_tables_active(): void {

@@ -24,12 +24,9 @@ class DatabaseOverview {
 	public function getArchivedDatabaseNames(): array {
 		global $wpdb;
 
-		$current_event_id = get_option( 'kjg_ticketing_current_event' );
+		$current_event_id = \KjG_Ticketing\Options::get_current_event_id();
 		if ( $current_event_id ) {
-			$sql             = $wpdb->prepare(
-				"SELECT name FROM kjg_ticketing_events WHERE id IS NOT %d",
-				(int) $current_event_id
-			);
+			$sql = $wpdb->prepare( "SELECT name FROM kjg_ticketing_events WHERE id IS NOT %d", $current_event_id );
 			$all_event_names = $wpdb->get_col( $sql );
 		} else {
 			$all_event_names = $wpdb->get_col( "SELECT name FROM kjg_ticketing_events" );

@@ -19,7 +19,7 @@ class DatabaseInstaller {
 		self::create_database_tables_template($charset_collate);
 
 		// TODO this option is not set correctly
-		add_option( 'kjg_ticketing_db_version', $kjg_ticketing_db_version );
+		\KjG_Ticketing\Options::add_db_version($kjg_ticketing_db_version);
 	}
 
 	private static function create_database_tables_active($charset_collate): void {
