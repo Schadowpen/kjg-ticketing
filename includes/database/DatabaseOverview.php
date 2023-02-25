@@ -2,6 +2,7 @@
 
 namespace KjG_Ticketing\database;
 
+use KjG_Ticketing\database\dto\Event;
 use KjG_Ticketing\Options;
 
 /**
@@ -17,16 +18,40 @@ use KjG_Ticketing\Options;
  */
 class DatabaseOverview {
 
+    /**
+     * @return Event[]
+     */
     public function getEvents(): array {
         global $wpdb;
 
-        return $wpdb->get_results( "SELECT * FROM " . DatabaseConnection::get_table_name_events(), OBJECT );
+        $events = $wpdb->get_results(
+            "SELECT id, name, archived, ticket_price, shipping_price, seating_plan_width, seating_plan_length, seating_plan_length_unit FROM "
+            . DatabaseConnection::get_table_name_events(),
+            OBJECT
+        );
+        for ( $i = 0; $i < count( $events ); $i ++ ) {
+            $events[ $i ] = Event::fromObject( $events[ $i ] );
+        }
+
+        return $events;
     }
 
+    /**
+     * @return Event[]
+     */
     public function getTemplateEvents(): array {
         global $wpdb;
 
-        return $wpdb->get_results( "SELECT * FROM " . TemplateDatabaseConnection::get_table_name_events(), OBJECT );
+        $events = $wpdb->get_results(
+            "SELECT id, name, archived, ticket_price, shipping_price, seating_plan_width, seating_plan_length, seating_plan_length_unit FROM "
+            . TemplateDatabaseConnection::get_table_name_events(),
+            OBJECT
+        );
+        for ( $i = 0; $i < count( $events ); $i ++ ) {
+            $events[ $i ] = Event::fromObject( $events[ $i ] );
+        }
+
+        return $events;
     }
 
     /**
