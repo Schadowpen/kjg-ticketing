@@ -17,12 +17,12 @@ msgstr ""
 "_nx_noop:4c,1,2;_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;"
 "__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.2.2\n"
 "X-Poedit-SearchPath-0: .\n"
 
 #: admin/partials/kjg-ticketing-admin-display.php:15
 msgid "Select currently active event"
-msgstr "Akutelle Veranstaltung auswählen"
+msgstr "Aktuelle Veranstaltung auswählen"
 
 #: admin/partials/kjg-ticketing-admin-display.php:20
 msgid "none"

@@ -2,6 +2,8 @@
 
 namespace KjG_Ticketing\database;
 
+use KjG_Ticketing\database\dto\Event;
+
 /**
  * An abstract definition of a database connection that can be either a connection to a specific event
  * or a specific event template
@@ -19,6 +21,26 @@ abstract class AbstractDatabaseConnection {
     }
 
     public static abstract function get_table_name_events(): string;
+
+    public function get_event( bool $echoErrors = true ): Event|false {
+        global $wpdb;
+        $sql = $wpdb->prepare(
+            "SELECT id, name, archived, ticket_price, shipping_price, seating_plan_width, seating_plan_length, seating_plan_length_unit FROM "
+            . static::get_table_name_events() . " WHERE id = %d",
+            $this->event_id
+        );
+        $results = $wpdb->get_results( $sql, OBJECT );
+
+        if ( count( $results ) !== 1 ) {
+            if ( $echoErrors ) {
+                echo "Error: Could not read event from database\n";
+            }
+
+            return false;
+        }
+
+        return Event::fromObject( $results[0] );
+    }
 
     /**
      * Deletes the whole event associated with this databaseConnection.

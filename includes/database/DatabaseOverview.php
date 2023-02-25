@@ -63,10 +63,14 @@ class DatabaseOverview {
         return in_array( $templateName, $this->getTemplateDatabaseNames() );
     }
 
-    public function getCurrentDatabaseConnection(): DatabaseConnection {
+    public function getCurrentDatabaseConnection( bool $echoErrors = true ): DatabaseConnection|false {
         $event_id = Options::get_current_event_id();
         if ( ! $event_id ) {
-            die( "Error: Current event does not exist\n" );
+            if ( $echoErrors ) {
+                echo "Error: Current event does not exist\n";
+            }
+
+            return false;
         }
 
         return new DatabaseConnection( $event_id );
