@@ -75,6 +75,16 @@ abstract class AbstractDatabaseConnection {
         return true;
     }
 
+    public function get_ticket_template(): string|null {
+        global $wpdb;
+        $sql = $wpdb->prepare(
+            "SELECT ticket_template FROM " . static::get_table_name_events() . " WHERE id = %d",
+            $this->event_id
+        );
+
+        return $wpdb->get_var( $sql );
+    }
+
     protected static abstract function get_table_name_ticket_text_config(): string;
 
     protected static abstract function get_table_name_ticket_image_config(): string;
