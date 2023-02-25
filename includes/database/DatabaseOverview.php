@@ -60,12 +60,13 @@ class DatabaseOverview {
     public function getArchivedDatabaseNames(): array {
         global $wpdb;
 
-        $current_event_id = \KjG_Ticketing\Options::get_current_event_id();
+        $current_event_id = Options::get_current_event_id();
         if ( $current_event_id ) {
-            $sql = $wpdb->prepare( "SELECT name FROM kjg_ticketing_events WHERE id IS NOT %d", $current_event_id );
+            $sql = $wpdb->prepare( "SELECT name FROM " . DatabaseConnection::get_table_name_events()
+                                   . " WHERE id IS NOT %d", $current_event_id );
             $all_event_names = $wpdb->get_col( $sql );
         } else {
-            $all_event_names = $wpdb->get_col( "SELECT name FROM kjg_ticketing_events" );
+            $all_event_names = $wpdb->get_col( "SELECT name FROM " . DatabaseConnection::get_table_name_events() );
         }
 
         return $all_event_names;
@@ -77,7 +78,7 @@ class DatabaseOverview {
     public function getTemplateDatabaseNames(): array {
         global $wpdb;
 
-        return $wpdb->get_col( "SELECT name FROM kjg_ticketing_template_events" );
+        return $wpdb->get_col( "SELECT name FROM " . TemplateDatabaseConnection::get_table_name_events() );
     }
 
     public function archiveDatabaseExists( string $archiveName ): bool {
