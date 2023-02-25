@@ -29,9 +29,9 @@ abstract class AbstractDatabaseConnection {
             . static::get_table_name_events() . " WHERE id = %d",
             $this->event_id
         );
-        $results = $wpdb->get_results( $sql, OBJECT );
+        $row = $wpdb->get_row( $sql, OBJECT );
 
-        if ( count( $results ) !== 1 ) {
+        if ( ! $row ) {
             if ( $echoErrors ) {
                 echo "Error: Could not read event from database\n";
             }
@@ -39,7 +39,7 @@ abstract class AbstractDatabaseConnection {
             return false;
         }
 
-        return Event::fromObject( $results[0] );
+        return Event::fromObject( $row );
     }
 
     /**
