@@ -15,16 +15,16 @@ class DatabaseInstaller {
 
 		$charset_collate = $wpdb->get_charset_collate();
 
-		self::create_database_tables_active($charset_collate);
-		self::create_database_tables_template($charset_collate);
+		self::create_database_tables_active( $charset_collate );
+		self::create_database_tables_template( $charset_collate );
 
 		// TODO this option is not set correctly
-		\KjG_Ticketing\Options::add_db_version($kjg_ticketing_db_version);
+		\KjG_Ticketing\Options::add_db_version( $kjg_ticketing_db_version );
 	}
 
-	private static function create_database_tables_active($charset_collate): void {
+	private static function create_database_tables_active( $charset_collate ): void {
 
-		dbDelta("CREATE TABLE kjg_ticketing_events (
+		dbDelta( "CREATE TABLE kjg_ticketing_events (
 			id int NOT NULL AUTO_INCREMENT,
 			name varchar(255) UNIQUE NOT NULL,
 			archived bit DEFAULT 0 NOT NULL,
@@ -33,13 +33,13 @@ class DatabaseInstaller {
 			seating_plan_width float NOT NULL,
 			seating_plan_length float NOT NULL,
 			seating_plan_length_unit char(32) NOT NULL,
-			ticket_template blob NOT NULL,
+			ticket_template mediumblob NOT NULL,
 			ticket_seating_plan_seat_numbers_visible bit DEFAULT 0 NOT NULL,
 			ticket_seating_plan_connect_arrows bit DEFAULT 1 NOT NULL,
 			PRIMARY KEY  (id)
-			) $charset_collate;");
+			) $charset_collate;" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_ticket_text_config (
+		dbDelta( "CREATE TABLE kjg_ticketing_ticket_text_config (
 			id int NOT NULL AUTO_INCREMENT,
 			event_id int NOT NULL,
 			content enum('date', 'time', 'block', 'row', 'seat', 'price', 'payment_status', 'event_id') NOT NULL,
@@ -53,10 +53,10 @@ class DatabaseInstaller {
 			color_blue tinyint NOT NULL,
 			PRIMARY KEY  (id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id)
-			) $charset_collate;");
-		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_ticket_text_config (event_id);");
+			) $charset_collate;" );
+		dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_ticket_text_config (event_id);" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_ticket_image_config (
+		dbDelta( "CREATE TABLE kjg_ticketing_ticket_image_config (
 			id int NOT NULL AUTO_INCREMENT,
 			event_id int NOT NULL,
 			content enum('qr_code', 'seating_plan') NOT NULL,
@@ -76,10 +76,10 @@ class DatabaseInstaller {
 			line_width float,
 			PRIMARY KEY  (id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id)
-			) $charset_collate;");
-		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_ticket_image_config (event_id);");
+			) $charset_collate;" );
+		dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_ticket_image_config (event_id);" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_seating_plan_areas (
+		dbDelta( "CREATE TABLE kjg_ticketing_seating_plan_areas (
 			id int NOT NULL AUTO_INCREMENT,
 			event_id int NOT NULL,
 			position_x float NOT NULL,
@@ -93,10 +93,10 @@ class DatabaseInstaller {
 			text_color char(7),
 			PRIMARY KEY  (id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id)
-			) $charset_collate;");
-		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seating_plan_areas (event_id);");
+			) $charset_collate;" );
+		dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_seating_plan_areas (event_id);" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_entrances (
+		dbDelta( "CREATE TABLE kjg_ticketing_entrances (
 			id int NOT NULL AUTO_INCREMENT,
 			event_id int NOT NULL,
 			x0 float NOT NULL,
@@ -114,10 +114,10 @@ class DatabaseInstaller {
 			PRIMARY KEY  (id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id),
 			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_entrances (id)
-			) $charset_collate;");
-		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_entrances (event_id);");
+			) $charset_collate;" );
+		dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_entrances (event_id);" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_seats (
+		dbDelta( "CREATE TABLE kjg_ticketing_seats (
 			event_id int NOT NULL,
 			seat_block char(50) NOT NULL,
 			seat_row char(2) NOT NULL,
@@ -131,10 +131,10 @@ class DatabaseInstaller {
 			PRIMARY KEY  (event_id, seat_block, seat_row, seat_number),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id),
 			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_entrances (id)
-			) $charset_collate;");
-		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seats (event_id);");
+			) $charset_collate;" );
+		dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_seats (event_id);" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_processes (
+		dbDelta( "CREATE TABLE kjg_ticketing_processes (
 			id int NOT NULL CHECK (id BETWEEN 1 and 999999999),
 			event_id int NOT NULL,
 			first_name varchar(255),
@@ -150,10 +150,10 @@ class DatabaseInstaller {
 			ticket_generated bit DEFAULT 0 NOT NULL,
 			PRIMARY KEY  (id, event_id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id)
-			) $charset_collate;");
-		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_processes (event_id);");
+			) $charset_collate;" );
+		dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_processes (event_id);" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_process_additional_fields (
+		dbDelta( "CREATE TABLE kjg_ticketing_process_additional_fields (
             id int NOT NULL AUTO_INCREMENT,
             event_id int NOT NULL,
             description varchar(255) NOT NULL,
@@ -161,10 +161,10 @@ class DatabaseInstaller {
             required bit NOT NULL DEFAULT 0,
             PRIMARY KEY  (id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id)
-        ) $charset_collate;");
-		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_process_additional_fields (event_id);");
+        ) $charset_collate;" );
+		dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_process_additional_fields (event_id);" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_process_additional_entries (
+		dbDelta( "CREATE TABLE kjg_ticketing_process_additional_entries (
             event_id int NOT NULL,
             process_id int NOT NULL,
             field_id int NOT NULL,
@@ -176,21 +176,21 @@ class DatabaseInstaller {
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id),
 			FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes (id) ON DELETE CASCADE,
 			FOREIGN KEY  (field_id) REFERENCES kjg_ticketing_process_additional_fields (id)
-        ) $charset_collate;");
-		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_process_additional_entries (event_id);");
+        ) $charset_collate;" );
+		dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_process_additional_entries (event_id);" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_shows (
+		dbDelta( "CREATE TABLE kjg_ticketing_shows (
 			id int NOT NULL AUTO_INCREMENT,
 			event_id int NOT NULL,
 			show_date date NOT NULL,
 			show_time char(5) NOT NULL,
             PRIMARY KEY  (id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id)
-		) $charset_collate;");
-		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_shows (event_id);");
+		) $charset_collate;" );
+		dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_shows (event_id);" );
 
 		// TODO Foreign key referencing kjg_ticketing_seats is not created
-		dbDelta("CREATE TABLE kjg_ticketing_seat_state (
+		dbDelta( "CREATE TABLE kjg_ticketing_seat_state (
 			event_id int NOT NULL,
 			seat_block char(50) NOT NULL,
 			seat_row char(2) NOT NULL,
@@ -202,13 +202,13 @@ class DatabaseInstaller {
 			CONSTRAINT FK_seat FOREIGN KEY  (event_id, seat_block, seat_row, seat_number) REFERENCES kjg_ticketing_seats (event_id, seat_block, seat_row, seat_number),
 			FOREIGN KEY  (show_id) REFERENCES kjg_ticketing_shows (id),
 			FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes (id) ON DELETE CASCADE
-		) $charset_collate;");
-		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seat_state (event_id);");
+		) $charset_collate;" );
+		dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_seat_state (event_id);" );
 	}
 
-	private static function create_database_tables_template($charset_collate): void {
+	private static function create_database_tables_template( $charset_collate ): void {
 
-		dbDelta("CREATE TABLE kjg_ticketing_template_events (
+		dbDelta( "CREATE TABLE kjg_ticketing_template_events (
 			id int NOT NULL AUTO_INCREMENT,
 			name varchar(255) NOT NULL,
 			ticket_price decimal(6,2) DEFAULT 5 NOT NULL,
@@ -216,13 +216,13 @@ class DatabaseInstaller {
 			seating_plan_width float,
 			seating_plan_length float,
 			seating_plan_length_unit char(32),
-			ticket_template blob,
+			ticket_template mediumblob,
 			ticket_seating_plan_seat_numbers_visible bit DEFAULT 0 NOT NULL,
 			ticket_seating_plan_connect_arrows bit DEFAULT 1 NOT NULL,
 			PRIMARY KEY  (id)
-			) $charset_collate;");
+			) $charset_collate;" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_template_ticket_text_config (
+		dbDelta( "CREATE TABLE kjg_ticketing_template_ticket_text_config (
 			id int NOT NULL AUTO_INCREMENT,
 			event_id int NOT NULL,
 			content enum('date', 'time', 'block', 'row', 'seat', 'price', 'payment_status', 'event_id') NOT NULL,
@@ -236,9 +236,9 @@ class DatabaseInstaller {
 			color_blue tinyint NOT NULL,
 			PRIMARY KEY  (id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id)
-			) $charset_collate;");
+			) $charset_collate;" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_template_ticket_image_config (
+		dbDelta( "CREATE TABLE kjg_ticketing_template_ticket_image_config (
 			id int NOT NULL AUTO_INCREMENT,
 			event_id int NOT NULL,
 			content enum('qr_code', 'seating_plan') NOT NULL,
@@ -258,9 +258,9 @@ class DatabaseInstaller {
 			line_width float,
 			PRIMARY KEY  (id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id)
-			) $charset_collate;");
+			) $charset_collate;" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_template_seating_plan_areas (
+		dbDelta( "CREATE TABLE kjg_ticketing_template_seating_plan_areas (
 			id int NOT NULL AUTO_INCREMENT,
 			event_id int NOT NULL,
 			position_x float NOT NULL,
@@ -274,10 +274,10 @@ class DatabaseInstaller {
 			text_color char(7),
 			PRIMARY KEY  (id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id)
-			) $charset_collate;");
-		dbDelta("CREATE INDEX idx_event_id ON kjg_ticketing_seating_plan_areas (event_id);");
+			) $charset_collate;" );
+		dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_seating_plan_areas (event_id);" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_template_entrances (
+		dbDelta( "CREATE TABLE kjg_ticketing_template_entrances (
 			id int NOT NULL AUTO_INCREMENT,
 			event_id int NOT NULL,
 			x0 float NOT NULL,
@@ -295,9 +295,9 @@ class DatabaseInstaller {
 			PRIMARY KEY  (id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id),
 			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_template_entrances (id)
-			) $charset_collate;");
+			) $charset_collate;" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_template_seats (
+		dbDelta( "CREATE TABLE kjg_ticketing_template_seats (
 			event_id int NOT NULL,
 			seat_block char(50) NOT NULL,
 			seat_row char(2) NOT NULL,
@@ -311,9 +311,9 @@ class DatabaseInstaller {
 			PRIMARY KEY  (event_id, seat_block, seat_row, seat_number),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id),
 			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_template_entrances (id)
-			) $charset_collate;");
+			) $charset_collate;" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_template_seat_groups (
+		dbDelta( "CREATE TABLE kjg_ticketing_template_seat_groups (
 			id int NOT NULL AUTO_INCREMENT,
 			event_id int NOT NULL,
 			block char(50) NOT NULL,
@@ -332,9 +332,9 @@ class DatabaseInstaller {
 			PRIMARY KEY  (id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id),
 			FOREIGN KEY  (entrance_id) REFERENCES kjg_ticketing_template_entrances (id)
-			) $charset_collate;");
+			) $charset_collate;" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_template_process_additional_fields (
+		dbDelta( "CREATE TABLE kjg_ticketing_template_process_additional_fields (
             id int NOT NULL AUTO_INCREMENT,
             event_id int NOT NULL,
             description varchar(255) NOT NULL,
@@ -342,16 +342,16 @@ class DatabaseInstaller {
             required bit NOT NULL DEFAULT 0,
             PRIMARY KEY  (id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id)
-        ) $charset_collate;");
+        ) $charset_collate;" );
 
-		dbDelta("CREATE TABLE kjg_ticketing_template_shows (
+		dbDelta( "CREATE TABLE kjg_ticketing_template_shows (
 			id int NOT NULL AUTO_INCREMENT,
 			event_id int NOT NULL,
 			show_date date NOT NULL,
 			show_time char(5) NOT NULL,
             PRIMARY KEY  (id),
 			FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id)
-		) $charset_collate;");
+		) $charset_collate;" );
 	}
 
 }

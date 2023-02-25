@@ -27,6 +27,10 @@ class Options {
 
 	private static string $current_event_id_option_name = "kjg_ticketing_current_event_id";
 
+	public static function update_current_event_id( int $current_event_id ): bool {
+		return update_option( self::$current_event_id_option_name, $current_event_id );
+	}
+
 	public static function get_current_event_id(): int|false {
 		$current_event_id = get_option( self::$current_event_id_option_name );
 		if ( ! $current_event_id ) {

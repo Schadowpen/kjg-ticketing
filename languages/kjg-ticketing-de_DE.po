@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: KjG Ticketing\n"
-"POT-Creation-Date: 2023-01-08 19:00+0100\n"
+"POT-Creation-Date: 2023-02-25 08:58+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: KjG Theater <info@kjg-theater.de>\n"
@@ -20,74 +20,96 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
-msgid "Seating plan"
-msgstr "Sitzplan"
+#: admin/partials/kjg-ticketing-admin-display.php:14
+msgid "Select currently active event"
+msgstr "Akutelle Veranstaltung auswählen"
 
-msgid "Ticket"
-msgstr "Eintrittskarte"
+#: admin/partials/kjg-ticketing-admin-display.php:19
+msgid "none"
+msgstr "Keine"
 
-msgid "Entrance"
-msgstr "Eingang"
+#: admin/partials/kjg-ticketing-admin-display.php:37
+msgid "Please ensure that nobody else is currently working on this event!"
+msgstr ""
+"Bitte stelle sicher, dass aktuell niemand anderes an der Veranstaltung "
+"arbeitet!"
 
-msgid "Block"
-msgstr "Block"
+#: admin/partials/kjg-ticketing-admin-display.php:43
+msgid "Currently active event"
+msgstr "Aktuelle Veranstaltung"
 
-msgid "Row"
-msgstr "Reihe"
+#: admin/partials/kjg-ticketing-admin-display.php:49
+msgid "Submit"
+msgstr "Abschicken"
 
-msgid "Seat"
-msgstr "Platz"
+#~ msgid "Seating plan"
+#~ msgstr "Sitzplan"
 
-msgid "available"
-msgstr "frei"
+#~ msgid "Ticket"
+#~ msgstr "Eintrittskarte"
 
-msgid "reserved"
-msgstr "reserviert"
+#~ msgid "Entrance"
+#~ msgstr "Eingang"
 
-msgid "booked"
-msgstr "gebucht"
+#~ msgid "Block"
+#~ msgstr "Block"
 
-msgid "blocked"
-msgstr "gesperrt"
+#~ msgid "Row"
+#~ msgstr "Reihe"
 
-msgid "present"
-msgstr "anwesend"
+#~ msgid "Seat"
+#~ msgstr "Platz"
 
-msgid "Visitor"
-msgstr "Zuschauer"
+#~ msgid "available"
+#~ msgstr "frei"
 
-msgid "Event"
-msgstr "Veranstaltung"
+#~ msgid "reserved"
+#~ msgstr "reserviert"
 
-msgid "Show"
-msgstr "Vorstellung"
+#~ msgid "booked"
+#~ msgstr "gebucht"
 
-msgid "Process"
-msgstr "Vorgang"
+#~ msgid "blocked"
+#~ msgstr "gesperrt"
 
-msgid "Process ID"
-msgstr "Vorgangsnummer"
+#~ msgid "present"
+#~ msgstr "anwesend"
 
-msgid "Payment method"
-msgstr "Bezahlart"
+#~ msgid "Visitor"
+#~ msgstr "Zuschauer"
 
-msgid "Cash"
-msgstr "Bar"
+#~ msgid "Event"
+#~ msgstr "Veranstaltung"
 
-msgid "Bank"
-msgstr "Überweisung"
+#~ msgid "Show"
+#~ msgstr "Vorstellung"
 
-msgid "Box Office"
-msgstr "Abendkasse"
+#~ msgid "Process"
+#~ msgstr "Vorgang"
 
-msgid "Shipping"
-msgstr "Versandart"
+#~ msgid "Process ID"
+#~ msgstr "Vorgangsnummer"
 
-msgid "Pick up"
-msgstr "Abholung"
+#~ msgid "Payment method"
+#~ msgstr "Bezahlart"
 
-msgid "Mail"
-msgstr "Post"
+#~ msgid "Cash"
+#~ msgstr "Bar"
 
-msgid "E-Mail"
-msgstr "E-Mail"
+#~ msgid "Bank"
+#~ msgstr "Überweisung"
+
+#~ msgid "Box Office"
+#~ msgstr "Abendkasse"
+
+#~ msgid "Shipping"
+#~ msgstr "Versandart"
+
+#~ msgid "Pick up"
+#~ msgstr "Abholung"
+
+#~ msgid "Mail"
+#~ msgstr "Post"
+
+#~ msgid "E-Mail"
+#~ msgstr "E-Mail"
