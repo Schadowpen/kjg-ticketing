@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: KjG Ticketing\n"
-"POT-Creation-Date: 2023-02-25 08:58+0100\n"
+"POT-Creation-Date: 2023-02-25 11:12+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: KjG Theater <info@kjg-theater.de>\n"
@@ -20,15 +20,19 @@ msgstr ""
 "X-Generator: Poedit 3.0.1\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/partials/kjg-ticketing-admin-display.php:14
+#: admin/partials/kjg-ticketing-admin-display.php:15
 msgid "Select currently active event"
 msgstr "Akutelle Veranstaltung auswählen"
 
-#: admin/partials/kjg-ticketing-admin-display.php:19
+#: admin/partials/kjg-ticketing-admin-display.php:20
 msgid "none"
 msgstr "Keine"
 
-#: admin/partials/kjg-ticketing-admin-display.php:37
+#: admin/partials/kjg-ticketing-admin-display.php:38
+msgid "Before you change this setting"
+msgstr "Bevor du diese Einstellung änderst"
+
+#: admin/partials/kjg-ticketing-admin-display.php:39
 msgid "Please ensure that nobody else is currently working on this event!"
 msgstr ""
 "Bitte stelle sicher, dass aktuell niemand anderes an der Veranstaltung "

@@ -1,4 +1,5 @@
 <?php
+
 namespace KjG_Ticketing;
 
 use KjG_Ticketing_Admin;
@@ -48,7 +49,7 @@ class KjG_Ticketing {
      * the public-facing side of the site.
      */
     public function __construct() {
-        if (defined('KJG_TICKETING_VERSION')) {
+        if ( defined( 'KJG_TICKETING_VERSION' ) ) {
             $this->version = KJG_TICKETING_VERSION;
         } else {
             $this->version = '1.0.0';
@@ -86,13 +87,13 @@ class KjG_Ticketing {
         /**
          * The class responsible for defining all actions that occur in the admin area.
          */
-        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/KjG_Ticketing_Admin.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/KjG_Ticketing_Admin.php';
 
         /**
          * The class responsible for defining all actions that occur in the public-facing
          * side of the site.
          */
-        require_once plugin_dir_path(dirname(__FILE__)) . 'public/KjG_Ticketing_Public.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/KjG_Ticketing_Public.php';
 
         $this->loader = new KjG_Ticketing_Loader();
 
@@ -110,42 +111,42 @@ class KjG_Ticketing {
 
         $plugin_i18n = new KjG_Ticketing_i18n();
 
-        $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
+        $this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
     }
 
     /**
-     * Register all of the hooks related to the admin area functionality
+     * Register all the hooks related to the admin area functionality
      * of the plugin.
      *
      * @access   private
      */
     private function define_admin_hooks(): void {
 
-        $plugin_admin = new KjG_Ticketing_Admin($this->get_plugin_name(), $this->get_version());
+        $plugin_admin = new KjG_Ticketing_Admin( $this->get_plugin_name(), $this->get_version() );
 
-        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
-        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
-        $this->loader->add_action('admin_menu', $plugin_admin, 'add_menu_pages');
+        $this->loader->add_action( 'admin_menu', $plugin_admin, 'add_menu_pages' );
+        $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
+        $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
     }
 
     /**
-     * Register all of the hooks related to the public-facing functionality
+     * Register all the hooks related to the public-facing functionality
      * of the plugin.
      *
      * @access   private
      */
     private function define_public_hooks(): void {
 
-        $plugin_public = new KjG_Ticketing_Public($this->get_plugin_name(), $this->get_version());
+        $plugin_public = new KjG_Ticketing_Public( $this->get_plugin_name(), $this->get_version() );
 
-        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
-        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+        $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+        $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
     }
 
     /**
-     * Run the loader to execute all of the hooks with WordPress.
+     * Run the loader to execute all the hooks with WordPress.
      */
     public function run(): void {
         $this->loader->run();

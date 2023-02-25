@@ -70,6 +70,8 @@ msgid "E-Mail"
 msgstr ""
 
 # Other (sorted alphabetically)
+msgid "Before you change this setting"
+msgstr ""
 msgid "Currently active event"
 msgstr ""
 msgid "none"
