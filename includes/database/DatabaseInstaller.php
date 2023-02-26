@@ -34,20 +34,18 @@ class DatabaseInstaller {
             seating_plan_length float DEFAULT 10 NOT NULL,
             seating_plan_length_unit char(32) NOT NULL,
             ticket_template mediumblob NOT NULL,
-            ticket_seating_plan_seat_numbers_visible bit DEFAULT 0 NOT NULL,
-            ticket_seating_plan_connect_arrows bit DEFAULT 1 NOT NULL,
             PRIMARY KEY  (id)
             ) $charset_collate;" );
 
         dbDelta( "CREATE TABLE kjg_ticketing_ticket_text_config (
             id int NOT NULL AUTO_INCREMENT,
             event_id int NOT NULL,
-            content enum('date', 'time', 'block', 'row', 'seat', 'price', 'payment_status', 'event_id') NOT NULL,
+            content enum('date', 'time', 'seat_block', 'seat_row', 'seat_number', 'price', 'payment_state', 'process_id') NOT NULL,
             position_x float NOT NULL,
             position_y float NOT NULL,
             alignment enum('left', 'center', 'right') NOT NULL,
             font char(50) NOT NULL,
-            fontSize float NOT NULL,
+            font_size float NOT NULL,
             color_red tinyint NOT NULL,
             color_green tinyint NOT NULL,
             color_blue tinyint NOT NULL,
@@ -72,8 +70,12 @@ class DatabaseInstaller {
             upper_left_corner_x float NOT NULL,
             upper_left_corner_y float NOT NULL,
             font char(50),
-            fontSize float,
+            font_size float,
             line_width float,
+            seating_plan_seat_numbers_visible bit DEFAULT 0,
+            CONSTRAINT check_seat_numbers_visible_not_null CHECK (( content = 'seating_plan' AND  seating_plan_seat_numbers_visible  is not null) OR content <> 'seating_plan' ),
+            seating_plan_connect_arrows bit DEFAULT 1,
+            CONSTRAINT check_connect_arrows_not_null CHECK (( content = 'seating_plan' AND  seating_plan_connect_arrows  is not null) OR content <> 'seating_plan' ),
             PRIMARY KEY  (id),
             FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id) ON DELETE CASCADE
             ) $charset_collate;" );
@@ -218,20 +220,18 @@ class DatabaseInstaller {
             seating_plan_length float DEFAULT 10,
             seating_plan_length_unit char(32),
             ticket_template mediumblob,
-            ticket_seating_plan_seat_numbers_visible bit DEFAULT 0 NOT NULL,
-            ticket_seating_plan_connect_arrows bit DEFAULT 1 NOT NULL,
             PRIMARY KEY  (id)
             ) $charset_collate;" );
 
         dbDelta( "CREATE TABLE kjg_ticketing_template_ticket_text_config (
             id int NOT NULL AUTO_INCREMENT,
             event_id int NOT NULL,
-            content enum('date', 'time', 'block', 'row', 'seat', 'price', 'payment_status', 'event_id') NOT NULL,
+            content enum('date', 'time', 'seat_block', 'seat_row', 'seat_number', 'price', 'payment_state', 'process_id') NOT NULL,
             position_x float NOT NULL,
             position_y float NOT NULL,
             alignment enum('left', 'center', 'right') NOT NULL,
             font char(50) NOT NULL,
-            fontSize float NOT NULL,
+            font_size float NOT NULL,
             color_red tinyint NOT NULL,
             color_green tinyint NOT NULL,
             color_blue tinyint NOT NULL,
@@ -255,8 +255,12 @@ class DatabaseInstaller {
             upper_left_corner_x float NOT NULL,
             upper_left_corner_y float NOT NULL,
             font char(50),
-            fontSize float,
+            font_size float,
             line_width float,
+            seating_plan_seat_numbers_visible bit DEFAULT 0,
+            CONSTRAINT check_seat_numbers_visible_not_null CHECK (( content = 'seating_plan' AND  seating_plan_seat_numbers_visible  is not null) OR content <> 'seating_plan' ),
+            seating_plan_connect_arrows bit DEFAULT 1,
+            CONSTRAINT check_connect_arrows_not_null CHECK (( content = 'seating_plan' AND  seating_plan_connect_arrows  is not null) OR content <> 'seating_plan' ),
             PRIMARY KEY  (id),
             FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_template_events (id) ON DELETE CASCADE
             ) $charset_collate;" );

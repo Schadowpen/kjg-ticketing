@@ -3,6 +3,7 @@
 namespace KjG_Ticketing\database;
 
 use KjG_Ticketing\database\dto\Event;
+use KjG_Ticketing\database\dto\TicketConfig;
 
 /**
  * An abstract definition of a database connection that can be either a connection to a specific event
@@ -39,7 +40,7 @@ abstract class AbstractDatabaseConnection {
             return false;
         }
 
-        return Event::fromObject( $row );
+        return Event::from_DB( $row );
     }
 
     /**
@@ -87,7 +88,34 @@ abstract class AbstractDatabaseConnection {
 
     protected static abstract function get_table_name_ticket_text_config(): string;
 
+    protected function get_ticket_text_configs(): array {
+        global $wpdb;
+        $sql = $wpdb->prepare(
+            "SELECT * FROM " . static::get_table_name_ticket_text_config() . " WHERE event_id = %d ORDER BY id",
+            $this->event_id
+        );
+
+        return $wpdb->get_results( $sql );
+    }
+
     protected static abstract function get_table_name_ticket_image_config(): string;
+
+    protected function get_ticket_image_configs(): array {
+        global $wpdb;
+        $sql = $wpdb->prepare(
+            "SELECT * FROM " . static::get_table_name_ticket_image_config() . " WHERE event_id = %d ORDER BY id",
+            $this->event_id
+        );
+
+        return $wpdb->get_results( $sql );
+    }
+
+    public function get_ticket_config(): TicketConfig|false {
+        $text_configs = $this->get_ticket_text_configs();
+        $image_configs = $this->get_ticket_image_configs();
+
+        return TicketConfig::from_DB( $text_configs, $image_configs );
+    }
 
     protected static abstract function get_table_name_seating_plan_areas(): string;
 

@@ -30,7 +30,7 @@ class DatabaseOverview {
             OBJECT
         );
         for ( $i = 0; $i < count( $events ); $i ++ ) {
-            $events[ $i ] = Event::fromObject( $events[ $i ] );
+            $events[ $i ] = Event::from_DB( $events[ $i ] );
         }
 
         return $events;
@@ -48,7 +48,7 @@ class DatabaseOverview {
             OBJECT
         );
         for ( $i = 0; $i < count( $events ); $i ++ ) {
-            $events[ $i ] = Event::fromObject( $events[ $i ] );
+            $events[ $i ] = Event::from_DB( $events[ $i ] );
         }
 
         return $events;
