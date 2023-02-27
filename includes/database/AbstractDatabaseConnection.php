@@ -2,7 +2,12 @@
 
 namespace KjG_Ticketing\database;
 
+use KjG_Ticketing\database\dto\Entrance;
 use KjG_Ticketing\database\dto\Event;
+use KjG_Ticketing\database\dto\ProcessAdditionalField;
+use KjG_Ticketing\database\dto\Seat;
+use KjG_Ticketing\database\dto\SeatingPlanArea;
+use KjG_Ticketing\database\dto\Show;
 use KjG_Ticketing\database\dto\TicketConfig;
 
 /**
@@ -20,6 +25,27 @@ abstract class AbstractDatabaseConnection {
     public function __construct( int $event_id ) {
         $this->event_id = $event_id;
     }
+
+    /**
+     * Returns all rows in this table for $event_id
+     *
+     * @param string $table_name
+     * @param callable $dto_mapper function that maps table row to one of the \Kjg_Ticketing\database\dto classes
+     *
+     * @return array An array of DTO objects. Type depends on $dto_mapper.
+     */
+    protected function get_table_contents( string $table_name, callable $dto_mapper ): array {
+        global $wpdb;
+        $sql = $wpdb->prepare(
+            "SELECT * FROM $table_name WHERE event_id = %d",
+            $this->event_id
+        );
+        $table_rows = $wpdb->get_results( $sql );
+
+        return array_map( $dto_mapper, $table_rows );
+    }
+
+    // --------------------------------------------------
 
     public static abstract function get_table_name_events(): string;
 
@@ -76,6 +102,8 @@ abstract class AbstractDatabaseConnection {
         return true;
     }
 
+    // --------------------------------------------------
+
     public function get_ticket_template(): string|null {
         global $wpdb;
         $sql = $wpdb->prepare(
@@ -85,6 +113,8 @@ abstract class AbstractDatabaseConnection {
 
         return $wpdb->get_var( $sql );
     }
+
+    // --------------------------------------------------
 
     protected static abstract function get_table_name_ticket_text_config(): string;
 
@@ -110,20 +140,90 @@ abstract class AbstractDatabaseConnection {
         return $wpdb->get_results( $sql );
     }
 
-    public function get_ticket_config(): TicketConfig|false {
+    public function get_ticket_config(): TicketConfig {
         $text_configs = $this->get_ticket_text_configs();
         $image_configs = $this->get_ticket_image_configs();
 
         return TicketConfig::from_DB( $text_configs, $image_configs );
     }
 
+    // --------------------------------------------------
+
     protected static abstract function get_table_name_seating_plan_areas(): string;
+
+    /**
+     * @return SeatingPlanArea[]
+     */
+    public function get_seating_plan_areas(): array {
+        return $this->get_table_contents(
+            static::get_table_name_seating_plan_areas(),
+            function ( $table_row ) {
+                return SeatingPlanArea::from_DB( $table_row );
+            }
+        );
+    }
+
+    // --------------------------------------------------
 
     protected static abstract function get_table_name_entrances(): string;
 
+    /**
+     * @return Entrance[]
+     */
+    public function get_entrances(): array {
+        return $this->get_table_contents(
+            static::get_table_name_entrances(),
+            function ( $table_row ) {
+                return Entrance::from_DB( $table_row );
+            }
+        );
+    }
+
+    // --------------------------------------------------
+
     protected static abstract function get_table_name_seats(): string;
+
+    /**
+     * @return Seat[]
+     */
+    public function get_seats(): array {
+        return $this->get_table_contents(
+            static::get_table_name_seats(),
+            function ( $table_row ) {
+                return Seat::from_DB( $table_row );
+            }
+        );
+    }
+
+    // --------------------------------------------------
 
     protected static abstract function get_table_name_process_additional_fields(): string;
 
+    /**
+     * @return ProcessAdditionalField[]
+     */
+    public function get_process_additional_fields(): array {
+        return $this->get_table_contents(
+            static::get_table_name_process_additional_fields(),
+            function ( $table_row ) {
+                return ProcessAdditionalField::from_DB( $table_row );
+            }
+        );
+    }
+
+    // --------------------------------------------------
+
     protected static abstract function get_table_name_shows(): string;
+
+    /**
+     * @return Show[]
+     */
+    public function get_shows(): array {
+        return $this->get_table_contents(
+            static::get_table_name_shows(),
+            function ( $table_row ) {
+                return Show::from_DB( $table_row );
+            }
+        );
+    }
 }
