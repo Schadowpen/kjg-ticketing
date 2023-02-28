@@ -3,6 +3,8 @@
 namespace KjG_Ticketing\database;
 
 use KjG_Ticketing\database\dto\Event;
+use KjG_Ticketing\database\dto\Seat;
+use KjG_Ticketing\database\dto\SeatGroup;
 use KjG_Ticketing\Options;
 
 /**
@@ -171,9 +173,11 @@ class DatabaseOverview {
             return false;
         }
 
-        $result = $wpdb->insert( "kjg_ticketing_template_events", array(
-            "name" => $templateName,
-        ) );
+        $result = $wpdb->insert(
+            TemplateDatabaseConnection::get_table_name_events(),
+            array( "name" => $templateName, ),
+            array( "%s" )
+        );
         if ( $result === false ) {
             if ( $echoErrors ) {
                 echo "Error: Database \"$templateName\" cannot be created\n";
@@ -204,6 +208,9 @@ class DatabaseOverview {
         return false;
     }
 
+    /**
+     * @deprecated use AbstractDatabaseConnection->delete_event() directly
+     */
     public function deleteDatabase( AbstractDatabaseConnection $dbc, bool $echoErrors = true ): bool {
         return $dbc->delete_event( $echoErrors );
     }
@@ -211,86 +218,29 @@ class DatabaseOverview {
     /**
      * Distributes a seat group into its individual seats
      *
-     * @param object $seatGroup
+     * @param SeatGroup $seatGroup
      *
-     * @return array All seats this seat group describes
+     * @return Seat[] All seats this seat group describes
+     *
+     * @deprecated Use SeatGroup->split_into_seats() directly
      */
-    public static function getSeatsFromSeatGroup( object $seatGroup ): array {
-        $rows = array();
-        $frontRowCharCode = ord( $seatGroup->row_front );
-        $backRowCharCode = ord( $seatGroup->row_back );
-        $charCodeJ = ord( "J" );
-        if ( $frontRowCharCode < $backRowCharCode ) {
-            for ( $c = $frontRowCharCode; $c <= $backRowCharCode; $c ++ ) {
-                if ( $c != $charCodeJ ) {
-                    $rows[] = chr( $c );
-                }
-            }
-        } else {
-            for ( $c = $frontRowCharCode; $c >= $backRowCharCode; $c -- ) {
-                if ( $c != $charCodeJ ) {
-                    $rows[] = chr( $c );
-                }
-            }
-        }
-        $groupLength = ( count( $rows ) - 1 ) * $seatGroup->row_distance;
-
-        $columns = array();
-        if ( $seatGroup->seat_number_left < $seatGroup->seat_number_right ) {
-            for ( $p = $seatGroup->seat_number_left; $p <= $seatGroup->seat_number_right; $p ++ ) {
-                $columns[] = $p;
-            }
-        } else {
-            for ( $p = $seatGroup->seat_number_left; $p >= $seatGroup->seat_number_right; $p -- ) {
-                $columns[] = $p;
-            }
-        }
-        $groupWidth = ( count( $columns ) - 1 ) * $seatGroup->seat_distance;
-
-        $seats = array();
-        for ( $i = 0; $i < count( $rows ); $i ++ ) {
-            for ( $k = 0; $k < count( $columns ); $k ++ ) {
-                $internalX = - $groupWidth / 2 + $k * $seatGroup->seat_distance;
-                $internalY = $groupLength / 2 - $i * $seatGroup->row_distance;
-                $rotationRad = deg2rad( $seatGroup->rotation );
-                $seats[] = (object) [
-                    "event_id"    => $seatGroup->event_id,
-                    "seat_block"  => $seatGroup->block,
-                    "seat_row"    => $rows[ $i ],
-                    "seat_number" => $columns[ $k ],
-                    "position_x"  => cos( $rotationRad ) * $internalX - sin( $rotationRad ) * $internalY + $seatGroup->position_x,
-                    "position_y"  => sin( $rotationRad ) * $internalX + cos( $rotationRad ) * $internalY + $seatGroup->position_y,
-                    "rotation"    => $seatGroup->rotation,
-                    "width"       => $seatGroup->seat_width,
-                    "length"      => $seatGroup->seat_length,
-                    "entrance_id" => @$seatGroup->entrance_id,
-                ];
-            }
-        }
-
-        return $seats;
+    public static function getSeatsFromSeatGroup( SeatGroup $seatGroup ): array {
+        return $seatGroup->split_into_seats();
     }
 
     /**
      * Returns all seats for this template event, including individual seats and seat groups
      *
      * @param TemplateDatabaseConnection $dbc
-     * @param bool $echoErrors If errors should be directly printed to the output via echo, default true
      *
-     * @return array|null null on error, array of seats otherwise
+     * @return Seat[]
      */
-    public static function getSeatsIncludingSeatGroups( TemplateDatabaseConnection $dbc, bool $echoErrors = true ): ?array {
-        $seats = $dbc->get_seats( $echoErrors );
-        if ( $seats === null ) {
-            return null;
-        }
-        $seat_groups = $dbc->get_seat_groups( $echoErrors );
-        if ( $seat_groups === null ) {
-            return null;
-        }
+    public static function getSeatsIncludingSeatGroups( TemplateDatabaseConnection $dbc ): array {
+        $seats = $dbc->get_seats();
+        $seat_groups = $dbc->get_seat_groups();
 
         foreach ( $seat_groups as $seat_group ) {
-            $seats_from_seat_group = self::getSeatsFromSeatGroup( $seat_group );
+            $seats_from_seat_group = $seat_group->split_into_seats();
             $seats = array_merge( $seats, $seats_from_seat_group );
         }
 

@@ -3,6 +3,12 @@
 namespace KjG_Ticketing\database\dto;
 
 class Seat {
+    /**
+     * Since "I" and "J" look very similar, it is not allowed to have a row called "J".
+     * The row "I" should be followed by a row "K".
+     */
+    public const NOT_ALLOWED_ROW_NAME = "J";
+
     public string $block;
     public string $row;
     public int $number;

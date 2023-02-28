@@ -2,6 +2,8 @@
 
 namespace KjG_Ticketing\database;
 
+use KjG_Ticketing\database\dto\SeatGroup;
+
 /**
  * A connection to the template database for a single event
  */
@@ -31,9 +33,25 @@ class TemplateDatabaseConnection extends AbstractDatabaseConnection {
         return "kjg_ticketing_template_seats";
     }
 
+    // --------------------------------------------------
+
     protected static function get_table_name_seat_groups(): string {
         return "kjg_ticketing_template_seat_groups";
     }
+
+    /**
+     * @return SeatGroup[]
+     */
+    public function get_seat_groups(): array {
+        return $this->get_table_contents(
+            static::get_table_name_seat_groups(),
+            function ( $table_row ) {
+                return SeatGroup::from_DB( $table_row );
+            }
+        );
+    }
+
+    // --------------------------------------------------
 
     protected static function get_table_name_process_additional_fields(): string {
         return "kjg_ticketing_template_process_additional_fields";

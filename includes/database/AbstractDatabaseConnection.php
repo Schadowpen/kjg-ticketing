@@ -71,6 +71,8 @@ abstract class AbstractDatabaseConnection {
 
     /**
      * Deletes the whole event associated with this databaseConnection.
+     * Afterwards, this AbstractDatabaseConnection instance is no longer usable.
+     *
      * Handle with care!
      *
      * @param bool $echoErrors If errors should be directly printed to the output via echo, default true
