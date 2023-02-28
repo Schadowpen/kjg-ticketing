@@ -5,7 +5,7 @@ namespace KjG_Ticketing\database\dto;
 use stdClass;
 
 class Process {
-    // TODO bring those enum options to all database enums
+    // possible values for payment_method enum
     public const PAYMENT_METHOD_CASH = "cash";
     public const PAYMENT_METHOD_BANK = "bank";
     public const PAYMENT_METHOD_PAYPAL = "PayPal";
@@ -13,10 +13,12 @@ class Process {
     public const PAYMENT_METHOD_VIP = "VIP";
     public const PAYMENT_METHOD_TRIPLE_A = "TripleA";
 
+    // possible values for payment_state enum
     public const PAYMENT_STATE_OPEN = "open";
     public const PAYMENT_STATE_PAID = "paid";
     public const PAYMENT_STATE_BOX_OFFICE = "box_office";
 
+    // possible values for shipping enum
     public const SHIPPING_PICK_UP = "pick_up";
     public const SHIPPING_MAIL = "mail";
     public const SHIPPING_EMAIL = "email";

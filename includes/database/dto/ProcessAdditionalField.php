@@ -3,6 +3,7 @@
 namespace KjG_Ticketing\database\dto;
 
 class ProcessAdditionalField {
+    // possible values for data_type enum
     public const DATA_TYPE_INT = "integer";
     public const DATA_TYPE_FLOAT = "float";
     public const DATA_TYPE_STRING = "string";

@@ -34,28 +34,28 @@ class TicketConfig {
             $text_config = TicketTextConfig::from_DB( $text_config_row );
             $content = (string) $text_config_row->content;
             switch ( $content ) {
-                case "date":
+                case TicketTextConfig::CONTENT_DATE:
                     $ticket_config->date_text_config = $text_config;
                     break;
-                case "time":
+                case TicketTextConfig::CONTENT_TIME:
                     $ticket_config->time_text_config = $text_config;
                     break;
-                case "seat_block":
+                case TicketTextConfig::CONTENT_SEAT_BLOCK:
                     $ticket_config->seat_block_text_config = $text_config;
                     break;
-                case "seat_row":
+                case TicketTextConfig::CONTENT_SEAT_ROW:
                     $ticket_config->seat_row_text_config = $text_config;
                     break;
-                case "seat_number":
+                case TicketTextConfig::CONTENT_SEAT_NUMBER:
                     $ticket_config->seat_number_text_config = $text_config;
                     break;
-                case "price":
+                case TicketTextConfig::CONTENT_PRICE:
                     $ticket_config->price_text_config = $text_config;
                     break;
-                case "payment_state":
+                case TicketTextConfig::CONTENT_PAYMENT_STATE:
                     $ticket_config->payment_state_text_config = $text_config;
                     break;
-                case "process_id":
+                case TicketTextConfig::CONTENT_PROCESS_ID:
                     $ticket_config->process_id_text_config = $text_config;
                     break;
             }
@@ -64,10 +64,10 @@ class TicketConfig {
         foreach ( $image_config_db_rows as $image_config_row ) {
             $content = (string) $image_config_row->content;
             switch ( $content ) {
-                case "qr_code":
+                case TicketImageConfig::CONTENT_QR_CODE:
                     $ticket_config->qr_code_config = TicketImageConfig::from_DB( $image_config_row );
                     break;
-                case "seating_plan":
+                case TicketImageConfig::CONTENT_SEATING_PLAN:
                     $ticket_config->seating_plan_config = TicketSeatingPlanConfig::from_DB( $image_config_row );
                     break;
             }
