@@ -101,8 +101,8 @@ class DatabaseConnection extends AbstractDatabaseConnection {
 
     // --------------------------------------------------
 
-    protected static function get_table_name_seat_state(): string {
-        return "kjg_ticketing_seat_state";
+    protected static function get_table_name_seat_states(): string {
+        return "kjg_ticketing_seat_states";
     }
 
     /**
@@ -110,7 +110,7 @@ class DatabaseConnection extends AbstractDatabaseConnection {
      */
     public function get_seat_states(): array {
         return $this->get_table_contents(
-            static::get_table_name_seat_state(),
+            static::get_table_name_seat_states(),
             function ( $table_row ) {
                 return SeatState::from_DB( $table_row );
             }

@@ -193,7 +193,7 @@ class DatabaseInstaller {
         dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_shows (event_id);" );
 
         // TODO Foreign key referencing kjg_ticketing_seats is not created
-        dbDelta( "CREATE TABLE kjg_ticketing_seat_state (
+        dbDelta( "CREATE TABLE kjg_ticketing_seat_states (
             event_id int NOT NULL,
             seat_block char(50) NOT NULL,
             seat_row char(2) NOT NULL,
@@ -207,7 +207,7 @@ class DatabaseInstaller {
             FOREIGN KEY  (show_id) REFERENCES kjg_ticketing_shows (id),
             FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes (id) ON DELETE CASCADE
         ) $charset_collate;" );
-        dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_seat_state (event_id);" );
+        dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_seat_states (event_id);" );
     }
 
     private static function create_database_tables_template( $charset_collate ): void {
