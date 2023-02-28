@@ -3,6 +3,12 @@
 namespace KjG_Ticketing\database\dto;
 
 class ProcessAdditionalField {
+    public const DATA_TYPE_INT = "integer";
+    public const DATA_TYPE_FLOAT = "float";
+    public const DATA_TYPE_STRING = "string";
+    public const DATA_TYPE_LONG_STRING = "longString";
+    public const DATA_TYPE_BOOLEAN = "boolean";
+
     public int $id;
     public string $description;
     public string $data_type;

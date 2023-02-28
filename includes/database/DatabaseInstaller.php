@@ -145,7 +145,7 @@ class DatabaseInstaller {
             phone varchar(31),
             email varchar(255),
             ticket_price decimal(6,2),
-            payment_method enum('cash', 'bank', 'box_office') NOT NULL,
+            payment_method enum('cash', 'bank', 'PayPal', 'box_office', 'VIP', 'TripleA') NOT NULL,
             payment_state enum('open', 'paid', 'box_office') NOT NULL,
             shipping enum('pick_up', 'mail', 'email') NOT NULL,
             comment varchar(2000),
@@ -177,7 +177,8 @@ class DatabaseInstaller {
             PRIMARY KEY  (event_id, process_id, field_id),
             FOREIGN KEY  (event_id) REFERENCES kjg_ticketing_events (id) ON DELETE CASCADE,
             FOREIGN KEY  (process_id) REFERENCES kjg_ticketing_processes (id) ON DELETE CASCADE,
-            FOREIGN KEY  (field_id) REFERENCES kjg_ticketing_process_additional_fields (id)
+            FOREIGN KEY  (field_id) REFERENCES kjg_ticketing_process_additional_fields (id),
+            CONSTRAINT check_any_value CHECK ( integer_value is not null OR float_value is not null OR string_value is not null OR boolean_value is not null )
         ) $charset_collate;" );
         dbDelta( "CREATE INDEX idx_event_id ON kjg_ticketing_process_additional_entries (event_id);" );
 
