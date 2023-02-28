@@ -4,6 +4,7 @@ namespace KjG_Ticketing\database;
 
 use KjG_Ticketing\database\dto\Process;
 use KjG_Ticketing\database\dto\ProcessAdditionalEntry;
+use KjG_Ticketing\database\dto\SeatState;
 
 /**
  * A connection to the database for a single event
@@ -102,5 +103,17 @@ class DatabaseConnection extends AbstractDatabaseConnection {
 
     protected static function get_table_name_seat_state(): string {
         return "kjg_ticketing_seat_state";
+    }
+
+    /**
+     * @return SeatState[]
+     */
+    public function get_seat_states(): array {
+        return $this->get_table_contents(
+            static::get_table_name_seat_state(),
+            function ( $table_row ) {
+                return SeatState::from_DB( $table_row );
+            }
+        );
     }
 }
