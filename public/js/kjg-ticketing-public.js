@@ -1,4 +1,4 @@
-(function( $ ) {
+(function ($) {
 	'use strict';
 
 	/**
@@ -29,4 +29,18 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
-})( jQuery );
+	$(function () {
+		$.post(
+			my_ajax_obj.ajax_url,
+			{
+				_ajax_nonce: my_ajax_obj.nonce,
+				action: 'kjg_ticketing_get_entrances',
+				title: 'Test',
+			},
+			function (data) {
+				console.log(data);
+			}
+		)
+	});
+
+})(jQuery);
