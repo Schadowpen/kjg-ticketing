@@ -1,5 +1,6 @@
 <?php
 
+use KjG_Ticketing\ApiHelper;
 use KjG_Ticketing\database\DatabaseOverview;
 use KjG_Ticketing\KjG_Ticketing_Security;
 
@@ -98,14 +99,8 @@ class KjG_Ticketing_Public {
     // |---------------------------|
 
     public function get_entrances(): void {
-        KjG_Ticketing_Security::check_AJAX_read_call();
-
-        // TODO full implementation
-        $dbo = new DatabaseOverview();
-        $dbc = $dbo->getCurrentDatabaseConnection();
-        if ( $dbc === false ) {
-            wp_die();
-        }
+        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
+        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
         wp_send_json( $dbc->get_entrances() );
     }
 

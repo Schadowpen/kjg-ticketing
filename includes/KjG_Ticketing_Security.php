@@ -21,34 +21,34 @@ class KjG_Ticketing_Security {
         return true;
     }
 
-    public static function check_AJAX_read_call(): void {
-        self::check_nonce();
+    public static function validate_AJAX_read_call(): void {
+        self::validate_nonce();
 
         // check user capabilities
         if ( ! current_user_can( "kjg_ticketing_read" ) ) {
             wp_die( "Error: User is not allowed to use the KjG_Ticketing read API", 403 );
         }
 
-        self::check_HTTPS();
+        self::validate_HTTPS();
     }
 
-    public static function check_AJAX_write_call(): void {
-        self::check_nonce();
+    public static function validate_AJAX_write_call(): void {
+        self::validate_nonce();
 
         // check user capabilities
         if ( ! current_user_can( "kjg_ticketing_write" ) ) {
             wp_die( "Error: User is not allowed to use the KjG_Ticketing write API", 403 );
         }
 
-        self::check_HTTPS();
+        self::validate_HTTPS();
     }
 
-    private static function check_nonce(): void {
+    private static function validate_nonce(): void {
         check_ajax_referer( 'kjg_ticketing' );
         // dies with 403 if nonce is invalid
     }
 
-    private static function check_HTTPS(): void {
+    private static function validate_HTTPS(): void {
         if ( ! is_ssl() && ! Options::is_http_allowed() ) {
             wp_die( "Error: Access is only allowed over HTTPS", 403 );
         }
