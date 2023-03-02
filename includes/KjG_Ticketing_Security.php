@@ -21,7 +21,7 @@ class KjG_Ticketing_Security {
         return true;
     }
 
-    public static function validate_AJAX_read_call(): void {
+    public static function validate_AJAX_read_permission(): void {
         self::validate_nonce();
 
         // check user capabilities
@@ -32,7 +32,7 @@ class KjG_Ticketing_Security {
         self::validate_HTTPS();
     }
 
-    public static function validate_AJAX_write_call(): void {
+    public static function validate_AJAX_write_permission(): void {
         self::validate_nonce();
 
         // check user capabilities

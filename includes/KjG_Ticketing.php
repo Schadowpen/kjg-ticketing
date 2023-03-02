@@ -143,7 +143,24 @@ class KjG_Ticketing {
         $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
         $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_archived_databases', $plugin_public, 'get_archived_databases' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_available_fonts', $plugin_public, 'get_available_fonts' );
         $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_entrances', $plugin_public, 'get_entrances' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_event', $plugin_public, 'get_event' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_overview', $plugin_public, 'get_overview' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_process', $plugin_public, 'get_process' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_processes_with_info', $plugin_public, 'get_processes_with_info' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_seating_plan', $plugin_public, 'get_seating_plan' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_seating_plan_areas', $plugin_public, 'get_seating_plan_areas' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_seats', $plugin_public, 'get_seats' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_seat_groups', $plugin_public, 'get_seat_groups' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_seat_states', $plugin_public, 'get_seat_states' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_shows', $plugin_public, 'get_shows' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_shows_with_states', $plugin_public, 'get_shows_with_states' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_template_databases', $plugin_public, 'get_template_databases' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_ticket_config', $plugin_public, 'get_ticket_config' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_ticket_template_positions', $plugin_public, 'get_ticket_template_positions' );
+        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_viewers_xlsx', $plugin_public, 'get_viewers_xlsx' );
 
     }
 

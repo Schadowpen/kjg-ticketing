@@ -1,5 +1,9 @@
 <?php
 
+use KjG_Ticketing\api\Overview;
+use KjG_Ticketing\api\ProcessesWithInfo;
+use KjG_Ticketing\api\SeatingPlan;
+use KjG_Ticketing\api\ShowsWithStates;
 use KjG_Ticketing\ApiHelper;
 use KjG_Ticketing\database\DatabaseOverview;
 use KjG_Ticketing\KjG_Ticketing_Security;
@@ -98,10 +102,121 @@ class KjG_Ticketing_Public {
     // |  Start of AJAX Endpoints  |
     // |---------------------------|
 
+    public function get_archived_databases(): void {
+        KjG_Ticketing_Security::validate_AJAX_read_permission();
+        $dbo = new DatabaseOverview();
+        wp_send_json( $dbo->getArchivedDatabaseNames() );
+    }
+
+    public function get_available_fonts(): void {
+        // TODO implement
+        wp_die( "Error: not yet implemented", 501 );
+    }
+
     public function get_entrances(): void {
         ApiHelper::validateDatabaseUsageAllowed( true, true, true );
         $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
         wp_send_json( $dbc->get_entrances() );
+    }
+
+    public function get_event(): void {
+        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
+        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        $event = $dbc->get_event();
+        if ( ! $event ) {
+            wp_die();
+        }
+        wp_send_json( $event );
+    }
+
+    public function get_overview(): void {
+        ApiHelper::validateDatabaseUsageAllowed( true, true, false );
+        $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
+        wp_send_json( Overview::get( $dbc ) );
+    }
+
+    public function get_process(): void {
+        KjG_Ticketing_Security::validate_AJAX_read_permission();
+        $process_id = ApiHelper::validate_and_get_process_id();
+        ApiHelper::validateDatabaseUsageAllowed( true, true, false );
+        $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
+        wp_send_json( $dbc->get_process( $process_id ) );
+    }
+
+    public function get_processes_with_info(): void {
+        KjG_Ticketing_Security::validate_AJAX_read_permission();
+        ApiHelper::validateDatabaseUsageAllowed( true, true, false );
+        $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
+        wp_send_json( ProcessesWithInfo::get( $dbc ) );
+    }
+
+    public function get_seating_plan(): void {
+        ApiHelper::validateDatabaseUsageAllowed( true, true, false );
+        $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
+        $seating_plan = SeatingPlan::get( $dbc );
+        wp_send_json( $seating_plan );
+    }
+
+    public function get_seating_plan_areas(): void {
+        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
+        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        wp_send_json( $dbc->get_seating_plan_areas() );
+    }
+
+    public function get_seats(): void {
+        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
+        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        wp_send_json( $dbc->get_seats() );
+    }
+
+    public function get_seat_groups(): void {
+        KjG_Ticketing_Security::validate_AJAX_read_permission();
+        ApiHelper::validateDatabaseUsageAllowed( false, false, true );
+        $dbc = ApiHelper::getTemplateDatabaseConnection( new DatabaseOverview() );
+        wp_send_json( $dbc->get_seat_groups() );
+    }
+
+    public function get_seat_states(): void {
+        KjG_Ticketing_Security::validate_AJAX_read_permission();
+        ApiHelper::validateDatabaseUsageAllowed( true, true, false );
+        $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
+        wp_send_json( $dbc->get_seat_states() );
+    }
+
+    public function get_shows(): void {
+        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
+        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        wp_send_json( $dbc->get_shows() );
+    }
+
+    public function get_shows_with_states(): void {
+        KjG_Ticketing_Security::validate_AJAX_read_permission();
+        ApiHelper::validateDatabaseUsageAllowed( true, true, false );
+        $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
+        wp_send_json( ShowsWithStates::get( $dbc ) );
+    }
+
+    public function get_template_databases(): void {
+        KjG_Ticketing_Security::validate_AJAX_read_permission();
+        $dbo = new DatabaseOverview();
+        wp_send_json( $dbo->getTemplateDatabaseNames() );
+    }
+
+    public function get_ticket_config(): void {
+        KjG_Ticketing_Security::validate_AJAX_read_permission();
+        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
+        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        wp_send_json( $dbc->get_ticket_config() );
+    }
+
+    public function get_ticket_template_positions(): void {
+        // TODO implement
+        wp_die( "Error: not yet implemented", 501 );
+    }
+
+    public function get_viewers_xlsx(): void {
+        // TODO implement
+        wp_die( "Error: not yet implemented", 501 );
     }
 
 }

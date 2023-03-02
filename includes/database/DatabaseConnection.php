@@ -5,6 +5,7 @@ namespace KjG_Ticketing\database;
 use KjG_Ticketing\database\dto\Process;
 use KjG_Ticketing\database\dto\ProcessAdditionalEntry;
 use KjG_Ticketing\database\dto\SeatState;
+use stdClass;
 
 /**
  * A connection to the database for a single event
@@ -55,6 +56,23 @@ class DatabaseConnection extends AbstractDatabaseConnection {
         );
     }
 
+    public function get_process( int $process_id ): Process|null {
+        global $wpdb;
+        $sql = $wpdb->prepare(
+            "SELECT * FROM " . static::get_table_name_processes() . " WHERE event_id = %d AND id = %d",
+            $this->event_id,
+            $process_id
+        );
+        $result = $wpdb->get_row( $sql );
+        if ( ! $result ) {
+            return null;
+        }
+
+        $additional_entries = $this->get_process_additional_entries( $process_id );
+
+        return Process::from_DB( $result, $additional_entries );
+    }
+
     // --------------------------------------------------
 
     protected static function get_table_name_process_additional_fields(): string {
@@ -78,7 +96,34 @@ class DatabaseConnection extends AbstractDatabaseConnection {
         );
         $table_rows = $wpdb->get_results( $sql );
 
+        return $this->map_process_additional_entries( $table_rows );
+    }
+
+    /**
+     * @return ProcessAdditionalEntry[]
+     */
+    protected function get_process_additional_entries( int $process_id ): array {
+        global $wpdb;
+        $sql = $wpdb->prepare(
+            "SELECT * FROM " . static::get_table_name_process_additional_entries() . " WHERE event_id = %d AND process_id = %d",
+            $this->event_id,
+            $process_id
+        );
+        $table_rows = $wpdb->get_results( $sql );
+
+        return $this->map_process_additional_entries( $table_rows );
+    }
+
+    /**
+     * Maps table data to DTOs while obeying the field definitions
+     *
+     * @param stdClass[] $table_rows
+     *
+     * @return ProcessAdditionalEntry[]
+     */
+    protected function map_process_additional_entries( array $table_rows ): array {
         $fields = $this->get_process_additional_fields();
+
         $entries = array();
         foreach ( $table_rows as $row ) {
             foreach ( $fields as $field ) {

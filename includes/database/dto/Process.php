@@ -75,4 +75,12 @@ class Process {
 
         return $process;
     }
+
+    public function get_ticket_price( Event $event ): float {
+        if ( $this->ticket_price != null ) {
+            return $this->ticket_price;
+        } else {
+            return $event->ticket_price;
+        }
+    }
 }

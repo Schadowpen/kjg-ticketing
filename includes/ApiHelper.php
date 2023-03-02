@@ -3,9 +3,22 @@
 namespace KjG_Ticketing;
 
 use KjG_Ticketing\database\AbstractDatabaseConnection;
+use KjG_Ticketing\database\DatabaseConnection;
 use KjG_Ticketing\database\DatabaseOverview;
+use KjG_Ticketing\database\TemplateDatabaseConnection;
 
 class ApiHelper {
+
+    public static function validate_and_get_process_id(): int {
+        if ( ! isset( $_POST['process_id'] ) ) {
+            wp_die( "Error: No process id defined in POST parameters", 400 );
+        }
+        if ( intval( $_POST['process_id'] ) < 0 ) {
+            wp_die( "Error: Only positive numbers for process id are allowed \n", 400 );
+        }
+
+        return intval( $_POST["process_id"] );
+    }
 
     /**
      * Checks, which databases are set in the AJAX-Request and if it is allowed to access those.
@@ -16,6 +29,8 @@ class ApiHelper {
      * @param bool $currentDatabaseAllowed If it is allowed to access the current event
      * @param bool $archiveDatabaseAllowed If it is allowed to access any archived event
      * @param bool $templateDatabaseAllowed If it is allowed to access template events
+     *
+     * TODO check usages of this functions and if they can be simplified
      */
     public static function validateDatabaseUsageAllowed( bool $currentDatabaseAllowed, bool $archiveDatabaseAllowed, bool $templateDatabaseAllowed ): void {
         // check for archive
@@ -69,7 +84,29 @@ class ApiHelper {
             $dbc = $dbo->getCurrentDatabaseConnection();
         }
 
-        if ( $dbc === false ) {
+        if ( ! $dbc ) {
+            wp_die();
+        }
+
+        return $dbc;
+    }
+
+    public static function getDatabaseConnection( DatabaseOverview $dbo ): DatabaseConnection {
+        if ( isset( $_POST['archive'] ) ) {
+            $dbc = $dbo->getArchiveDatabaseConnection( $_POST['archive'] );
+        } else {
+            $dbc = $dbo->getCurrentDatabaseConnection();
+        }
+        if ( ! $dbc ) {
+            wp_die();
+        }
+
+        return $dbc;
+    }
+
+    public static function getTemplateDatabaseConnection( DatabaseOverview $dbo ): TemplateDatabaseConnection {
+        $dbc = $dbo->getTemplateDatabaseConnection( $_POST["template"] );
+        if ( ! $dbc ) {
             wp_die();
         }
 
