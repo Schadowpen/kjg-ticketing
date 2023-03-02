@@ -42,22 +42,12 @@ class KjG_Ticketing_Admin {
      */
     public function enqueue_styles( string $hook ): void {
 
-        // TODO only register on certain pages
-
-        /**
-         * This function is provided for demonstration purposes only.
-         *
-         * An instance of this class should be passed to the run() function
-         * defined in KjG_Ticketing_Loader as all the hooks are defined
-         * in that particular class.
-         *
-         * The Plugin_Name_Loader will then create the relationship
-         * between the defined hooks and the functions defined in this
-         * class.
-         */
+        // only enqueue styles on admin page of kjg-ticketing
+        if ( $hook !== get_plugin_page_hookname( 'kjg-ticketing-admin-display', "" ) ) {
+            return;
+        }
 
         wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/kjg-ticketing-admin.css', array(), $this->version, 'all' );
-
     }
 
     /**
@@ -65,22 +55,12 @@ class KjG_Ticketing_Admin {
      */
     public function enqueue_scripts( string $hook ): void {
 
-        // TODO only register on certain pages
-
-        /**
-         * This function is provided for demonstration purposes only.
-         *
-         * An instance of this class should be passed to the run() function
-         * defined in KjG_Ticketing_Loader as all of the hooks are defined
-         * in that particular class.
-         *
-         * The KjG_Ticketing_Loader will then create the relationship
-         * between the defined hooks and the functions defined in this
-         * class.
-         */
+        // only enqueue scripts on admin page of kjg-ticketing
+        if ( $hook !== get_plugin_page_hookname( 'kjg-ticketing-admin-display', "" ) ) {
+            return;
+        }
 
         wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kjg-ticketing-admin.js', array( 'jquery' ), $this->version, false );
-
     }
 
     public function add_menu_pages(): void {
@@ -89,8 +69,8 @@ class KjG_Ticketing_Admin {
             "KjG Ticketing",
             "KjG Ticketing",
             "manage_options",
-            'kjg-ticketing-admin-display', //plugin_dir_path(__FILE__) . 'partials/kjg-ticketing-admin-display.php',
-            'kjg_ticketing_admin_display', //null
+            'kjg-ticketing-admin-display',
+            'kjg_ticketing_admin_display',
             'dashicons-tickets',
             100
         );
