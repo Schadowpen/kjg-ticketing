@@ -9,14 +9,15 @@ namespace KjG_Ticketing;
  */
 class KjG_Ticketing_Uninstaller {
 
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 */
-	public static function uninstall(): void {
-		\KjG_Ticketing\database\DatabaseUninstaller::delete_database_tables();
-		\KjG_Ticketing\Options::delete_all_options();
-	}
+    /**
+     * Short Description. (use period)
+     *
+     * Long Description.
+     */
+    public static function uninstall(): void {
+        \KjG_Ticketing\database\DatabaseUninstaller::delete_database_tables();
+        \KjG_Ticketing\Options::delete_all_options();
+        KjG_Ticketing_Security::delete_user_roles();
+    }
 
 }

@@ -1,5 +1,8 @@
 <?php
 
+use KjG_Ticketing\database\DatabaseOverview;
+use KjG_Ticketing\KjG_Ticketing_Security;
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -56,6 +59,7 @@ class KjG_Ticketing_Public {
 
         wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/kjg-ticketing-public.css', array(), $this->version, 'all' );
 
+        // TODO only enqueue styles for certain hooks
     }
 
     /**
@@ -82,9 +86,11 @@ class KjG_Ticketing_Public {
             'my_ajax_obj',
             array(
                 'ajax_url' => admin_url( 'admin-ajax.php' ),
-                'nonce'    => wp_create_nonce( 'kjg_ticketing' ),
+                'nonce'    => KjG_Ticketing_Security::create_AJAX_nonce()
             )
         );
+
+        // TODO only enqueue scripts for certain hooks
     }
 
     // |---------------------------|
@@ -92,11 +98,10 @@ class KjG_Ticketing_Public {
     // |---------------------------|
 
     public function get_entrances(): void {
-        // TODO authorization
-        check_ajax_referer( 'kjg_ticketing' );
+        KjG_Ticketing_Security::check_AJAX_read_call();
 
         // TODO full implementation
-        $dbo = new \KjG_Ticketing\database\DatabaseOverview();
+        $dbo = new DatabaseOverview();
         $dbc = $dbo->getCurrentDatabaseConnection();
         if ( $dbc === false ) {
             wp_die();

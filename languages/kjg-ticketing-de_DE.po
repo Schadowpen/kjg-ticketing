@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: KjG Ticketing\n"
-"POT-Creation-Date: 2023-02-25 11:12+0100\n"
+"POT-Creation-Date: 2023-03-02 13:04+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: KjG Theater <info@kjg-theater.de>\n"
@@ -20,29 +20,55 @@ msgstr ""
 "X-Generator: Poedit 3.2.2\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: admin/partials/kjg-ticketing-admin-display.php:15
-msgid "Select currently active event"
-msgstr "Aktuelle Veranstaltung auswählen"
-
-#: admin/partials/kjg-ticketing-admin-display.php:20
-msgid "none"
-msgstr "Keine"
-
-#: admin/partials/kjg-ticketing-admin-display.php:38
+#: admin/partials/kjg-ticketing-admin-display.php:26
 msgid "Before you change this setting"
 msgstr "Bevor du diese Einstellung änderst"
 
-#: admin/partials/kjg-ticketing-admin-display.php:39
+#: admin/partials/kjg-ticketing-admin-display.php:27
 msgid "Please ensure that nobody else is currently working on this event!"
 msgstr ""
 "Bitte stelle sicher, dass aktuell niemand anderes an der Veranstaltung "
 "arbeitet!"
 
-#: admin/partials/kjg-ticketing-admin-display.php:43
+#: admin/partials/kjg-ticketing-admin-display.php:30
+msgid "Select currently active event"
+msgstr "Aktuelle Veranstaltung auswählen"
+
+#: admin/partials/kjg-ticketing-admin-display.php:35
+msgid "none"
+msgstr "Keine"
+
+#: admin/partials/kjg-ticketing-admin-display.php:56
 msgid "Currently active event"
 msgstr "Aktuelle Veranstaltung"
 
-#: admin/partials/kjg-ticketing-admin-display.php:49
+#: admin/partials/kjg-ticketing-admin-display.php:69
+msgid "Please verify that this website is served via an HTTPS connection!"
+msgstr ""
+"Bitte stelle sicher, dass diese Webseite über eine HTTPS-Verbindung "
+"bereitgestellt wird!"
+
+#: admin/partials/kjg-ticketing-admin-display.php:71
+msgid "This plugin is used to manage personal data."
+msgstr "Mit diesem Plugin werden personenbezogene Daten verwaltet."
+
+#: admin/partials/kjg-ticketing-admin-display.php:72
+msgid "This data must be protected from access by third parties."
+msgstr "Diese Daten müssen vor dem Zugriff dritter geschützt werden."
+
+#: admin/partials/kjg-ticketing-admin-display.php:73
+msgid "The best way to do this is via an encrypted HTTPS connection."
+msgstr "Dies gelingt am besten über eine verschlüsselte HTTPS-Verbindung."
+
+#: admin/partials/kjg-ticketing-admin-display.php:81
+msgid "Allow connections over HTTP"
+msgstr "Erlaube Verbindungen über HTTP"
+
+#: admin/partials/kjg-ticketing-admin-display.php:82
+msgid "insecure"
+msgstr "unsicher"
+
+#: admin/partials/kjg-ticketing-admin-display.php:89
 msgid "Submit"
 msgstr "Abschicken"
 

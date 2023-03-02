@@ -3,8 +3,11 @@
 function kjg_ticketing_admin_display(): void {
     $database_overview = new KjG_Ticketing\database\DatabaseOverview();
 
+    // options managed on this site
     $selected_event_id = \KjG_Ticketing\Options::get_current_event_id();
+    $is_http_allowed = \KjG_Ticketing\Options::is_http_allowed();
 
+    // additional data
     $current_event = false;
     $dbc = $database_overview->getCurrentDatabaseConnection( false );
     if ( $dbc ) {
@@ -16,6 +19,8 @@ function kjg_ticketing_admin_display(): void {
 
         <form action="<?php menu_page_url( 'kjg-ticketing-admin-display' ) ?>" method="post">
             <?php wp_nonce_field( 'kjg-ticketing-admin-display' ) ?>
+
+            <!-- SELECTED EVENT ID -->
 
             <p class="error">
                 <?php esc_html_e( "Before you change this setting", "kjg-ticketing" ); ?>:
@@ -48,13 +53,37 @@ function kjg_ticketing_admin_display(): void {
             if ( $current_event ) {
                 ?>
                 <br/>
-                <label>
-                    <?php esc_html_e( "Currently active event", "kjg-ticketing" ); ?>:
-                    <span style="font-style: italic"><?php echo $current_event->name ?></span>
-                </label>
+                <?php esc_html_e( "Currently active event", "kjg-ticketing" ); ?>:
+                <span style="font-style: italic"><?php echo $current_event->name ?></span>
                 <?php
             }
             ?>
+
+            <!-- IS HTTP ALLOWED -->
+
+            <br/>
+            <?php
+            if ( $is_http_allowed ) {
+                ?>
+                <p class="error">
+                    <?php esc_html_e( "Please verify that this website is served via an HTTPS connection!", "kjg-ticketing" ) ?>
+                    <br/>
+                    <?php esc_html_e( "This plugin is used to manage personal data.", "kjg-ticketing" ) ?>
+                    <?php esc_html_e( "This data must be protected from access by third parties.", "kjg-ticketing" ) ?>
+                    <?php esc_html_e( "The best way to do this is via an encrypted HTTPS connection.", "kjg-ticketing" ) ?>
+                </p>
+                <br/>
+                <?php
+            }
+            ?>
+            <label>
+                <input name="http_allowed" type="checkbox" <?php echo $is_http_allowed ? 'checked="true"' : '' ?> />
+                <?php esc_html_e( "Allow connections over HTTP", "kjg-ticketing" ); ?>
+                (<?php esc_html_e( "insecure", "kjg-ticketing" ); ?>)
+            </label>
+
+            <!-- SUBMIT -->
+
             <br/>
             <br/>
             <input type="submit" value="<?php esc_html_e( "Submit", "kjg-ticketing" ); ?>">
