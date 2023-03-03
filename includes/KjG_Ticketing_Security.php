@@ -43,6 +43,11 @@ class KjG_Ticketing_Security {
         self::validate_HTTPS();
     }
 
+    public static function validate_AJAX_no_permission(): void {
+        self::validate_nonce();
+        self::validate_HTTPS();
+    }
+
     private static function validate_nonce(): void {
         check_ajax_referer( 'kjg_ticketing' );
         // dies with 403 if nonce is invalid

@@ -143,6 +143,7 @@ class KjG_Ticketing {
         $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
         $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+        // AJAX getters
         $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_archived_databases', $plugin_public, 'get_archived_databases' );
         $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_available_fonts', $plugin_public, 'get_available_fonts' );
         $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_entrances', $plugin_public, 'get_entrances' );

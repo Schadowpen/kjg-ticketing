@@ -114,12 +114,14 @@ class KjG_Ticketing_Public {
     }
 
     public function get_entrances(): void {
+        KjG_Ticketing_Security::validate_AJAX_no_permission();
         ApiHelper::validateDatabaseUsageAllowed( true, true, true );
         $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
         wp_send_json( $dbc->get_entrances() );
     }
 
     public function get_event(): void {
+        KjG_Ticketing_Security::validate_AJAX_no_permission();
         ApiHelper::validateDatabaseUsageAllowed( true, true, true );
         $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
         $event = $dbc->get_event();
@@ -130,6 +132,7 @@ class KjG_Ticketing_Public {
     }
 
     public function get_overview(): void {
+        KjG_Ticketing_Security::validate_AJAX_read_permission();
         ApiHelper::validateDatabaseUsageAllowed( true, true, false );
         $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
         wp_send_json( Overview::get( $dbc ) );
@@ -151,19 +154,21 @@ class KjG_Ticketing_Public {
     }
 
     public function get_seating_plan(): void {
+        KjG_Ticketing_Security::validate_AJAX_no_permission();
         ApiHelper::validateDatabaseUsageAllowed( true, true, false );
         $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
-        $seating_plan = SeatingPlan::get( $dbc );
-        wp_send_json( $seating_plan );
+        wp_send_json( SeatingPlan::get( $dbc ) );
     }
 
     public function get_seating_plan_areas(): void {
+        KjG_Ticketing_Security::validate_AJAX_no_permission();
         ApiHelper::validateDatabaseUsageAllowed( true, true, true );
         $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
         wp_send_json( $dbc->get_seating_plan_areas() );
     }
 
     public function get_seats(): void {
+        KjG_Ticketing_Security::validate_AJAX_no_permission();
         ApiHelper::validateDatabaseUsageAllowed( true, true, true );
         $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
         wp_send_json( $dbc->get_seats() );
@@ -184,6 +189,7 @@ class KjG_Ticketing_Public {
     }
 
     public function get_shows(): void {
+        KjG_Ticketing_Security::validate_AJAX_no_permission();
         ApiHelper::validateDatabaseUsageAllowed( true, true, true );
         $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
         wp_send_json( $dbc->get_shows() );
