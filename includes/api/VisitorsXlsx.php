@@ -9,6 +9,7 @@ use KjG_Ticketing\database\dto\Show;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
+// TODO use OpenDocument file type
 class VisitorsXlsx {
     /**
      * Creates an Excel file that contains all visitors for an event.
@@ -34,27 +35,26 @@ class VisitorsXlsx {
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
             if ( $for_single_show ) {
-                // TODO translate file name and content
-                $sheet->setCellValue( 'A1', 'Vorname' )
-                      ->setCellValue( 'B1', 'Nachname' )
-                      ->setCellValue( 'C1', 'Anschrift' )
-                      ->setCellValue( 'D1', 'E-Mail' )
-                      ->setCellValue( 'E1', 'Telefon' )
-                      ->setCellValue( 'F1', 'Block' )
-                      ->setCellValue( 'G1', 'Platz' )
-                      ->setCellValue( 'H1', 'Kommentar' );
+                $sheet->setCellValue( 'A1', __( "First name", "kjg-ticketing" ) )
+                      ->setCellValue( 'B1', __( "Last name", "kjg-ticketing" ) )
+                      ->setCellValue( 'C1', __( "Address", "kjg-ticketing" ) )
+                      ->setCellValue( 'D1', __( "E-Mail", "kjg-ticketing" ) )
+                      ->setCellValue( 'E1', __( "Phone", "kjg-ticketing" ) )
+                      ->setCellValue( 'F1', __( "Block", "kjg-ticketing" ) )
+                      ->setCellValue( 'G1', __( "Seat", "kjg-ticketing" ) )
+                      ->setCellValue( 'H1', __( "Comment", "kjg-ticketing" ) );
                 $lastColumn = 'H';
             } else {
-                $sheet->setCellValue( 'A1', 'Datum' )
-                      ->setCellValue( 'B1', 'Uhrzeit' )
-                      ->setCellValue( 'C1', 'Vorname' )
-                      ->setCellValue( 'D1', 'Nachname' )
-                      ->setCellValue( 'E1', 'Anschrift' )
-                      ->setCellValue( 'F1', 'E-Mail' )
-                      ->setCellValue( 'G1', 'Telefon' )
-                      ->setCellValue( 'H1', 'Block' )
-                      ->setCellValue( 'I1', 'Platz' )
-                      ->setCellValue( 'J1', 'Kommentar' );
+                $sheet->setCellValue( 'A1', __( "Date", "kjg-ticketing" ) )
+                      ->setCellValue( 'B1', __( "Time", "kjg-ticketing" ) )
+                      ->setCellValue( 'C1', __( "First name", "kjg-ticketing" ) )
+                      ->setCellValue( 'D1', __( "Last name", "kjg-ticketing" ) )
+                      ->setCellValue( 'E1', __( "Address", "kjg-ticketing" ) )
+                      ->setCellValue( 'F1', __( "E-Mail", "kjg-ticketing" ) )
+                      ->setCellValue( 'G1', __( "Phone", "kjg-ticketing" ) )
+                      ->setCellValue( 'H1', __( "Block", "kjg-ticketing" ) )
+                      ->setCellValue( 'I1', __( "Seat", "kjg-ticketing" ) )
+                      ->setCellValue( 'J1', __( "Comment", "kjg-ticketing" ) );
                 $lastColumn = 'J';
             }
             for ( $i = 0; $i < count( $process_additional_fields ); $i ++ ) {
@@ -125,9 +125,9 @@ class VisitorsXlsx {
             header( 'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' );
             if ( $for_single_show ) {
                 $show = self::get_show( $shows, $show_id );
-                $fileName = 'Zuschauer ' . $event->name . ' ' . $show->date . ' ' . $show->time . '.xlsx';
+                $fileName = __( "Visitor", "kjg-ticketing" ) . ' ' . $event->name . ' ' . $show->date . ' ' . $show->time . '.xlsx';
             } else {
-                $fileName = 'Zuschauer ' . $event->name . '.xlsx';
+                $fileName = __( "Visitor", "kjg-ticketing" ) . ' ' . $event->name . '.xlsx';
             }
             header( 'Content-Disposition: attachment; filename="' . $fileName . '"' );
             $writer->save( "php://output" );

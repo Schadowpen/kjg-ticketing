@@ -55,7 +55,7 @@ class KjG_Ticketing_Security {
 
         // check user capabilities
         if ( ! current_user_can( "kjg_ticketing_read" ) ) {
-            wp_die( "Error: Authentication error", 403 );
+            wp_die( "Error: User is not allowed to download this", 403 );
         }
 
         self::validate_HTTPS();

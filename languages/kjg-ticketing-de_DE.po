@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: KjG Ticketing\n"
-"POT-Creation-Date: 2023-03-02 13:04+0100\n"
+"POT-Creation-Date: 2023-03-03 19:31+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: KjG Theater <info@kjg-theater.de>\n"
@@ -72,6 +72,50 @@ msgstr "unsicher"
 msgid "Submit"
 msgstr "Abschicken"
 
+#: includes/api/VisitorsXlsx.php:38 includes/api/VisitorsXlsx.php:50
+msgid "First name"
+msgstr "Vorname"
+
+#: includes/api/VisitorsXlsx.php:39 includes/api/VisitorsXlsx.php:51
+msgid "Last name"
+msgstr "Nachname"
+
+#: includes/api/VisitorsXlsx.php:40 includes/api/VisitorsXlsx.php:52
+msgid "Address"
+msgstr "Anschrift"
+
+#: includes/api/VisitorsXlsx.php:41 includes/api/VisitorsXlsx.php:53
+msgid "E-Mail"
+msgstr "E-Mail"
+
+#: includes/api/VisitorsXlsx.php:42 includes/api/VisitorsXlsx.php:54
+msgid "Phone"
+msgstr "Telefon"
+
+#: includes/api/VisitorsXlsx.php:43 includes/api/VisitorsXlsx.php:55
+msgid "Block"
+msgstr "Block"
+
+#: includes/api/VisitorsXlsx.php:44 includes/api/VisitorsXlsx.php:56
+msgid "Seat"
+msgstr "Platz"
+
+#: includes/api/VisitorsXlsx.php:45 includes/api/VisitorsXlsx.php:57
+msgid "Comment"
+msgstr "Kommentar"
+
+#: includes/api/VisitorsXlsx.php:48
+msgid "Date"
+msgstr "Datum"
+
+#: includes/api/VisitorsXlsx.php:49
+msgid "Time"
+msgstr "Uhrzeit"
+
+#: includes/api/VisitorsXlsx.php:128 includes/api/VisitorsXlsx.php:130
+msgid "Visitor"
+msgstr "Zuschauer"
+
 #~ msgid "Seating plan"
 #~ msgstr "Sitzplan"
 
@@ -81,14 +125,8 @@ msgstr "Abschicken"
 #~ msgid "Entrance"
 #~ msgstr "Eingang"
 
-#~ msgid "Block"
-#~ msgstr "Block"
-
 #~ msgid "Row"
 #~ msgstr "Reihe"
-
-#~ msgid "Seat"
-#~ msgstr "Platz"
 
 #~ msgid "available"
 #~ msgstr "frei"
@@ -104,9 +142,6 @@ msgstr "Abschicken"
 
 #~ msgid "present"
 #~ msgstr "anwesend"
-
-#~ msgid "Visitor"
-#~ msgstr "Zuschauer"
 
 #~ msgid "Event"
 #~ msgstr "Veranstaltung"
@@ -140,6 +175,3 @@ msgstr "Abschicken"
 
 #~ msgid "Mail"
 #~ msgstr "Post"
-
-#~ msgid "E-Mail"
-#~ msgstr "E-Mail"
