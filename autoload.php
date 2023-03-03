@@ -8,19 +8,27 @@
 defined( 'WPINC' ) || exit;
 
 spl_autoload_register( function ( $class_name ): void {
-	$namespaces = [
-		'KjG_Ticketing\\' => __DIR__ . '/includes/',
-	];
-	foreach ( $namespaces as $prefix => $baseDir ) {
-		$len = strlen( $prefix );
-		if ( 0 !== strncmp( $prefix, $class_name, $len ) ) {
-			continue;
-		}
-		$file = $baseDir . str_replace( '\\', '/', substr( $class_name, $len ) ) . '.php';
-		if ( ! file_exists( $file ) ) {
-			continue;
-		}
-		require $file;
-		break;
-	}
+    $namespaces = [
+        'KjG_Ticketing\\' => __DIR__ . '/includes/',
+
+        'Complex\\'                   => __DIR__ . '/lib/Complex/', // used by PhpSpreadsheet
+        'Matrix\\'                    => __DIR__ . '/lib/Matrix/', // used by PhpSpreadsheet
+        'MyCLabs\\Enum\\'             => __DIR__ . '/lib/MyCLabs/Enum/', // used by ZipStream
+        'PhpOffice\\PhpSpreadsheet\\' => __DIR__ . '/lib/PhpOffice/PhpSpreadsheet', // generate Excel files
+        'phpqrcode\\'                 => __DIR__ . '/lib/phpqrcode/', // generate QR Codes
+        'Psr\\'                       => __DIR__ . '/lib/Psr/', // used by PhpSpreadsheet & ZipStream
+        'ZipStream\\'                 => __DIR__ . '/lib/ZipStream/', // used by PhpSpreadsheet
+    ];
+    foreach ( $namespaces as $prefix => $baseDir ) {
+        $len = strlen( $prefix );
+        if ( 0 !== strncmp( $prefix, $class_name, $len ) ) {
+            continue;
+        }
+        $file = $baseDir . str_replace( '\\', '/', substr( $class_name, $len ) ) . '.php';
+        if ( ! file_exists( $file ) ) {
+            continue;
+        }
+        require $file;
+        break;
+    }
 } );
