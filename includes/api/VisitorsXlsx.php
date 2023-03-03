@@ -9,7 +9,6 @@ use KjG_Ticketing\database\dto\Show;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-// TODO use OpenDocument file type
 class VisitorsXlsx {
     /**
      * Creates an Excel file that contains all visitors for an event.
