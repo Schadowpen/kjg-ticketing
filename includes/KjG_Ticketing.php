@@ -161,7 +161,9 @@ class KjG_Ticketing {
         $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_template_databases', $plugin_public, 'get_template_databases' );
         $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_ticket_config', $plugin_public, 'get_ticket_config' );
         $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_ticket_template_positions', $plugin_public, 'get_ticket_template_positions' );
-        $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_viewers_xlsx', $plugin_public, 'get_viewers_xlsx' );
+
+        // Downloads
+        $this->loader->add_action( 'init', $plugin_public, 'download_visitors_xlsx' );
 
     }
 

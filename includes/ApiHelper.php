@@ -7,6 +7,11 @@ use KjG_Ticketing\database\DatabaseConnection;
 use KjG_Ticketing\database\DatabaseOverview;
 use KjG_Ticketing\database\TemplateDatabaseConnection;
 
+/**
+ * Tools to simplify (AJAX) API Code
+ *
+ * @see DownloadHelper for download calls of the API
+ */
 class ApiHelper {
 
     public static function validate_and_get_process_id(): int {

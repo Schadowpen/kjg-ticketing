@@ -14,7 +14,7 @@ spl_autoload_register( function ( $class_name ): void {
         'Complex\\'                   => __DIR__ . '/lib/Complex/', // used by PhpSpreadsheet
         'Matrix\\'                    => __DIR__ . '/lib/Matrix/', // used by PhpSpreadsheet
         'MyCLabs\\Enum\\'             => __DIR__ . '/lib/MyCLabs/Enum/', // used by ZipStream
-        'PhpOffice\\PhpSpreadsheet\\' => __DIR__ . '/lib/PhpOffice/PhpSpreadsheet', // generate Excel files
+        'PhpOffice\\PhpSpreadsheet\\' => __DIR__ . '/lib/PhpOffice/PhpSpreadsheet/', // generate Excel files
         'phpqrcode\\'                 => __DIR__ . '/lib/phpqrcode/', // generate QR Codes
         'Psr\\'                       => __DIR__ . '/lib/Psr/', // used by PhpSpreadsheet & ZipStream
         'ZipStream\\'                 => __DIR__ . '/lib/ZipStream/', // used by PhpSpreadsheet

@@ -4,8 +4,10 @@ use KjG_Ticketing\api\Overview;
 use KjG_Ticketing\api\ProcessesWithInfo;
 use KjG_Ticketing\api\SeatingPlan;
 use KjG_Ticketing\api\ShowsWithStates;
+use KjG_Ticketing\api\VisitorsXlsx;
 use KjG_Ticketing\ApiHelper;
 use KjG_Ticketing\database\DatabaseOverview;
+use KjG_Ticketing\DownloadHelper;
 use KjG_Ticketing\KjG_Ticketing_Security;
 
 /**
@@ -100,6 +102,7 @@ class KjG_Ticketing_Public {
 
     // |---------------------------|
     // |  Start of AJAX Endpoints  |
+    // |    AJAX get-Endpoints     |
     // |---------------------------|
 
     public function get_archived_databases(): void {
@@ -220,9 +223,20 @@ class KjG_Ticketing_Public {
         wp_die( "Error: not yet implemented", 501 );
     }
 
-    public function get_viewers_xlsx(): void {
-        // TODO implement
-        wp_die( "Error: not yet implemented", 501 );
+    // |----------------------|
+    // |  Download endpoints  |
+    // |----------------------|
+
+    public function download_visitors_xlsx(): void {
+        if ( $_GET['action'] !== "kjg_ticketing_download_visitors_xlsx" ) {
+            return; // don't execute download action by accident
+        }
+
+        KjG_Ticketing_Security::validate_download_permission();
+        $show_id = DownloadHelper::validate_and_get_show_id_if_present();
+        ApiHelper::validateDatabaseUsageAllowed( true, true, false );
+        $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
+        VisitorsXlsx::get( $dbc, $show_id );
     }
 
 }

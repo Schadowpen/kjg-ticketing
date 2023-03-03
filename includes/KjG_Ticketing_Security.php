@@ -48,6 +48,19 @@ class KjG_Ticketing_Security {
         self::validate_HTTPS();
     }
 
+    public static function validate_download_permission(): void {
+        if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'kjg_ticketing' ) ) {
+            wp_die( "Error: Authentication error", 403 );
+        }
+
+        // check user capabilities
+        if ( ! current_user_can( "kjg_ticketing_read" ) ) {
+            wp_die( "Error: Authentication error", 403 );
+        }
+
+        self::validate_HTTPS();
+    }
+
     private static function validate_nonce(): void {
         check_ajax_referer( 'kjg_ticketing' );
         // dies with 403 if nonce is invalid

@@ -57,7 +57,7 @@ In the `kjg-ticketing.php` file, change the version number at two places:
 In the plugin directory, execute following command:
 
 ````shell
-tar -a -c -f kjg-ticketing.zip  admin includes languages public CHANGELOG.md index.php kjg-ticketing.php LICENSE
+tar -a -c -f kjg-ticketing.zip  admin includes languages lib public CHANGELOG.md index.php kjg-ticketing.php LICENSE
 ````
 
 Then you should find a `kjg-ticketing.zip` file with the correct content.
