@@ -2,7 +2,8 @@
 
 namespace pdf\object;
 
-use misc;
+use KjG_Ticketing\misc;
+use KjG_Ticketing\misc\StringReader;
 
 /**
  * Dies ist eine Helferklasse für den ObjectParser. Sie extrahiert einzelne Token, anhand derer der ObjectParser ein Objekt zusammensetzen kann.
@@ -10,8 +11,7 @@ use misc;
  * Dabei wird jeglicher "white space", also eine Aneinanderreihung von "white space" Zeichen oder auch Kommentare bereits herausgerechnet.
  * @package pdf\object
  */
-class Tokenizer
-{
+class Tokenizer {
     /**
      * Maske mit allen Zeichen, die in PDF-Dateien den Zwischenraum zwischen einzelnen PDF-Symbolen darstellen können
      * @type string
@@ -32,7 +32,7 @@ class Tokenizer
 
     /**
      * Zu lesender String inklusive Konstrukt, um den String gezielt auszulesen.
-     * @var misc\StringReader
+     * @var StringReader
      */
     private $stringReader;
 
@@ -45,10 +45,10 @@ class Tokenizer
     /**
      * Erzeugt einen neuen Tokenizer.
      * Es wird angenommen, dass die Startposition im StringReader bereits gesetzt ist
-     * @param misc\StringReader $stringReader Zum auslesen des Strings
+     *
+     * @param StringReader $stringReader Zum auslesen des Strings
      */
-    public function __construct(misc\StringReader $stringReader)
-    {
+    public function __construct( StringReader $stringReader ) {
         $this->stringReader = $stringReader;
     }
 
@@ -56,12 +56,13 @@ class Tokenizer
      * Sollte ein Token mit getToken() geholt werden, danach aber festgestellt werden dass dieser nicht benötigt wird,
      * kann er mit dieser Methode wieder in den Tokenizer geschmissen werden. Der Tokenizer verhält sich dann so, als sei der Token nie geholt worden.<br/>
      * Sollten mehrere nicht benötigte Token vorliegen, bitte in umgekehrter Reihenfolge wieder zurückgeben, wie sie geholt wurden!
+     *
      * @param string|null $token Token, welcher nicht benötigt und somit beim nächsten Aufruf von getToken zurückgeliefert werden soll.
      */
-    public function reuseToken(?string $token)
-    {
-        if ($token !== null)
+    public function reuseToken( ?string $token ) {
+        if ( $token !== null ) {
             $this->reuseTokenStack[] = $token;
+        }
     }
 
     /**
@@ -69,23 +70,22 @@ class Tokenizer
      * Wenn kein nächster Token gefunden wurde, liefert die Methode null zurück
      * @return string|null
      */
-    public function getToken(): ?string
-    {
+    public function getToken(): ?string {
         // reuse Token if available
-        $token = array_pop($this->reuseTokenStack);
-        if ($token !== null) {
+        $token = array_pop( $this->reuseTokenStack );
+        if ( $token !== null ) {
             return $token;
         }
 
         // skip White Space Characters
-        $this->stringReader->skipOnlyMask(self::whiteSpaceChars);
+        $this->stringReader->skipOnlyMask( self::whiteSpaceChars );
 
         try {
             $byte = $this->stringReader->readByte();
-        } catch (\Exception $exception) {
+        } catch ( \Exception $exception ) {
             return null; // Ende des Strings, kein Token
         }
-        switch ($byte) {
+        switch ( $byte ) {
             // one of the special Chars
             case "(":
             case ")":
@@ -99,10 +99,11 @@ class Tokenizer
                 return $byte;
             case "%": // it's a comment!
                 $this->stringReader->skipLine();
+
                 return $this->getToken();
         }
 
         // retrieve last byte and read until Token definitively ends
-        return $byte . $this->stringReader->readUntilMask(self::specialChars);
+        return $byte . $this->stringReader->readUntilMask( self::specialChars );
     }
 }
