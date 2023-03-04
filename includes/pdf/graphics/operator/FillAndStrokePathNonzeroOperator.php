@@ -8,15 +8,13 @@ namespace pdf\graphics\operator;
  * Offene Unterpfade, also welche die einen Anfang und ein Ende haben, werden nur für das Füllen geschlossen
  * @package pdf\graphics\operator
  */
-class FillAndStrokePathNonzeroOperator extends PathPaintingOperator
-{
+class FillAndStrokePathNonzeroOperator extends PathPaintingOperator {
 
     /**
      * Liefert den Operatoren, wie er im ContentStream vorkommt
      * @return string
      */
-    function getOperator(): string
-    {
+    function getOperator(): string {
         return "B";
     }
 
@@ -25,8 +23,7 @@ class FillAndStrokePathNonzeroOperator extends PathPaintingOperator
      * Dieser Beinhaltet auch einen EOL-Marker am Ende des Operatoren
      * @return string
      */
-    function __toString(): string
-    {
+    function __toString(): string {
         return "B\n";
     }
 }

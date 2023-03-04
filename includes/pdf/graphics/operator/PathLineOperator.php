@@ -10,8 +10,7 @@ use pdf\object\PdfNumber;
  * Operator zum Zeichnen einer Linie vom letzten Punkt des Unterpfades zum angegebenen Punkt
  * @package pdf\graphics\operator
  */
-class PathLineOperator extends PathConstructionOperator
-{
+class PathLineOperator extends PathConstructionOperator {
     /**
      * x-Position des Linienendes in User Space
      * @var PdfNumber
@@ -25,13 +24,13 @@ class PathLineOperator extends PathConstructionOperator
 
     /**
      * PathLineOperator constructor.
+     *
      * @param PdfNumber $x x-Position des Linienendes in User Space
      * @param PdfNumber $y y-Position des Linienendes in User Space
      * @param OperatorMetadata|null $operatorMetadata Metadaten zu einem Operatoren, wenn ein ContentStream analysiert wird. Wird nicht benötigt für einen neu generierten ContentStream.
      */
-    public function __construct(PdfNumber $x, PdfNumber $y, OperatorMetadata $operatorMetadata = null)
-    {
-        parent::__construct($operatorMetadata);
+    public function __construct( PdfNumber $x, PdfNumber $y, OperatorMetadata $operatorMetadata = null ) {
+        parent::__construct( $operatorMetadata );
         $this->x = $x;
         $this->y = $y;
     }
@@ -40,8 +39,7 @@ class PathLineOperator extends PathConstructionOperator
      * Liefert den Operatoren, wie er im ContentStream vorkommt
      * @return string
      */
-    function getOperator(): string
-    {
+    function getOperator(): string {
         return "l";
     }
 
@@ -50,8 +48,7 @@ class PathLineOperator extends PathConstructionOperator
      * Dieser Beinhaltet auch einen EOL-Marker am Ende des Operatoren
      * @return string
      */
-    function __toString(): string
-    {
+    function __toString(): string {
         return "{$this->x->toString()} {$this->y->toString()} l\n";
     }
 
@@ -60,24 +57,21 @@ class PathLineOperator extends PathConstructionOperator
      * Sollte der Operator einen Unterpfad beenden, wird null zurückgeliefert
      * @return null|Point
      */
-    public function getLastPoint(): ?Point
-    {
-        return new Point($this->x->getValue(), $this->y->getValue());
+    public function getLastPoint(): ?Point {
+        return new Point( $this->x->getValue(), $this->y->getValue() );
     }
 
     /**
      * @return PdfNumber
      */
-    public function getX(): PdfNumber
-    {
+    public function getX(): PdfNumber {
         return $this->x;
     }
 
     /**
      * @return PdfNumber
      */
-    public function getY(): PdfNumber
-    {
+    public function getY(): PdfNumber {
         return $this->y;
     }
 }

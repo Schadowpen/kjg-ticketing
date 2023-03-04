@@ -12,16 +12,14 @@ namespace pdf\document;
  *
  * @package pdf\document
  */
-class FontType0 extends Font
-{
+class FontType0 extends Font {
 
     /**
      * Liefert den Subtype dieser Klasse an Dokument Objekten.
      * Sollte für die Dokumentklasse kein SubType benötigt werden, wird null zurückgeliefert.
      * @return string|null
      */
-    public static function objectSubtype(): ?string
-    {
+    public static function objectSubtype(): ?string {
         return "Type0";
     }
 
@@ -29,9 +27,8 @@ class FontType0 extends Font
      * Liefert den Namen der Schriftart
      * @return string
      */
-    public function getBaseFontName(): string
-    {
-        return $this->get("BaseFont")->getValue();
+    public function getBaseFontName(): string {
+        return $this->get( "BaseFont" )->getValue();
     }
 
     /**
@@ -41,10 +38,10 @@ class FontType0 extends Font
      * Stattdessen wird eine Standardbreite von 1 im Glyph Space zurückgegeben, um Divisionen durch 0 zu vermeiden
      *
      * @param int $charCode Zeichencode des Zeichens, dessen Breite zu ermitteln ist
+     *
      * @return float Breite in Glyph Space
      */
-    public function getCharWidth(int $charCode)
-    {
+    public function getCharWidth( int $charCode ) {
         return 1;
     }
 
@@ -55,12 +52,12 @@ class FontType0 extends Font
      * Stattdessen wird auf jeden Fall eine Exception geschmissen
      *
      * @param string $utf8String Mit UTF-8 Kodierter Text
+     *
      * @return string Entsprechend dem Font kodierter Text
      * @throws \Exception Wenn die Kodierung im Font nicht unterstützt wird.
      */
-    public function fromUTF8(string $utf8String): string
-    {
-        throw new \Exception("No Character Code Encoding for Fonts of Type0");
+    public function fromUTF8( string $utf8String ): string {
+        throw new \Exception( "No Character Code Encoding for Fonts of Type0" );
     }
 
     /**
@@ -71,10 +68,10 @@ class FontType0 extends Font
      * Stattdessen wird der originale String zurückgeliefert
      *
      * @param string $fontEncodedString Entsprechend dem Font kodierter Text
+     *
      * @return string UTF-8 kodierter Text oder $fontEncodedString
      */
-    public function toUTF8(string $fontEncodedString): string
-    {
+    public function toUTF8( string $fontEncodedString ): string {
         return $fontEncodedString;
     }
 }

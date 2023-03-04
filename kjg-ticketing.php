@@ -13,7 +13,7 @@
  */
 
 // If this file is called directly, abort.
-if (!defined('WPINC')) {
+if ( ! defined( 'WPINC' ) ) {
     die;
 }
 
@@ -22,7 +22,7 @@ if (!defined('WPINC')) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('KJG_TICKETING_VERSION', '0.1.1');
+define( 'KJG_TICKETING_VERSION', '0.1.1' );
 
 require_once "autoload.php";
 
@@ -48,9 +48,9 @@ function uninstall_kjg_ticketing(): void {
     \KjG_Ticketing\KjG_Ticketing_Uninstaller::uninstall();
 }
 
-register_activation_hook(__FILE__, 'activate_kjg_ticketing');
-register_deactivation_hook(__FILE__, 'deactivate_kjg_ticketing');
-register_uninstall_hook(__FILE__, 'uninstall_kjg_ticketing');
+register_activation_hook( __FILE__, 'activate_kjg_ticketing' );
+register_deactivation_hook( __FILE__, 'deactivate_kjg_ticketing' );
+register_uninstall_hook( __FILE__, 'uninstall_kjg_ticketing' );
 
 /**
  * Begins execution of the plugin.

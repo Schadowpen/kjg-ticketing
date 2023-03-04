@@ -1,4 +1,5 @@
 <?php
+
 namespace pdf\graphics;
 
 
@@ -15,8 +16,7 @@ use pdf\PdfFile;
  * Dazu müssen mit der Funktion addOperator() neue Operatoren an das Ende des ContentStreams angehangen werden.
  * @package pdf\graphics
  */
-class GenerateContentStream
-{
+class GenerateContentStream {
     /**
      * GraphicsStateStack, mit welchem dieser Content Stream begonnen wurde
      * @var GraphicsStateStack
@@ -40,11 +40,11 @@ class GenerateContentStream
 
     /**
      * GeneratedContentStream constructor.
+     *
      * @param GraphicsStateStack $initialGraphicsStateStack Initialer Wert des GraphicsStateStack für den ContentStream
      * @param ContentStream $contentStream ContentStream, dessen Ihnalt noch generiert werden wird.
      */
-    public function __construct(GraphicsStateStack $initialGraphicsStateStack, ContentStream $contentStream)
-    {
+    public function __construct( GraphicsStateStack $initialGraphicsStateStack, ContentStream $contentStream ) {
         $this->initialGraphicsStateStack = $initialGraphicsStateStack;
         $this->lastGraphicsStateStack = clone $initialGraphicsStateStack;
         $this->contentStream = $contentStream;
@@ -54,25 +54,27 @@ class GenerateContentStream
     /**
      * Erzeugt einen neuen, zu generierenden ContentStream.
      * Dabei werden zugehörige Objekte wie Stream oder CrossReferenceTableEntry ebenfalls neu erzeugt.
+     *
      * @param GraphicsStateStack $initialGraphicsStateStack Initialer Wert des GraphicsStateStack für den ContentStream
      * @param ResourceDictionary $resourceDictionary Resource Dictionary, welches für diesen ContentStream bereits gilt.
      * @param PdfFile $pdfFile PDF-Datei, in welcher der ContentStream vorkommen soll
+     *
      * @return GenerateContentStream Klasse zum generieren eines ContentStreams
      * @throws \Exception Wenn der ContentStream nicht erzeugt werden kann.
      */
-    public static function generateNew(GraphicsStateStack $initialGraphicsStateStack, ResourceDictionary $resourceDictionary, PdfFile $pdfFile): GenerateContentStream {
+    public static function generateNew( GraphicsStateStack $initialGraphicsStateStack, ResourceDictionary $resourceDictionary, PdfFile $pdfFile ): GenerateContentStream {
         $crossReferenceTableEntry = $pdfFile->generateNewCrossReferenceTableEntry();
-        $pdfStream = PdfStream::fromCrossReferenceTableEntry($crossReferenceTableEntry, $pdfFile);
-        $contentStream = new ContentStream($pdfStream, $pdfFile, $resourceDictionary->clone());
-        return new GenerateContentStream($initialGraphicsStateStack, $contentStream);
+        $pdfStream = PdfStream::fromCrossReferenceTableEntry( $crossReferenceTableEntry, $pdfFile );
+        $contentStream = new ContentStream( $pdfStream, $pdfFile, $resourceDictionary->clone() );
+
+        return new GenerateContentStream( $initialGraphicsStateStack, $contentStream );
     }
 
     /**
      * Liefert den Initialen Wert des GraphicsStateStack
      * @return GraphicsStateStack
      */
-    public function getInitialGraphicsStateStack(): GraphicsStateStack
-    {
+    public function getInitialGraphicsStateStack(): GraphicsStateStack {
         return $this->initialGraphicsStateStack;
     }
 
@@ -80,8 +82,7 @@ class GenerateContentStream
      * Liefert den GraphicsStateStack nach durchlaufen des ContentStreams beziehungsweise beim aktuellen Zustand des Generierten ContentStreams
      * @return GraphicsStateStack
      */
-    public function getLastGraphicsStateStack(): GraphicsStateStack
-    {
+    public function getLastGraphicsStateStack(): GraphicsStateStack {
         return $this->lastGraphicsStateStack;
     }
 
@@ -89,23 +90,25 @@ class GenerateContentStream
      * Liefert den analysierten ContentStream
      * @return ContentStream
      */
-    public function getContentStream(): ContentStream
-    {
+    public function getContentStream(): ContentStream {
         return $this->contentStream;
     }
 
     /**
      * Fügt einen neuen Operatoren an das Ende des Content Streams an.
+     *
      * @param AbstractOperator $operator
+     *
      * @throws \Exception Wenn der Operator den GraphicsState beeinflussen soll, dieser aber nichts damit anzufangen weiss.
      */
-    public function addOperator(AbstractOperator $operator) {
+    public function addOperator( AbstractOperator $operator ) {
         // Add to Content Stream
         $this->contentString .= $operator->__toString();
-        $this->contentStream->setStream($this->contentString);
+        $this->contentStream->setStream( $this->contentString );
 
         // Add to Graphics State
-        if ($operator->isGraphicsStateOperator())
-            $this->lastGraphicsStateStack->reactToOperator($operator);
+        if ( $operator->isGraphicsStateOperator() ) {
+            $this->lastGraphicsStateStack->reactToOperator( $operator );
+        }
     }
 }

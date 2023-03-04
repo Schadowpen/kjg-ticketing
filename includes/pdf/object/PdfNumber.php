@@ -1,12 +1,12 @@
 <?php
+
 namespace pdf\object;
 
 /**
  * Ein PDF-Objekt, welches eine Nummer (float oder int) beinhaltet.
  * @package pdf\object
  */
-class PdfNumber extends PdfAbstractObject
-{
+class PdfNumber extends PdfAbstractObject {
     /**
      * @var int|float
      */
@@ -15,15 +15,16 @@ class PdfNumber extends PdfAbstractObject
     /**
      * Erzeugt ein Pdf Nummer Objekt.
      * Bei der Übergabe wird überprüft, ob der Wert eine Ganze Zahl oder eine Fließkommazahl ist, und entsprechend geparst.
+     *
      * @param mixed $value
      */
-    public function __construct($value)
-    {
-        $intval = (int)$value;
-        if ($value == $intval)
+    public function __construct( $value ) {
+        $intval = (int) $value;
+        if ( $value == $intval ) {
             $this->value = $intval;
-        else
-            $this->value = (float)$value;
+        } else {
+            $this->value = (float) $value;
+        }
     }
 
     /**
@@ -31,8 +32,7 @@ class PdfNumber extends PdfAbstractObject
      * @return bool
      * @see PdfAbstractObject::needsWhiteSpaceAfter() Ein Trennzeichen wird nur benötigt, wenn beim vorherigen Objekt ebenfalls ein Trennzeichen benötigt wird.
      */
-    public function needsWhiteSpaceBefore(): bool
-    {
+    public function needsWhiteSpaceBefore(): bool {
         return true;
     }
 
@@ -41,8 +41,7 @@ class PdfNumber extends PdfAbstractObject
      * @return bool
      * @see PdfAbstractObject::needsWhiteSpaceBefore() Ein Trennzeichen wird nur benötigt, wenn beim nachfolgenden Objekt ebenfalls ein Trennzeichen benötigt wird.
      */
-    public function needsWhiteSpaceAfter(): bool
-    {
+    public function needsWhiteSpaceAfter(): bool {
         return true;
     }
 
@@ -50,8 +49,7 @@ class PdfNumber extends PdfAbstractObject
      * Liefert den Wert dieses Objektes zurück.
      * @return int|float
      */
-    public function getValue()
-    {
+    public function getValue() {
         return $this->value;
     }
 
@@ -59,52 +57,50 @@ class PdfNumber extends PdfAbstractObject
      * Überprüft, ob der Wert eine ganze Zahl ist
      * @return bool
      */
-    public function isInt()
-    {
-        return is_int($this->value);
+    public function isInt() {
+        return is_int( $this->value );
     }
 
     /**
      * Überprüft, ob der Wert eine Fließkommazahl ist.
      * @return bool
      */
-    public function isFloat()
-    {
-        return is_float($this->value);
+    public function isFloat() {
+        return is_float( $this->value );
     }
 
     /**
      * Erstellt für dieses Objekt einen String zum einbetten in eine PDF-Datei
      * @return string
      */
-    public function toString(): string
-    {
-        return (string)$this->value;
+    public function toString(): string {
+        return (string) $this->value;
     }
 
     /**
      * Wenn der ObjectParser ein bestimmtes Objekt anhand des letzten Tokens erkannt hat, kann mit dieser Funktion das Objekt erzeugt werden.
      * Es wird angenommen, dass die Delimiter am Anfang des Objektes bereits vom Tokenizer genutzt wurden, der Inhalt und die Delimiter am Ende jedoch nicht.
+     *
      * @param Tokenizer $tokenizer Tokenizer des Objectparser um weitere Token zu erhalten
      * @param ObjectParser $objectParser ObjectParser, welcher dieses Objekt erkannt hat
-     * @throws \Exception Wenn beim Parsen ein Fehler auftritt
+     *
      * @return PdfNumber ein neues Objekt
+     * @throws \Exception Wenn beim Parsen ein Fehler auftritt
      */
-    public static function parse(ObjectParser $objectParser): PdfAbstractObject
-    {
+    public static function parse( ObjectParser $objectParser ): PdfAbstractObject {
         $token = $objectParser->getTokenizer()->getToken();
-        if (!is_numeric($token))
-            throw new \Exception("could not parse Number Pdf Object");
+        if ( ! is_numeric( $token ) ) {
+            throw new \Exception( "could not parse Number Pdf Object" );
+        }
 
-        return new PdfNumber($token);
+        return new PdfNumber( $token );
     }
 
     /**
      * Erzeugt eine (tiefe) Kopie dieses Objektes
      * @return PdfNumber
      */
-    public function clone(): PdfAbstractObject
-    {
-        return new PdfNumber($this->value);
+    public function clone(): PdfAbstractObject {
+        return new PdfNumber( $this->value );
     }
 }

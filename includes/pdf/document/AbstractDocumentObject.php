@@ -15,8 +15,7 @@ use pdf\PdfFile;
  * Sollte das Dictionary direkt in einem IndirectObject liegen, kann dieses angegeben werden und Features wie Referenzierung genutzt werden.
  * @package pdf\document
  */
-abstract class AbstractDocumentObject
-{
+abstract class AbstractDocumentObject {
     /**
      * Indirect Object, in welchem das Dictionary mit den Daten liegt.
      * Wenn es nicht existiert / nicht bekannt ist, ist der Wert null.
@@ -38,26 +37,29 @@ abstract class AbstractDocumentObject
 
     /**
      * Erzeugt ein neues AbstractDocumentObject.
+     *
      * @param PdfDictionary|PdfIndirectObject|PdfIndirectReference $pdfObject Entweder ein Dictionary mit dem Objekt ODER ein IndirectObject, welches dieses Dictionary beinhaltet ODER eine Referenz auf das IndirectObject
      * @param PdfFile $pdfFile PDF-Datei, in welcher das Objekt liegt.
+     *
      * @throws \Exception Wenn das übergebene Dictionary kein Dictionary ist oder nicht dem richtigen Objekttyp entspricht.
      */
-    public function __construct($pdfObject, PdfFile $pdfFile)
-    {
-        if ($pdfObject instanceof PdfIndirectObject) {
+    public function __construct( $pdfObject, PdfFile $pdfFile ) {
+        if ( $pdfObject instanceof PdfIndirectObject ) {
             $this->indirectObject = $pdfObject;
             $this->dictionary = $pdfObject->getContainingObject();
-        } else if ($pdfObject instanceof PdfIndirectReference) {
-            $this->indirectObject = $pdfFile->getIndirectObject($pdfObject);
+        } else if ( $pdfObject instanceof PdfIndirectReference ) {
+            $this->indirectObject = $pdfFile->getIndirectObject( $pdfObject );
             $this->dictionary = $this->indirectObject->getContainingObject();
         } else {
             $this->dictionary = $pdfObject;
         }
-        if (!($this->dictionary instanceof PdfDictionary))
-            throw new \Exception("Document Object is no Dictionary");
+        if ( ! ( $this->dictionary instanceof PdfDictionary ) ) {
+            throw new \Exception( "Document Object is no Dictionary" );
+        }
 
-        if (!self::matchesType($this->dictionary))
-            throw new \Exception("Given Document does not match Type " . self::objectType() . (self::objectSubtype() !== null ? " with Subtype" . self::objectSubtype() : ""));
+        if ( ! self::matchesType( $this->dictionary ) ) {
+            throw new \Exception( "Given Document does not match Type " . self::objectType() . ( self::objectSubtype() !== null ? " with Subtype" . self::objectSubtype() : "" ) );
+        }
 
         $this->pdfFile = $pdfFile;
     }
@@ -81,17 +83,20 @@ abstract class AbstractDocumentObject
     /**
      * Liefert zurück, ob das durch das Dictionary beschriebene Objekt diesen Objekttyp besitzt.
      * Dies wird anhand des Type und Subtype-Eintrages bestimmt.
+     *
      * @param PdfDictionary $dictionary Dictionary, welches ein Dokumentenobjekt beinhaltet
+     *
      * @return bool
      */
-    public static function matchesType(PdfDictionary $dictionary): bool
-    {
-        if (static::objectType() === null)
-            return true; // Kein Type angegeben -> alles passt
-        $type = $dictionary->getObject("Type");
-        $subtype = $dictionary->getObject("Subtype");
+    public static function matchesType( PdfDictionary $dictionary ): bool {
+        if ( static::objectType() === null ) {
+            return true;
+        } // Kein Type angegeben -> alles passt
+        $type = $dictionary->getObject( "Type" );
+        $subtype = $dictionary->getObject( "Subtype" );
+
         return @$type != null && $type->getValue() === static::objectType()
-            && ($subtype === null ? static::objectSubtype() === null : $subtype->getValue() === static::objectSubtype());
+               && ( $subtype === null ? static::objectSubtype() === null : $subtype->getValue() === static::objectSubtype() );
     }
 
     /**
@@ -99,8 +104,7 @@ abstract class AbstractDocumentObject
      * Wenn es nicht existiert / nicht bekannt ist, wird null zurückgegeben.
      * @return PdfIndirectObject
      */
-    public function getIndirectObject(): ?PdfIndirectObject
-    {
+    public function getIndirectObject(): ?PdfIndirectObject {
         return $this->indirectObject;
     }
 
@@ -111,6 +115,7 @@ abstract class AbstractDocumentObject
      */
     public function getIndirectReference(): PdfIndirectReference {
         $this->generateIndirectObjectIfNotExists();
+
         return $this->indirectObject->getIndirectReference();
     }
 
@@ -118,8 +123,7 @@ abstract class AbstractDocumentObject
      * Gibt das Dictionary mit den Daten über dieses Dokument Objekt zurück
      * @return PdfDictionary
      */
-    public function getDictionary(): PdfDictionary
-    {
+    public function getDictionary(): PdfDictionary {
         return $this->dictionary;
     }
 
@@ -127,37 +131,39 @@ abstract class AbstractDocumentObject
      * Liefert das PdfFile zurück, in welchem das Dokument Objekt vorkommt
      * @return PdfFile
      */
-    public function getPdfFile(): PdfFile
-    {
+    public function getPdfFile(): PdfFile {
         return $this->pdfFile;
     }
 
     /**
      * Kurzform, um einen Eintrag aus dem Dictionary zu holen.
      * Referenzen werden direkt zu einem Objekt geparst.
+     *
      * @param string $dictionaryName Name des Eintrags im Dictionary
+     *
      * @return PdfAbstractObject|null
      */
-    public function get(string $dictionaryName) : ?PdfAbstractObject
-    {
-        return $this->pdfFile->parseReference($this->dictionary->getObject($dictionaryName));
+    public function get( string $dictionaryName ): ?PdfAbstractObject {
+        return $this->pdfFile->parseReference( $this->dictionary->getObject( $dictionaryName ) );
     }
 
     /**
      * Kurzform, um einen Eintrag in das Dictionary zu schreiben
+     *
      * @param string $dictionaryName Name des Eintrags im Dictionary
      * @param PdfAbstractObject $object Neues Objekt, welches eingetragen werden soll
      */
-    public function set(string $dictionaryName, PdfAbstractObject $object) {
-        $this->dictionary->setObject($dictionaryName, $object);
+    public function set( string $dictionaryName, PdfAbstractObject $object ) {
+        $this->dictionary->setObject( $dictionaryName, $object );
     }
 
     /**
      * Kurzform, um einen Eintrag aus dem Dictionary zu löschen
+     *
      * @param string $dictionaryName Name des Eintrags im Dictionary
      */
-    public function remove(string $dictionaryName) {
-        $this->dictionary->removeObject($dictionaryName);
+    public function remove( string $dictionaryName ) {
+        $this->dictionary->removeObject( $dictionaryName );
     }
 
 
@@ -165,12 +171,11 @@ abstract class AbstractDocumentObject
      * Wenn zu diesem Dokument Objekt noch kein dazugehöriges IndirectObject bekannt ist, wird es erstellt und in die PdfFile eingebettet.
      * Sollte sich dieses Objekt bereits innerhalb eines anderen Objektes befinden und dies hier nicht bekannt sein, kann diese Funktion zu unerwartetem Verhalten führen.
      */
-    public function generateIndirectObjectIfNotExists()
-    {
-        if ($this->indirectObject === null) {
+    public function generateIndirectObjectIfNotExists() {
+        if ( $this->indirectObject === null ) {
             $crossReferenceTableEntry = $this->pdfFile->generateNewCrossReferenceTableEntry();
-            $this->indirectObject = new PdfIndirectObject($crossReferenceTableEntry->getObjNumber(), $crossReferenceTableEntry->getGenerationNumber(), $this->dictionary);
-            $crossReferenceTableEntry->setReferencedObject($this->indirectObject);
+            $this->indirectObject = new PdfIndirectObject( $crossReferenceTableEntry->getObjNumber(), $crossReferenceTableEntry->getGenerationNumber(), $this->dictionary );
+            $crossReferenceTableEntry->setReferencedObject( $this->indirectObject );
         }
     }
 }

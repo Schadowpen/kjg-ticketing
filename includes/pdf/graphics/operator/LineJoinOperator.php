@@ -10,8 +10,7 @@ use pdf\object\PdfNumber;
  * Operator, welcher den Style, wie Linien zusammengefügt werden, im GraphicsState setzt
  * @package pdf\graphics\operator
  */
-class LineJoinOperator extends AbstractOperator
-{
+class LineJoinOperator extends AbstractOperator {
     /**
      * Linien werden mit einer spitzen Ecke zusammengefügt.
      * Der MiterLimit beschreibt, wie lang die spizte Ecke maximal sein darf
@@ -34,12 +33,12 @@ class LineJoinOperator extends AbstractOperator
 
     /**
      * LineJoinOperator constructor.
+     *
      * @param PdfNumber $lineJoin Der neue Style, wie Linien zusammengefügt werden
      * @param OperatorMetadata|null $operatorMetadata Metadaten zu einem Operatoren, wenn ein ContentStream analysiert wird. Wird nicht benötigt für einen neu generierten ContentStream.
      */
-    public function __construct(PdfNumber $lineJoin, OperatorMetadata $operatorMetadata = null)
-    {
-        parent::__construct($operatorMetadata);
+    public function __construct( PdfNumber $lineJoin, OperatorMetadata $operatorMetadata = null ) {
+        parent::__construct( $operatorMetadata );
         $this->lineJoin = $lineJoin->getValue();
     }
 
@@ -47,8 +46,7 @@ class LineJoinOperator extends AbstractOperator
      * Liefert den Operatoren, wie er im ContentStream vorkommt
      * @return string
      */
-    function getOperator(): string
-    {
+    function getOperator(): string {
         return "j";
     }
 
@@ -56,21 +54,18 @@ class LineJoinOperator extends AbstractOperator
      * Parst den Operatoren zu einem String, wie er in einem ContentStream vorkommt
      * @return string
      */
-    function __toString(): string
-    {
+    function __toString(): string {
         return $this->lineJoin . " J\n";
     }
 
-    public function isGraphicsStateOperator(): bool
-    {
+    public function isGraphicsStateOperator(): bool {
         return true;
     }
 
     /**
      * @return int
      */
-    public function getLineJoin(): int
-    {
+    public function getLineJoin(): int {
         return $this->lineJoin;
     }
 }

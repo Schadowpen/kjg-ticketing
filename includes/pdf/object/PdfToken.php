@@ -1,4 +1,5 @@
 <?php
+
 namespace pdf\object;
 
 /**
@@ -6,8 +7,7 @@ namespace pdf\object;
  * Normale PDF-Objekte dürfen keine solcher reinen Token beinhalten, sie können aber beispielsweise in Content Streams auftreten.
  * @package pdf\object
  */
-class PdfToken extends PdfAbstractObject
-{
+class PdfToken extends PdfAbstractObject {
     /**
      * String-Wert dieses Token.
      * @var string
@@ -16,10 +16,10 @@ class PdfToken extends PdfAbstractObject
 
     /**
      * Erzeugt einen neuen PdfToken
+     *
      * @param string $value Inhalt dieses Token
      */
-    public function __construct(string $value)
-    {
+    public function __construct( string $value ) {
         $this->value = $value;
     }
 
@@ -28,8 +28,7 @@ class PdfToken extends PdfAbstractObject
      * @return bool
      * @see PdfAbstractObject::needsWhiteSpaceAfter() Ein Trennzeichen wird nur benötigt, wenn beim vorherigen Objekt ebenfalls ein Trennzeichen benötigt wird.
      */
-    public function needsWhiteSpaceBefore(): bool
-    {
+    public function needsWhiteSpaceBefore(): bool {
         return true;
     }
 
@@ -38,8 +37,7 @@ class PdfToken extends PdfAbstractObject
      * @return bool
      * @see PdfAbstractObject::needsWhiteSpaceBefore() Ein Trennzeichen wird nur benötigt, wenn beim nachfolgenden Objekt ebenfalls ein Trennzeichen benötigt wird.
      */
-    public function needsWhiteSpaceAfter(): bool
-    {
+    public function needsWhiteSpaceAfter(): bool {
         return true;
     }
 
@@ -48,8 +46,7 @@ class PdfToken extends PdfAbstractObject
      * Manche Objekte liefern darüber hinaus bessere Methoden, um den Objektinhalt abzufragen.
      * @return mixed
      */
-    public function getValue()
-    {
+    public function getValue() {
         return $this->value;
     }
 
@@ -57,30 +54,29 @@ class PdfToken extends PdfAbstractObject
      * Erstellt für dieses Objekt einen String zum einbetten in eine PDF-Datei
      * @return string
      */
-    public function toString(): string
-    {
+    public function toString(): string {
         return $this->value;
     }
 
     /**
      * Wenn der ObjectParser ein bestimmtes Objekt anhand des letzten Tokens erkannt hat, kann mit dieser Funktion das Objekt erzeugt werden.
      * Es wird angenommen, dass die Delimiter am Anfang des Objektes bereits vom Tokenizer genutzt wurden, der Inhalt und die Delimiter am Ende jedoch nicht.
+     *
      * @param Tokenizer $tokenizer Tokenizer des Objectparser um weitere Token zu erhalten
      * @param ObjectParser $objectParser ObjectParser, welcher dieses Objekt erkannt hat
-     * @throws \Exception Wenn beim Parsen ein Fehler auftritt
+     *
      * @return PdfToken ein neues Objekt
+     * @throws \Exception Wenn beim Parsen ein Fehler auftritt
      */
-    public static function parse(ObjectParser $objectParser): PdfAbstractObject
-    {
-        return new PdfToken($objectParser->getTokenizer()->getToken());
+    public static function parse( ObjectParser $objectParser ): PdfAbstractObject {
+        return new PdfToken( $objectParser->getTokenizer()->getToken() );
     }
 
     /**
      * Erzeugt eine (tiefe) Kopie dieses Objektes
      * @return PdfToken
      */
-    public function clone(): PdfAbstractObject
-    {
-        return new PdfToken($this->value);
+    public function clone(): PdfAbstractObject {
+        return new PdfToken( $this->value );
     }
 }

@@ -12,11 +12,9 @@ use pdf\graphics\Point;
  * Das können InlineImages, aber auch XObjects sein.
  * @package pdf\graphics\operator
  */
-abstract class AbstractImageOperator extends AbstractOperator
-{
+abstract class AbstractImageOperator extends AbstractOperator {
 
-    public function isRenderingOperator(): bool
-    {
+    public function isRenderingOperator(): bool {
         return true;
     }
 

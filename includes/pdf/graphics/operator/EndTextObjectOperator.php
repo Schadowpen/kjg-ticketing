@@ -8,15 +8,13 @@ namespace pdf\graphics\operator;
  * Er entfernt den TextObjectState.
  * @package pdf\graphics\operator
  */
-class EndTextObjectOperator extends AbstractOperator
-{
+class EndTextObjectOperator extends AbstractOperator {
 
     /**
      * Liefert den Operatoren, wie er im ContentStream vorkommt
      * @return string
      */
-    function getOperator(): string
-    {
+    function getOperator(): string {
         return "ET";
     }
 
@@ -24,13 +22,11 @@ class EndTextObjectOperator extends AbstractOperator
      * Parst den Operatoren zu einem String, wie er in einem ContentStream vorkommt
      * @return string
      */
-    function __toString(): string
-    {
+    function __toString(): string {
         return "ET\n";
     }
 
-    public function isGraphicsStateOperator(): bool
-    {
+    public function isGraphicsStateOperator(): bool {
         return true;
     }
 }

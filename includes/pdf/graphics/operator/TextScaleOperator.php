@@ -9,8 +9,7 @@ use pdf\object\PdfNumber;
  * Operator zum Setzen der horizontalen Skalierung in Prozent
  * @package pdf\graphics\operator
  */
-class TextScaleOperator extends AbstractOperator
-{
+class TextScaleOperator extends AbstractOperator {
     /**
      * Horizontale Skalierung des Textes in Prozent
      * @var PdfNumber
@@ -19,12 +18,12 @@ class TextScaleOperator extends AbstractOperator
 
     /**
      * TextScaleOperator constructor.
+     *
      * @param PdfNumber $scale Horizontale Skalierung des Textes in Prozent
      * @param OperatorMetadata|null $operatorMetadata Metadaten zu einem Operatoren, wenn ein ContentStream analysiert wird. Wird nicht benötigt für einen neu generierten ContentStream.
      */
-    public function __construct(PdfNumber $scale, OperatorMetadata $operatorMetadata = null)
-    {
-        parent::__construct($operatorMetadata);
+    public function __construct( PdfNumber $scale, OperatorMetadata $operatorMetadata = null ) {
+        parent::__construct( $operatorMetadata );
         $this->scale = $scale;
     }
 
@@ -32,8 +31,7 @@ class TextScaleOperator extends AbstractOperator
      * Liefert den Operatoren, wie er im ContentStream vorkommt
      * @return string
      */
-    function getOperator(): string
-    {
+    function getOperator(): string {
         return "Tz";
     }
 
@@ -41,21 +39,18 @@ class TextScaleOperator extends AbstractOperator
      * Parst den Operatoren zu einem String, wie er in einem ContentStream vorkommt
      * @return string
      */
-    function __toString(): string
-    {
+    function __toString(): string {
         return $this->scale->toString() . " Tz\n";
     }
 
-    public function isGraphicsStateOperator(): bool
-    {
+    public function isGraphicsStateOperator(): bool {
         return true;
     }
 
     /**
      * @return PdfNumber
      */
-    public function getScale(): PdfNumber
-    {
+    public function getScale(): PdfNumber {
         return $this->scale;
     }
 }

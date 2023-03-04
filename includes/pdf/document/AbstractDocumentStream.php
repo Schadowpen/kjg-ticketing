@@ -1,4 +1,5 @@
 <?php
+
 namespace pdf\document;
 
 use pdf\indirectObject\PdfStream;
@@ -10,22 +11,22 @@ use pdf\PdfFile;
  * Zudem wird, als IndirectObject bezeichnet, auf den PdfStream verwiesen, der den Stream beinhaltet.
  * @package pdf\document
  */
-abstract class AbstractDocumentStream extends AbstractDocumentObject
-{
+abstract class AbstractDocumentStream extends AbstractDocumentObject {
     /**
      * Überschreibt den Typ des IndirectObject als PdfStream
      * @var PdfStream
      */
     protected $indirectObject;
 
-    public function __construct($pdfObject, PdfFile $pdfFile)
-    {
-        parent::__construct($pdfObject, $pdfFile);
+    public function __construct( $pdfObject, PdfFile $pdfFile ) {
+        parent::__construct( $pdfObject, $pdfFile );
 
-        if ($this->indirectObject === null)
-            throw new \Exception("No PdfStream given to Document Stream");
-        if (!($this->indirectObject instanceof PdfStream))
-            throw new \Exception("The given IndirectObject to this DocumentStream is no PdfStream");
+        if ( $this->indirectObject === null ) {
+            throw new \Exception( "No PdfStream given to Document Stream" );
+        }
+        if ( ! ( $this->indirectObject instanceof PdfStream ) ) {
+            throw new \Exception( "The given IndirectObject to this DocumentStream is no PdfStream" );
+        }
     }
 
     /**
@@ -33,15 +34,16 @@ abstract class AbstractDocumentStream extends AbstractDocumentObject
      * @return string
      * @throws \Exception Wenn der Stream nicht dekomprimiert werden kann
      */
-    public function getStream() : string {
+    public function getStream(): string {
         return $this->indirectObject->getDecompressedStream();
     }
 
     /**
      * Setzt den Stream eines Dokument-Objektes
+     *
      * @param string $stream
      */
-    public function setStream(string $stream) {
-        $this->indirectObject->setDecompressedStream($stream);
+    public function setStream( string $stream ) {
+        $this->indirectObject->setDecompressedStream( $stream );
     }
 }

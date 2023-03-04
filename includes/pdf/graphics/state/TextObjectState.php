@@ -12,8 +12,7 @@ use pdf\graphics\TransformationMatrix;
  * AdditionalGraphicsState, der nur innerhalb eines Text Objekts Verwendung finden soll.
  * @package pdf\graphics\state
  */
-class TextObjectState extends AbstractAdditionalGraphicsState
-{
+class TextObjectState extends AbstractAdditionalGraphicsState {
     /**
      * Die Transformationsmatrix, wo das nächste Zeichen gezeichnet werden soll
      * @var TransformationMatrix
@@ -25,8 +24,7 @@ class TextObjectState extends AbstractAdditionalGraphicsState
      */
     protected $textLineMatrix;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->textMatrix = new TransformationMatrix();
         $this->textLineMatrix = new TransformationMatrix();
     }
@@ -34,51 +32,48 @@ class TextObjectState extends AbstractAdditionalGraphicsState
     /**
      * @return TransformationMatrix
      */
-    public function getTextMatrix(): TransformationMatrix
-    {
+    public function getTextMatrix(): TransformationMatrix {
         return $this->textMatrix;
     }
 
     /**
      * @param TransformationMatrix $textMatrix
      */
-    public function setTextMatrix(TransformationMatrix $textMatrix): void
-    {
+    public function setTextMatrix( TransformationMatrix $textMatrix ): void {
         $this->textMatrix = $textMatrix;
     }
 
     /**
      * @return TransformationMatrix
      */
-    public function getTextLineMatrix(): TransformationMatrix
-    {
+    public function getTextLineMatrix(): TransformationMatrix {
         return $this->textLineMatrix;
     }
 
     /**
      * @param TransformationMatrix $textLineMatrix
      */
-    public function setTextLineMatrix(TransformationMatrix $textLineMatrix): void
-    {
+    public function setTextLineMatrix( TransformationMatrix $textLineMatrix ): void {
         $this->textLineMatrix = $textLineMatrix;
     }
 
     /**
      * @param TransformationMatrix $matrix
+     *
      * @see TextObjectState::setTextMatrix()
      * @see TextObjectState::setTextLineMatrix()
      */
-    public function setTextMatrixAndTextLineMatrix(TransformationMatrix $matrix): void {
+    public function setTextMatrixAndTextLineMatrix( TransformationMatrix $matrix ): void {
         $this->textMatrix = $matrix;
         $this->textLineMatrix = $matrix;
     }
 
     /**
      * @param GraphicsState $graphicsState GraphicsState, in dem der TextObjectState vorkommt.
+     *
      * @return TransformationMatrix
      */
-    public function getTextRenderingMatrix(GraphicsState $graphicsState): TransformationMatrix
-    {
+    public function getTextRenderingMatrix( GraphicsState $graphicsState ): TransformationMatrix {
         $textState = $graphicsState->getTextState();
         $additionalMatrix = new TransformationMatrix(
             $textState->getTextFontSize()->getValue() * $textState->getHorizontalScaling()->getValue(),
@@ -88,6 +83,7 @@ class TextObjectState extends AbstractAdditionalGraphicsState
             0,
             $textState->getTextRise()->getValue()
         );
-        return $graphicsState->getCurrentTransformationMatrix()->addTransformation($this->textMatrix)->addTransformation($additionalMatrix);
+
+        return $graphicsState->getCurrentTransformationMatrix()->addTransformation( $this->textMatrix )->addTransformation( $additionalMatrix );
     }
 }

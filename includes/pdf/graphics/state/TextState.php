@@ -1,4 +1,5 @@
 <?php
+
 namespace pdf\graphics\state;
 
 use pdf\document\Font;
@@ -21,8 +22,7 @@ use pdf\object\PdfNumber;
  * TextState innerhalb eines GraphicsState
  * @package pdf\graphics
  */
-class TextState
-{
+class TextState {
     /**
      * Platz zwischen zwei Charakteren, in Text Space
      * @var PdfNumber
@@ -80,22 +80,21 @@ class TextState
     /**
      * Erzeugt einen neuen TextState mit Standardwerten
      */
-    public function __construct()
-    {
-        $this->characterSpacing = new PdfNumber(0);
-        $this->wordSpacing = new PdfNumber(0);
-        $this->horizontalScaling = new PdfNumber(100);
-        $this->leading = new PdfNumber(0);
+    public function __construct() {
+        $this->characterSpacing = new PdfNumber( 0 );
+        $this->wordSpacing = new PdfNumber( 0 );
+        $this->horizontalScaling = new PdfNumber( 100 );
+        $this->leading = new PdfNumber( 0 );
         $this->textFont = null;
         $this->textFontSize = null;
-        $this->textRenderMode = new PdfNumber(0);
-        $this->textRise = new PdfNumber(0);
-        $this->textKnockout = new PdfBoolean(true);
+        $this->textRenderMode = new PdfNumber( 0 );
+        $this->textRise = new PdfNumber( 0 );
+        $this->textKnockout = new PdfBoolean( true );
     }
 
-    public function reactToOperator(AbstractOperator $operator) : TextState {
+    public function reactToOperator( AbstractOperator $operator ): TextState {
         $newTextState = clone $this;
-        switch (get_class($operator)) {
+        switch ( get_class( $operator ) ) {
 
             case CharacterSpaceOperator::class:
                 $newTextState->characterSpacing = $operator->getCharSpace();
@@ -126,19 +125,22 @@ class TextState
                 $newTextState->textRise = $operator->getTextRise();
                 break;
         }
+
         return $newTextState;
     }
 
-    public function reactToExternalGraphicsState(GraphicsStateParameterDictionary $extGState): TextState {
+    public function reactToExternalGraphicsState( GraphicsStateParameterDictionary $extGState ): TextState {
         $newTextState = clone $this;
         $tmp = $extGState->getFont();
-        if ($tmp !== null) {
-            $newTextState->textFont = $tmp->getObject(0);
-            $newTextState->textFontSize = $tmp->getObject(1);
+        if ( $tmp !== null ) {
+            $newTextState->textFont = $tmp->getObject( 0 );
+            $newTextState->textFontSize = $tmp->getObject( 1 );
         }
         $tmp = $extGState->getTextKnockout();
-        if ($tmp !== null)
+        if ( $tmp !== null ) {
             $newTextState->textKnockout = $tmp;
+        }
+
         return $newTextState;
     }
 
@@ -146,72 +148,63 @@ class TextState
     /**
      * @return PdfNumber
      */
-    public function getCharacterSpacing(): PdfNumber
-    {
+    public function getCharacterSpacing(): PdfNumber {
         return $this->characterSpacing;
     }
 
     /**
      * @return PdfNumber
      */
-    public function getWordSpacing(): PdfNumber
-    {
+    public function getWordSpacing(): PdfNumber {
         return $this->wordSpacing;
     }
 
     /**
      * @return PdfNumber
      */
-    public function getHorizontalScaling(): PdfNumber
-    {
+    public function getHorizontalScaling(): PdfNumber {
         return $this->horizontalScaling;
     }
 
     /**
      * @return PdfNumber
      */
-    public function getLeading(): PdfNumber
-    {
+    public function getLeading(): PdfNumber {
         return $this->leading;
     }
 
     /**
      * @return Font|null
      */
-    public function getTextFont(): ?Font
-    {
+    public function getTextFont(): ?Font {
         return $this->textFont;
     }
 
     /**
      * @return PdfNumber
      */
-    public function getTextFontSize(): PdfNumber
-    {
+    public function getTextFontSize(): PdfNumber {
         return $this->textFontSize;
     }
 
     /**
      * @return PdfNumber
      */
-    public function getTextRenderMode(): PdfNumber
-    {
+    public function getTextRenderMode(): PdfNumber {
         return $this->textRenderMode;
     }
 
     /**
      * @return PdfNumber
      */
-    public function getTextRise(): PdfNumber
-    {
+    public function getTextRise(): PdfNumber {
         return $this->textRise;
     }
 
     /**
      * @return PdfBoolean
      */
-    public function getTextKnockout(): PdfBoolean
-    {
+    public function getTextKnockout(): PdfBoolean {
         return $this->textKnockout;
     }
 
@@ -219,18 +212,18 @@ class TextState
     /**
      * @param PdfNumber $leading Abstand zwischen zwei Zeilen, in Text Space
      */
-    public function setLeading(PdfNumber $leading)
-    {
+    public function setLeading( PdfNumber $leading ) {
         $this->leading = $leading;
     }
 
     /**
      * Setzt Word-Spacint und Character-Spacing im TextState.
      * Diese Funktion sollte nur vom ComplexTextOperator genutzt werden.
+     *
      * @param PdfNumber $wordSpacing
      * @param PdfNumber $characterSpacing
      */
-    public function setWordAndCharacterSpacing(PdfNumber $wordSpacing, PdfNumber $characterSpacing) {
+    public function setWordAndCharacterSpacing( PdfNumber $wordSpacing, PdfNumber $characterSpacing ) {
         $this->wordSpacing = $wordSpacing;
         $this->characterSpacing = $characterSpacing;
     }

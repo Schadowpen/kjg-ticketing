@@ -10,15 +10,12 @@ use pdf\graphics\Point;
  * Hier werden mehrere Operatoren in einer Klasse zusammengefasst.
  * @package pdf\graphics\operator
  */
-abstract class PathConstructionOperator extends AbstractOperator
-{
-    public function isGraphicsStateOperator(): bool
-    {
+abstract class PathConstructionOperator extends AbstractOperator {
+    public function isGraphicsStateOperator(): bool {
         return true;
     }
 
-    public function isRenderingOperator(): bool
-    {
+    public function isRenderingOperator(): bool {
         return false;
     }
 
@@ -27,5 +24,5 @@ abstract class PathConstructionOperator extends AbstractOperator
      * Sollte der Operator einen Unterpfad beenden, wird null zurückgeliefert
      * @return null|Point
      */
-    public abstract function getLastPoint() : ?Point;
+    public abstract function getLastPoint(): ?Point;
 }

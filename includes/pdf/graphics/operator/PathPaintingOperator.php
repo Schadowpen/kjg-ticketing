@@ -8,15 +8,12 @@ namespace pdf\graphics\operator;
  * Da es nicht relevant ist, werden hier mehrere Operatoren mit einer Klasse zusammengefasst.
  * @package pdf\graphics\operator
  */
-abstract class PathPaintingOperator extends AbstractOperator
-{
-    public function isGraphicsStateOperator(): bool
-    {
+abstract class PathPaintingOperator extends AbstractOperator {
+    public function isGraphicsStateOperator(): bool {
         return true;
     }
 
-    public function isRenderingOperator(): bool
-    {
+    public function isRenderingOperator(): bool {
         return true;
     }
 }

@@ -8,15 +8,13 @@ namespace pdf\graphics\operator;
  * Dieser Operator sollte direkt vor einem Path Painting Operator aufgerufen werden.
  * @package pdf\graphics\operator
  */
-class ClippingPathNonzeroOperator extends AbstractOperator
-{
+class ClippingPathNonzeroOperator extends AbstractOperator {
 
     /**
      * Liefert den Operatoren, wie er im ContentStream vorkommt
      * @return string
      */
-    function getOperator(): string
-    {
+    function getOperator(): string {
         return "W";
     }
 
@@ -24,13 +22,11 @@ class ClippingPathNonzeroOperator extends AbstractOperator
      * Parst den Operatoren zu einem String, wie er in einem ContentStream vorkommt
      * @return string
      */
-    function __toString(): string
-    {
+    function __toString(): string {
         return "W\n";
     }
 
-    public function isGraphicsStateOperator(): bool
-    {
+    public function isGraphicsStateOperator(): bool {
         return true;
     }
 }

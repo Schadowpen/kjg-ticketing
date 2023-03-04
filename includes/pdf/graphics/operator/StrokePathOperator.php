@@ -9,15 +9,13 @@ namespace pdf\graphics\operator;
  * Offene Unterpfade, also welche die einen Anfang und ein Ende haben, werden vorher geschlossen
  * @package pdf\graphics\operator
  */
-class StrokePathOperator extends PathPaintingOperator
-{
+class StrokePathOperator extends PathPaintingOperator {
 
     /**
      * Liefert den Operatoren, wie er im ContentStream vorkommt
      * @return string
      */
-    function getOperator(): string
-    {
+    function getOperator(): string {
         return "S";
     }
 
@@ -26,8 +24,7 @@ class StrokePathOperator extends PathPaintingOperator
      * Dieser Beinhaltet auch einen EOL-Marker am Ende des Operatoren
      * @return string
      */
-    function __toString(): string
-    {
+    function __toString(): string {
         return "S\n";
     }
 }

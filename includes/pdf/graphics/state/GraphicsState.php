@@ -58,8 +58,7 @@ use pdf\object\PdfNumber;
  * Der (Device Independent) Graphics State, mit welchem ContentStreams arbeiten
  * @package pdf\graphics
  */
-class GraphicsState
-{
+class GraphicsState {
     /**
      * Transformationsmatrix, um von User Space in Device Space umzurechnen
      * @var TransformationMatrix
@@ -177,48 +176,50 @@ class GraphicsState
 
     /**
      * Initialisiert einen GraphicsState mit Standardwerten
+     *
      * @param TransformationMatrix $startTransformationMatrix Anfängliche Transformationsmatrix, die Device Space in Default User Space umrechnet
      * @param mixed $clippingPath Anfänglicher Clipping Path für den sichtbaren Bereich
+     *
      * @throws \Exception Wo auch immer da eine Exception geworfen wird, whatever
      */
-    public function __construct(TransformationMatrix $startTransformationMatrix, $clippingPath)
-    {
+    public function __construct( TransformationMatrix $startTransformationMatrix, $clippingPath ) {
         $this->currentTransformationMatrix = $startTransformationMatrix;
         $this->clippingPath = $clippingPath;
-        $this->colorSpaceStroking = new PdfName("DeviceGray");
-        $this->colorStroking = new ColorGray(0);
-        $this->colorSpaceFilling = new PdfName("DeviceGray");
-        $this->colorFilling = new ColorGray(0);
+        $this->colorSpaceStroking = new PdfName( "DeviceGray" );
+        $this->colorStroking = new ColorGray( 0 );
+        $this->colorSpaceFilling = new PdfName( "DeviceGray" );
+        $this->colorFilling = new ColorGray( 0 );
         $this->textState = new TextState();
-        $this->lineWidth = new PdfNumber(1.0);
+        $this->lineWidth = new PdfNumber( 1.0 );
         $this->lineCap = 0;
         $this->lineJoin = 0;
-        $this->miterLimit = new PdfNumber(10.0);
-        $this->dashPatternArray = new PdfArray([]);
-        $this->dashPatternPhase = new PdfNumber(0);
-        $this->renderingIntent = new PdfName("RelativeColorimetric");
-        $this->strokeAdjustment = new PdfBoolean(false);
-        $this->blendMode = new PdfName("Normal");
-        $this->softMask = new PdfName("None");
-        $this->alphaConstantPainting = new PdfNumber(1.0);
-        $this->alphaConstantStroking = new PdfNumber(1.0);
-        $this->alphaSource = new PdfBoolean(false);
+        $this->miterLimit = new PdfNumber( 10.0 );
+        $this->dashPatternArray = new PdfArray( [] );
+        $this->dashPatternPhase = new PdfNumber( 0 );
+        $this->renderingIntent = new PdfName( "RelativeColorimetric" );
+        $this->strokeAdjustment = new PdfBoolean( false );
+        $this->blendMode = new PdfName( "Normal" );
+        $this->softMask = new PdfName( "None" );
+        $this->alphaConstantPainting = new PdfNumber( 1.0 );
+        $this->alphaConstantStroking = new PdfNumber( 1.0 );
+        $this->alphaSource = new PdfBoolean( false );
         $this->additionalGraphicsState = null;
     }
 
     /**
      * Reagiert auf einen Operatoren, der den GraphicsStateStack beeinflusst.
      * Gibt den neuen GraphicsState zurück, der jetzige wird nicht beeinflusst.
+     *
      * @param AbstractOperator $operator
+     *
      * @return GraphicsState
      * @throws \Exception Wenn der Operator definitiv nicht erlaubt ist.
      */
-    public function reactToOperator(AbstractOperator $operator): GraphicsState
-    {
+    public function reactToOperator( AbstractOperator $operator ): GraphicsState {
         $newGraphicsState = clone $this;
-        switch (get_class($operator)) {
+        switch ( get_class( $operator ) ) {
             case ModifyTransformationMatrixOperator::class:
-                $newGraphicsState->currentTransformationMatrix = $this->currentTransformationMatrix->addTransformation($operator->getTransformationMatrix());
+                $newGraphicsState->currentTransformationMatrix = $this->currentTransformationMatrix->addTransformation( $operator->getTransformationMatrix() );
                 break;
 
             case LineWidthOperator::class:
@@ -254,55 +255,67 @@ class GraphicsState
                 /** @var GraphicsStateParameterDictionary $extGState */
                 $extGState = $operator->getExternalGraphicsState();
                 $tmp = $extGState->getLineWidth();
-                if ($tmp !== null)
+                if ( $tmp !== null ) {
                     $newGraphicsState->lineWidth = $tmp;
+                }
                 $tmp = $extGState->getLineCapStyle();
-                if ($tmp !== null)
+                if ( $tmp !== null ) {
                     $newGraphicsState->lineCap = $tmp->getValue();
+                }
                 $tmp = $extGState->getLineJoinStyle();
-                if ($tmp !== null)
+                if ( $tmp !== null ) {
                     $newGraphicsState->lineJoin = $tmp->getValue();
+                }
                 $tmp = $extGState->getMiterLimit();
-                if ($tmp !== null)
+                if ( $tmp !== null ) {
                     $newGraphicsState->miterLimit = $tmp;
+                }
                 $tmp = $extGState->getDashPattern();
-                if ($tmp !== null) {
-                    $newGraphicsState->dashPatternArray = $tmp->getObject(0);
-                    $newGraphicsState->dashPatternPhase = $tmp->getObject(1);
+                if ( $tmp !== null ) {
+                    $newGraphicsState->dashPatternArray = $tmp->getObject( 0 );
+                    $newGraphicsState->dashPatternPhase = $tmp->getObject( 1 );
                 }
                 $tmp = $extGState->getRenderingIntent();
-                if ($tmp !== null)
+                if ( $tmp !== null ) {
                     $newGraphicsState->renderingIntent = $tmp;
+                }
                 $tmp = $extGState->getAutomaticStrokeAdjustment();
-                if ($tmp !== null)
+                if ( $tmp !== null ) {
                     $newGraphicsState->strokeAdjustment = $tmp;
+                }
                 $tmp = $extGState->getBlendMode();
-                if ($tmp !== null)
+                if ( $tmp !== null ) {
                     $newGraphicsState->blendMode = $tmp;
+                }
                 $tmp = $extGState->getSoftMask();
-                if ($tmp !== null)
+                if ( $tmp !== null ) {
                     $newGraphicsState->softMask = $tmp;
+                }
                 $tmp = $extGState->getStrokingAlphaConstant();
-                if ($tmp !== null)
+                if ( $tmp !== null ) {
                     $newGraphicsState->alphaConstantStroking = $tmp;
+                }
                 $tmp = $extGState->getNonstrokingAlphaConstant();
-                if ($tmp !== null)
+                if ( $tmp !== null ) {
                     $newGraphicsState->alphaConstantPainting = $tmp;
+                }
                 $tmp = $extGState->getAlphaSource();
-                if ($tmp !== null)
+                if ( $tmp !== null ) {
                     $newGraphicsState->alphaSource = $tmp;
-                $newGraphicsState->textState = $newGraphicsState->textState->reactToExternalGraphicsState($extGState);
+                }
+                $newGraphicsState->textState = $newGraphicsState->textState->reactToExternalGraphicsState( $extGState );
                 break;
 
             // AdditionalGraphicsState
             case PathBeginOperator::class:
             case PathRectangleOperator::class:
-                if (!$this->additionalGraphicsState instanceof PathConstructionState)
+                if ( ! $this->additionalGraphicsState instanceof PathConstructionState ) {
                     $newGraphicsState->additionalGraphicsState = new PathConstructionState();
+                }
             case PathLineOperator::class:
             case PathBezierOperator::class:
             case PathCloseOperator::class:
-                $newGraphicsState->additionalGraphicsState = $newGraphicsState->getPathConstructionState()->reactToOperator($operator);
+                $newGraphicsState->additionalGraphicsState = $newGraphicsState->getPathConstructionState()->reactToOperator( $operator );
                 break;
 
             case BeginTextObjectOperator::class:
@@ -325,26 +338,26 @@ class GraphicsState
             // Text Operators
             case TextNewLineAndLeadingOperator::class:
                 $newGraphicsState->textState = clone $this->textState;
-                $newGraphicsState->textState->setLeading(new PdfNumber(-$operator->getTy()->getValue()));
+                $newGraphicsState->textState->setLeading( new PdfNumber( - $operator->getTy()->getValue() ) );
             case TextNewLineOperator::class:
                 $textObjectState = $this->getTextObjectState();
                 $newGraphicsState->additionalGraphicsState = clone $textObjectState;
-                $newGraphicsState->additionalGraphicsState->setTextMatrixAndTextLineMatrix($textObjectState->getTextLineMatrix()->addTransformation(TransformationMatrix::translation($operator->getTx()->getValue(), $operator->getTy()->getValue())));
+                $newGraphicsState->additionalGraphicsState->setTextMatrixAndTextLineMatrix( $textObjectState->getTextLineMatrix()->addTransformation( TransformationMatrix::translation( $operator->getTx()->getValue(), $operator->getTy()->getValue() ) ) );
                 break;
             case TextMatrixOperator::class:
                 $newGraphicsState->additionalGraphicsState = clone $this->getTextObjectState();
-                $newGraphicsState->additionalGraphicsState->setTextMatrixAndTextLineMatrix($operator->getTextMatrix());
+                $newGraphicsState->additionalGraphicsState->setTextMatrixAndTextLineMatrix( $operator->getTextMatrix() );
                 break;
             case TextNextLineOperator::class:
                 $textObjectState = $this->getTextObjectState();
                 $newGraphicsState->additionalGraphicsState = clone $textObjectState;
-                $newGraphicsState->additionalGraphicsState->setTextMatrixAndTextLineMatrix($textObjectState->getTextLineMatrix()->addTransformation(TransformationMatrix::translation(0, -$this->textState->getLeading()->getValue())));
+                $newGraphicsState->additionalGraphicsState->setTextMatrixAndTextLineMatrix( $textObjectState->getTextLineMatrix()->addTransformation( TransformationMatrix::translation( 0, - $this->textState->getLeading()->getValue() ) ) );
                 break;
             case TextOperator::class:
             case TextInNewLineOperator::class:
             case ComplexTextOperator::class:
             case TextWithSpacesOperator::class:
-                $operator->calculateText($newGraphicsState);
+                $operator->calculateText( $newGraphicsState );
                 break;
 
             // Clipping
@@ -359,7 +372,7 @@ class GraphicsState
                 $newGraphicsState->colorStroking = null;
                 break;
             case ColorRGBStrokingOperator::class:
-                $newGraphicsState->colorSpaceStroking = new PdfName("DeviceRGB");
+                $newGraphicsState->colorSpaceStroking = new PdfName( "DeviceRGB" );
                 $newGraphicsState->colorStroking = $operator->getColor();
                 break;
             case ColorFillingOperator::class:
@@ -367,15 +380,16 @@ class GraphicsState
                 $newGraphicsState->colorFilling = null;
                 break;
             case ColorRGBFillingOperator::class:
-                $newGraphicsState->colorSpaceFilling = new PdfName("DeviceRGB");
+                $newGraphicsState->colorSpaceFilling = new PdfName( "DeviceRGB" );
                 $newGraphicsState->colorFilling = $operator->getColor();
                 break;
 
             // Text State Operators
             default:
-                $newGraphicsState->textState = $this->textState->reactToOperator($operator);
+                $newGraphicsState->textState = $this->textState->reactToOperator( $operator );
                 break;
         }
+
         return $newGraphicsState;
     }
 
@@ -383,16 +397,14 @@ class GraphicsState
     /**
      * @return TransformationMatrix
      */
-    public function getCurrentTransformationMatrix(): TransformationMatrix
-    {
+    public function getCurrentTransformationMatrix(): TransformationMatrix {
         return $this->currentTransformationMatrix;
     }
 
     /**
      * @return PdfArray|PdfName|null
      */
-    public function getColorSpaceStroking()
-    {
+    public function getColorSpaceStroking() {
         return $this->colorSpaceStroking;
     }
 
@@ -400,136 +412,119 @@ class GraphicsState
     /**
      * @return Color|null
      */
-    public function getColorStroking(): ?Color
-    {
+    public function getColorStroking(): ?Color {
         return $this->colorStroking;
     }
 
     /**
      * @return PdfArray|PdfName|null
      */
-    public function getColorSpaceFilling()
-    {
+    public function getColorSpaceFilling() {
         return $this->colorSpaceFilling;
     }
 
     /**
      * @return Color|null
      */
-    public function getColorFilling(): ?Color
-    {
+    public function getColorFilling(): ?Color {
         return $this->colorFilling;
     }
 
     /**
      * @return TextState
      */
-    public function getTextState(): TextState
-    {
+    public function getTextState(): TextState {
         return $this->textState;
     }
 
     /**
      * @return PdfNumber
      */
-    public function getLineWidth(): PdfNumber
-    {
+    public function getLineWidth(): PdfNumber {
         return $this->lineWidth;
     }
 
     /**
      * @return int
      */
-    public function getLineCap(): int
-    {
+    public function getLineCap(): int {
         return $this->lineCap;
     }
 
     /**
      * @return int
      */
-    public function getLineJoin(): int
-    {
+    public function getLineJoin(): int {
         return $this->lineJoin;
     }
 
     /**
      * @return PdfNumber
      */
-    public function getMiterLimit(): PdfNumber
-    {
+    public function getMiterLimit(): PdfNumber {
         return $this->miterLimit;
     }
 
     /**
      * @return PdfArray
      */
-    public function getDashPatternArray(): PdfArray
-    {
+    public function getDashPatternArray(): PdfArray {
         return $this->dashPatternArray;
     }
 
     /**
      * @return PdfNumber
      */
-    public function getDashPatternPhase(): PdfNumber
-    {
+    public function getDashPatternPhase(): PdfNumber {
         return $this->dashPatternPhase;
     }
 
     /**
      * @return PdfName
      */
-    public function getRenderingIntent(): PdfName
-    {
+    public function getRenderingIntent(): PdfName {
         return $this->renderingIntent;
     }
 
     /**
      * @return PdfBoolean
      */
-    public function getStrokeAdjustment(): PdfBoolean
-    {
+    public function getStrokeAdjustment(): PdfBoolean {
         return $this->strokeAdjustment;
     }
 
     /**
      * @return PdfArray|PdfName
      */
-    public function getBlendMode()
-    {
+    public function getBlendMode() {
         return $this->blendMode;
     }
 
     /**
      * @return PdfDictionary|PdfName
      */
-    public function getSoftMask()
-    {
+    public function getSoftMask() {
         return $this->softMask;
     }
 
     /**
      * @return PdfNumber
      */
-    public function getAlphaConstantPainting(): PdfNumber
-    {
+    public function getAlphaConstantPainting(): PdfNumber {
         return $this->alphaConstantPainting;
     }
 
     /**
      * @return PdfNumber
      */
-    public function getAlphaConstantStroking(): PdfNumber
-    {
+    public function getAlphaConstantStroking(): PdfNumber {
         return $this->alphaConstantStroking;
     }
 
     /**
      * @return PdfBoolean
      */
-    public function getAlphaSource(): PdfBoolean
-    {
+    public function getAlphaSource(): PdfBoolean {
         return $this->alphaSource;
     }
 
@@ -538,11 +533,11 @@ class GraphicsState
      * @return PathConstructionState
      * @throws \Exception Wenn gerade kein Pfad gezeichnet wird
      */
-    public function getPathConstructionState(): PathConstructionState
-    {
-        if ($this->additionalGraphicsState instanceof PathConstructionState)
+    public function getPathConstructionState(): PathConstructionState {
+        if ( $this->additionalGraphicsState instanceof PathConstructionState ) {
             return $this->additionalGraphicsState;
-        throw new \Exception("There is no Path under construction, so no PathConstructionState is applied");
+        }
+        throw new \Exception( "There is no Path under construction, so no PathConstructionState is applied" );
     }
 
     /**
@@ -550,11 +545,11 @@ class GraphicsState
      * @return TextObjectState
      * @throws \Exception Wenn gerade kein Text Objekt gezeichnet wird
      */
-    public function getTextObjectState(): TextObjectState
-    {
-        if ($this->additionalGraphicsState instanceof TextObjectState)
+    public function getTextObjectState(): TextObjectState {
+        if ( $this->additionalGraphicsState instanceof TextObjectState ) {
             return $this->additionalGraphicsState;
-        throw new \Exception("There is no text object under construction, so no TextObjectState is applied");
+        }
+        throw new \Exception( "There is no text object under construction, so no TextObjectState is applied" );
     }
 
     /**
@@ -563,13 +558,13 @@ class GraphicsState
      * @return TextObjectState
      * @throws \Exception Wenn gerade kein Text Objekt gezeichnet wird
      */
-    public function cloneTextObjectState(): TextObjectState
-    {
-        if ($this->additionalGraphicsState instanceof TextObjectState) {
+    public function cloneTextObjectState(): TextObjectState {
+        if ( $this->additionalGraphicsState instanceof TextObjectState ) {
             $this->additionalGraphicsState = clone $this->additionalGraphicsState;
+
             return $this->additionalGraphicsState;
         }
-        throw new \Exception("There is no text object under construction, so no TextObjectState is applied");
+        throw new \Exception( "There is no text object under construction, so no TextObjectState is applied" );
     }
 
     /**
@@ -577,8 +572,9 @@ class GraphicsState
      * Diese Funktion ergibt nur für die calculateText()-Funktion im ComplexTextOperator Sinn, da dieser den TextState verändern muss.
      * @return TextState
      */
-    public function cloneTextState() : TextState {
+    public function cloneTextState(): TextState {
         $this->textState = clone $this->textState;
+
         return $this->textState;
     }
 }

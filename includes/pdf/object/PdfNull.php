@@ -6,16 +6,14 @@ namespace pdf\object;
  * Repräsentiert ein Null Objekt in einer PDF-Datei
  * @package pdf\object
  */
-class PdfNull extends PdfAbstractObject
-{
+class PdfNull extends PdfAbstractObject {
 
     /**
      * Ob vor dem Objekt ein "white space" benötigt wird, weil das Objekt nicht mit einem Trennzeichen beginnt.
      * @return bool
      * @see PdfAbstractObject::needsWhiteSpaceAfter() Ein Trennzeichen wird nur benötigt, wenn beim vorherigen Objekt ebenfalls ein Trennzeichen benötigt wird.
      */
-    public function needsWhiteSpaceBefore(): bool
-    {
+    public function needsWhiteSpaceBefore(): bool {
         return true;
     }
 
@@ -24,8 +22,7 @@ class PdfNull extends PdfAbstractObject
      * @return bool
      * @see PdfAbstractObject::needsWhiteSpaceBefore() Ein Trennzeichen wird nur benötigt, wenn beim nachfolgenden Objekt ebenfalls ein Trennzeichen benötigt wird.
      */
-    public function needsWhiteSpaceAfter(): bool
-    {
+    public function needsWhiteSpaceAfter(): bool {
         return true;
     }
 
@@ -33,8 +30,7 @@ class PdfNull extends PdfAbstractObject
      * Liefert den Wert dieses Objektes zurück.
      * @return null
      */
-    public function getValue()
-    {
+    public function getValue() {
         return null;
     }
 
@@ -42,23 +38,24 @@ class PdfNull extends PdfAbstractObject
      * Erstellt für dieses Objekt einen String zum einbetten in eine PDF-Datei
      * @return string
      */
-    public function toString(): string
-    {
+    public function toString(): string {
         return "null";
     }
 
     /**
      * Wenn der ObjectParser ein bestimmtes Objekt anhand des letzten Tokens erkannt hat, kann mit dieser Funktion das Objekt erzeugt werden.
      * Es wird angenommen, dass die Delimiter am Anfang des Objektes bereits vom Tokenizer genutzt wurden, der Inhalt und die Delimiter am Ende jedoch nicht.
+     *
      * @param ObjectParser $objectParser ObjectParser, welcher dieses Objekt erkannt hat
-     * @throws \Exception Wenn der Token nicht "null" Enthält
+     *
      * @return PdfNull ein neues Objekt
+     * @throws \Exception Wenn der Token nicht "null" Enthält
      */
-    public static function parse(ObjectParser $objectParser): PdfAbstractObject
-    {
+    public static function parse( ObjectParser $objectParser ): PdfAbstractObject {
         $token = $objectParser->getTokenizer()->getToken();
-        if ($token !== "null")
-            throw new \Exception("Could not parse null Pdf Object");
+        if ( $token !== "null" ) {
+            throw new \Exception( "Could not parse null Pdf Object" );
+        }
 
         return new PdfNull();
     }
@@ -67,8 +64,7 @@ class PdfNull extends PdfAbstractObject
      * Erzeugt eine (tiefe) Kopie dieses Objektes
      * @return PdfNull
      */
-    public function clone(): PdfAbstractObject
-    {
+    public function clone(): PdfAbstractObject {
         return new PdfNull();
     }
 }

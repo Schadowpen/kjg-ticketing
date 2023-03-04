@@ -10,8 +10,7 @@ use pdf\graphics\ColorRGB;
  * Operator zum Setzen der Farbe für Linien Zeichnen auf einen RGB-Wert
  * @package pdf\graphics\operator
  */
-class ColorRGBStrokingOperator extends AbstractOperator
-{
+class ColorRGBStrokingOperator extends AbstractOperator {
     /**
      * Neue Farbe für Linien zeichnen
      * @var ColorRGB
@@ -20,12 +19,12 @@ class ColorRGBStrokingOperator extends AbstractOperator
 
     /**
      * ColorRGBStrokingOperator constructor.
+     *
      * @param ColorRGB $color Neue Farbe für Linien zeichnen
      * @param OperatorMetadata|null $operatorMetadata Metadaten zu einem Operatoren, wenn ein ContentStream analysiert wird. Wird nicht benötigt für einen neu generierten ContentStream.
      */
-    public function __construct(ColorRGB $color, OperatorMetadata $operatorMetadata = null)
-    {
-        parent::__construct($operatorMetadata);
+    public function __construct( ColorRGB $color, OperatorMetadata $operatorMetadata = null ) {
+        parent::__construct( $operatorMetadata );
         $this->color = $color;
     }
 
@@ -33,8 +32,7 @@ class ColorRGBStrokingOperator extends AbstractOperator
      * Liefert den Operatoren, wie er im ContentStream vorkommt
      * @return string
      */
-    function getOperator(): string
-    {
+    function getOperator(): string {
         return "RG";
     }
 
@@ -42,23 +40,20 @@ class ColorRGBStrokingOperator extends AbstractOperator
      * Parst den Operatoren zu einem String, wie er in einem ContentStream vorkommt
      * @return string
      */
-    function __toString(): string
-    {
+    function __toString(): string {
         return $this->color->getRed() . " "
-            . $this->color->getGreen() . " "
-            . $this->color->getBlue() . " RG\n";
+               . $this->color->getGreen() . " "
+               . $this->color->getBlue() . " RG\n";
     }
 
-    public function isGraphicsStateOperator(): bool
-    {
+    public function isGraphicsStateOperator(): bool {
         return true;
     }
 
     /**
      * @return ColorRGB
      */
-    public function getColor(): ColorRGB
-    {
+    public function getColor(): ColorRGB {
         return $this->color;
     }
 }

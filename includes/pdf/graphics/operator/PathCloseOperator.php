@@ -1,4 +1,5 @@
 <?php
+
 namespace pdf\graphics\operator;
 
 
@@ -9,15 +10,13 @@ use pdf\graphics\Point;
  * Danach muss ein neuer Unterpfad mit dem m oder re Operatoren geöffnet werden
  * @package pdf\graphics\operator
  */
-class PathCloseOperator extends PathConstructionOperator
-{
+class PathCloseOperator extends PathConstructionOperator {
 
     /**
      * Liefert den Operatoren, wie er im ContentStream vorkommt
      * @return string
      */
-    function getOperator(): string
-    {
+    function getOperator(): string {
         return "h";
     }
 
@@ -26,8 +25,7 @@ class PathCloseOperator extends PathConstructionOperator
      * Dieser Beinhaltet auch einen EOL-Marker am Ende des Operatoren
      * @return string
      */
-    function __toString(): string
-    {
+    function __toString(): string {
         return "h\n";
     }
 
@@ -36,8 +34,7 @@ class PathCloseOperator extends PathConstructionOperator
      * Sollte der Operator einen Unterpfad beenden, wird null zurückgeliefert
      * @return null|Point
      */
-    public function getLastPoint(): ?Point
-    {
+    public function getLastPoint(): ?Point {
         return null;
     }
 }

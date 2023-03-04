@@ -8,8 +8,7 @@ use pdf\indirectObject\PdfIndirectObject;
  * Eintrag in einer CrossReferenceTable
  * @package pdf\crossReference
  */
-class CrossReferenceTableEntry
-{
+class CrossReferenceTableEntry {
     /**
      * Nummer des Objektes
      * @var int
@@ -38,13 +37,13 @@ class CrossReferenceTableEntry
 
     /**
      * Erzeugt einen neuen Eintrag.
+     *
      * @param $objNumber int Nummer des Objektes
      * @param $generationNumber int Generierungsnummer zwischen 0 und 65535 inklusive
      * @param $inUse bool Ob das Objekt genutzt (n/true) oder frei (f/false) ist
      * @param $byteOffset int Anzahl der Bytes bis zum Beginn des Objektes in der PDF-Datei
      */
-    public function __construct($objNumber, $generationNumber, $inUse, $byteOffset)
-    {
+    public function __construct( $objNumber, $generationNumber, $inUse, $byteOffset ) {
         $this->objNumber = $objNumber;
         $this->generationNumber = $generationNumber;
         $this->inUse = $inUse;
@@ -55,8 +54,7 @@ class CrossReferenceTableEntry
      * Gibt die eindeutige Nummer des Objektes zurück
      * @return int
      */
-    public function getObjNumber(): int
-    {
+    public function getObjNumber(): int {
         return $this->objNumber;
     }
 
@@ -64,8 +62,7 @@ class CrossReferenceTableEntry
      * Gibt die Generierungsnummer des Objektes zurück
      * @return int
      */
-    public function getGenerationNumber(): int
-    {
+    public function getGenerationNumber(): int {
         return $this->generationNumber;
     }
 
@@ -73,8 +70,7 @@ class CrossReferenceTableEntry
      * Gibt zurück, ob dieses Objekt benutzt wird oder frei ist
      * @return bool
      */
-    public function isInUse(): bool
-    {
+    public function isInUse(): bool {
         return $this->inUse;
     }
 
@@ -82,8 +78,7 @@ class CrossReferenceTableEntry
      * Gibt die Anzahl der Bytes bis zum Beginn des Objektes in der PDF-Datei zurück
      * @return int
      */
-    public function getByteOffset(): int
-    {
+    public function getByteOffset(): int {
         return $this->byteOffset;
     }
 
@@ -91,60 +86,61 @@ class CrossReferenceTableEntry
      * Gibt das in dem Eintrag referenzierte Objekt zurück
      * @return null|PdfIndirectObject
      */
-    public function getReferencedObject()
-    {
+    public function getReferencedObject() {
         return $this->referencedObject;
     }
 
     /**
      * Setzt die eindeutige Nummer des Objektes
+     *
      * @param int $objNumber
      */
-    public function setObjNumber(int $objNumber): void
-    {
+    public function setObjNumber( int $objNumber ): void {
         $this->objNumber = $objNumber;
-        if ($this->referencedObject != null)
-            $this->referencedObject->setObjectNumber($objNumber);
+        if ( $this->referencedObject != null ) {
+            $this->referencedObject->setObjectNumber( $objNumber );
+        }
     }
 
     /**
      * Setzt die Generierungsnummer des Objektes
+     *
      * @param int $generationNumber
      */
-    public function setGenerationNumber(int $generationNumber): void
-    {
+    public function setGenerationNumber( int $generationNumber ): void {
         $this->generationNumber = $generationNumber;
-        if ($this->referencedObject != null)
-            $this->referencedObject->setGenerationNumber($generationNumber);
+        if ( $this->referencedObject != null ) {
+            $this->referencedObject->setGenerationNumber( $generationNumber );
+        }
     }
 
     /**
      * Setzt, ob diese Objektnummer frei ist oder benutzt wird
+     *
      * @param bool $inUse
      */
-    public function setInUse(bool $inUse): void
-    {
+    public function setInUse( bool $inUse ): void {
         $this->inUse = $inUse;
     }
 
     /**
      * Setzt den Byte Offset zu dem Indirect Object in der Datei
+     *
      * @param int $byteOffset
      */
-    public function setByteOffset(int $byteOffset): void
-    {
+    public function setByteOffset( int $byteOffset ): void {
         $this->byteOffset = $byteOffset;
     }
 
     /**
      * Setzt das referenzierte Indirect Object
+     *
      * @param PdfIndirectObject $referencedObject
      */
-    public function setReferencedObject(PdfIndirectObject $referencedObject): void
-    {
+    public function setReferencedObject( PdfIndirectObject $referencedObject ): void {
         $this->referencedObject = $referencedObject;
-        $this->referencedObject->setObjectNumber($this->objNumber);
-        $this->referencedObject->setGenerationNumber($this->generationNumber);
+        $this->referencedObject->setObjectNumber( $this->objNumber );
+        $this->referencedObject->setGenerationNumber( $this->generationNumber );
         $this->inUse = true;
     }
 
@@ -152,13 +148,12 @@ class CrossReferenceTableEntry
      * Liefert einen (exakt 20 Zeichen langen) String zum einbetten in die CrossReferenceTable einer PDF-Datei
      * @return string
      */
-    public function toString(): string
-    {
-        return str_pad((string)$this->byteOffset, 10, "0", STR_PAD_LEFT)
-            . " "
-            . str_pad((string)$this->generationNumber, 5, "0", STR_PAD_LEFT)
-            . " "
-            . ($this->inUse ? "n" : "f")
-            . " \n";
+    public function toString(): string {
+        return str_pad( (string) $this->byteOffset, 10, "0", STR_PAD_LEFT )
+               . " "
+               . str_pad( (string) $this->generationNumber, 5, "0", STR_PAD_LEFT )
+               . " "
+               . ( $this->inUse ? "n" : "f" )
+               . " \n";
     }
 }

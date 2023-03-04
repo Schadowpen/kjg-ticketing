@@ -11,7 +11,7 @@ class TicketImageConfig {
     // possible values for content enum
     public const CONTENT_QR_CODE = "qr_code";
     public const CONTENT_SEATING_PLAN = "seating_plan";
-    
+
     public ?int $pdf_operator_number;
     public ?string $pdf_operator_name;
     public ?bool $pdf_resource_deletable;

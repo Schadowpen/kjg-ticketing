@@ -6,8 +6,7 @@ namespace pdf\object;
  * Ein PDF-Objekt, welches einen String beinhaltet
  * @package pdf\object
  */
-class PdfString extends PdfAbstractObject
-{
+class PdfString extends PdfAbstractObject {
     /**
      * In dem PdfString enthaltener, bereits geparster String
      * @var string
@@ -16,10 +15,10 @@ class PdfString extends PdfAbstractObject
 
     /**
      * PdfString constructor.
+     *
      * @param string $value In dem PdfString enthaltener String
      */
-    public function __construct(string $value)
-    {
+    public function __construct( string $value ) {
         $this->value = $value;
     }
 
@@ -28,8 +27,7 @@ class PdfString extends PdfAbstractObject
      * @return bool
      * @see PdfAbstractObject::needsWhiteSpaceAfter() Ein Trennzeichen wird nur benötigt, wenn beim vorherigen Objekt ebenfalls ein Trennzeichen benötigt wird.
      */
-    public function needsWhiteSpaceBefore(): bool
-    {
+    public function needsWhiteSpaceBefore(): bool {
         return false;
     }
 
@@ -38,8 +36,7 @@ class PdfString extends PdfAbstractObject
      * @return bool
      * @see PdfAbstractObject::needsWhiteSpaceBefore() Ein Trennzeichen wird nur benötigt, wenn beim nachfolgenden Objekt ebenfalls ein Trennzeichen benötigt wird.
      */
-    public function needsWhiteSpaceAfter(): bool
-    {
+    public function needsWhiteSpaceAfter(): bool {
         return false;
     }
 
@@ -47,8 +44,7 @@ class PdfString extends PdfAbstractObject
      * Liefert den Wert dieses Objektes zurück.
      * @return string
      */
-    public function getValue(): string
-    {
+    public function getValue(): string {
         return $this->value;
     }
 
@@ -56,15 +52,14 @@ class PdfString extends PdfAbstractObject
      * Erstellt für dieses Objekt einen String zum einbetten in eine PDF-Datei
      * @return string
      */
-    public function toString(): string
-    {
-        $valueLength = strlen($this->value);
+    public function toString(): string {
+        $valueLength = strlen( $this->value );
 
         $string = "(";
-        for ($i = 0; $i < $valueLength; ++$i) {
-            $byte = $this->value[$i];
+        for ( $i = 0; $i < $valueLength; ++ $i ) {
+            $byte = $this->value[ $i ];
 
-            switch ($byte) {
+            switch ( $byte ) {
                 // besondere Zeichen besonders Handhaben
                 case "(":
                 case ")":
@@ -92,6 +87,7 @@ class PdfString extends PdfAbstractObject
                     break;
             }
         }
+
         return $string . ")";
     }
 
@@ -99,41 +95,44 @@ class PdfString extends PdfAbstractObject
      * Wenn der ObjectParser ein bestimmtes Objekt anhand des letzten Tokens erkannt hat, kann mit dieser Funktion das Objekt erzeugt werden.
      * Es wird angenommen, dass die Delimiter am Anfang des Objektes bereits vom Tokenizer des ObjectParsers genutzt wurden, der Inhalt und die Delimiter am Ende jedoch nicht.
      * Zudem wird angenommen, dass der reuseTokenStack des Tokenizers leer ist.
+     *
      * @param ObjectParser $objectParser ObjectParser, welcher dieses Objekt erkannt hat
+     *
      * @return PdfString ein neues Objekt
      * @throws \Exception Wenn beim Parsen ein Fehler auftritt
      */
-    public static function parse(ObjectParser $objectParser): PdfAbstractObject
-    {
+    public static function parse( ObjectParser $objectParser ): PdfAbstractObject {
         $stringReader = $objectParser->getStringReader();
         $string = "";
         $numberOfOpenBrackets = 1;
         do {
-            $string .= $stringReader->readUntilMask("\\()\r");
+            $string .= $stringReader->readUntilMask( "\\()\r" );
             $byte = $stringReader->readByte();
-            switch ($byte) {
+            switch ( $byte ) {
                 // erlaube Balancierte Klammern
                 case "(":
-                    ++$numberOfOpenBrackets;
+                    ++ $numberOfOpenBrackets;
                     $string .= "(";
                     break;
                 case ")":
-                    --$numberOfOpenBrackets;
-                    if ($numberOfOpenBrackets > 0)
+                    -- $numberOfOpenBrackets;
+                    if ( $numberOfOpenBrackets > 0 ) {
                         $string .= ")";
+                    }
                     break;
 
                 // Zeilenumbrüche werden alle zu \n konvertiert.    Hier wird nur \r abgefangen, da \n nicht mehr zu \n konvertiert werden muss
                 case "\r":
-                    if ($stringReader->getByte($stringReader->getReaderPos()) === "\n")
+                    if ( $stringReader->getByte( $stringReader->getReaderPos() ) === "\n" ) {
                         $stringReader->skipByte();
+                    }
                     $string .= "\n";
                     break;
 
                 // Diverse Sequenzen, die mit einem \ beginnen
                 case "\\":
                     $byte = $stringReader->readByte();
-                    switch ($byte) {
+                    switch ( $byte ) {
                         case "(":
                         case ")":
                         case "\\":
@@ -168,14 +167,15 @@ class PdfString extends PdfAbstractObject
                         case "5":
                         case "6":
                         case "7":
-                            $octalString = $byte . $stringReader->readOnlyMaskWithMaxLength("01234567", 2);
-                            $string .= chr(octdec($octalString));
+                            $octalString = $byte . $stringReader->readOnlyMaskWithMaxLength( "01234567", 2 );
+                            $string .= chr( octdec( $octalString ) );
                             break;
 
                         // Zeilenumbrüche nach einem \ sollen ignoriert werden
                         case "\r":
-                            if ($stringReader->getByte($stringReader->getReaderPos()) === "\n")
+                            if ( $stringReader->getByte( $stringReader->getReaderPos() ) === "\n" ) {
                                 $stringReader->skipByte();
+                            }
                             break;
                         case "\n":
                             break;
@@ -187,17 +187,16 @@ class PdfString extends PdfAbstractObject
                     }
                     break;
             }
-        } while ($numberOfOpenBrackets > 0);
+        } while ( $numberOfOpenBrackets > 0 );
 
-        return new PdfString($string);
+        return new PdfString( $string );
     }
 
     /**
      * Erzeugt eine (tiefe) Kopie dieses Objektes
      * @return PdfString
      */
-    public function clone(): PdfAbstractObject
-    {
-        return new PdfString($this->value);
+    public function clone(): PdfAbstractObject {
+        return new PdfString( $this->value );
     }
 }

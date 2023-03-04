@@ -6,8 +6,7 @@ namespace pdf\object;
  * Repräsentiert ein Boolean Objekt aus einer PDF-Datei
  * @package pdf\object
  */
-class PdfBoolean extends PdfAbstractObject
-{
+class PdfBoolean extends PdfAbstractObject {
     /**
      * Wert dieses Boolean
      * @var bool
@@ -16,10 +15,10 @@ class PdfBoolean extends PdfAbstractObject
 
     /**
      * Erzeugt einen PdfBoolean.
+     *
      * @param bool $value true oder false
      */
-    public function __construct(bool $value)
-    {
+    public function __construct( bool $value ) {
         $this->value = $value;
     }
 
@@ -28,8 +27,7 @@ class PdfBoolean extends PdfAbstractObject
      * @return bool
      * @see PdfAbstractObject::needsWhiteSpaceAfter() Ein Trennzeichen wird nur benötigt, wenn beim vorherigen Objekt ebenfalls ein Trennzeichen benötigt wird.
      */
-    public function needsWhiteSpaceBefore(): bool
-    {
+    public function needsWhiteSpaceBefore(): bool {
         return true;
     }
 
@@ -38,8 +36,7 @@ class PdfBoolean extends PdfAbstractObject
      * @return bool
      * @see PdfAbstractObject::needsWhiteSpaceBefore() Ein Trennzeichen wird nur benötigt, wenn beim nachfolgenden Objekt ebenfalls ein Trennzeichen benötigt wird.
      */
-    public function needsWhiteSpaceAfter(): bool
-    {
+    public function needsWhiteSpaceAfter(): bool {
         return true;
     }
 
@@ -47,8 +44,7 @@ class PdfBoolean extends PdfAbstractObject
      * Liefert den Wert dieses Objektes zurück.
      * @return bool
      */
-    public function getValue()
-    {
+    public function getValue() {
         return $this->value;
     }
 
@@ -56,28 +52,28 @@ class PdfBoolean extends PdfAbstractObject
      * Erstellt für dieses Objekt einen String zum einbetten in eine PDF-Datei
      * @return string
      */
-    public function toString(): string
-    {
+    public function toString(): string {
         return $this->value ? "true" : "false";
     }
 
     /**
      * Wenn der ObjectParser ein bestimmtes Objekt anhand des letzten Tokens erkannt hat, kann mit dieser Funktion das Objekt erzeugt werden.
      * Es wird angenommen, dass die Delimiter am Anfang des Objektes bereits vom Tokenizer genutzt wurden, der Inhalt und die Delimiter am Ende jedoch nicht.
+     *
      * @param ObjectParser $objectParser ObjectParser, welcher dieses Objekt erkannt hat
-     * @throws \Exception Wenn beim Parsen ein Fehler auftritt
+     *
      * @return PdfBoolean ein neues Objekt
+     * @throws \Exception Wenn beim Parsen ein Fehler auftritt
      */
-    public static function parse(ObjectParser $objectParser): PdfAbstractObject
-    {
+    public static function parse( ObjectParser $objectParser ): PdfAbstractObject {
         $token = $objectParser->getTokenizer()->getToken();
-        switch ($token) {
+        switch ( $token ) {
             case "true":
-                return new PdfBoolean(true);
+                return new PdfBoolean( true );
             case "false":
-                return new PdfBoolean(false);
+                return new PdfBoolean( false );
             default:
-                throw new \Exception("could not parse Boolean Pdf Object");
+                throw new \Exception( "could not parse Boolean Pdf Object" );
         }
     }
 
@@ -85,8 +81,7 @@ class PdfBoolean extends PdfAbstractObject
      * Erzeugt eine (tiefe) Kopie dieses Objektes
      * @return PdfBoolean
      */
-    public function clone(): PdfAbstractObject
-    {
-        return new PdfBoolean($this->value);
+    public function clone(): PdfAbstractObject {
+        return new PdfBoolean( $this->value );
     }
 }

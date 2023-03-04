@@ -8,10 +8,8 @@ namespace pdf\graphics\operator;
  * Da dies für den Anwendungszweck nicht relevant ist, werden alle Operatoren mit dieser Oberklasse zusammengefasst.
  * @package pdf\graphics\operator
  */
-class MarkedContentOperator extends UnknownOperator
-{
-    public function isRenderingOperator(): bool
-    {
+class MarkedContentOperator extends UnknownOperator {
+    public function isRenderingOperator(): bool {
         return false;
     }
 }

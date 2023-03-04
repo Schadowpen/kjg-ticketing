@@ -1,4 +1,5 @@
 <?php
+
 namespace KjG_Ticketing;
 
 /**
@@ -8,13 +9,13 @@ namespace KjG_Ticketing;
  */
 class KjG_Ticketing_Deactivator {
 
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 */
-	public static function deactivate(): void {
+    /**
+     * Short Description. (use period)
+     *
+     * Long Description.
+     */
+    public static function deactivate(): void {
 
-	}
+    }
 
 }
