@@ -2,7 +2,6 @@
 
 namespace KjG_Ticketing\pdf\object;
 
-use KjG_Ticketing\misc\StringReader;
 use \Exception;
 
 /**

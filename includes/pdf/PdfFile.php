@@ -2,8 +2,7 @@
 
 namespace KjG_Ticketing\pdf;
 
-use KjG_Ticketing\misc;
-use KjG_Ticketing\misc\StringReader;
+use KjG_Ticketing\pdf\misc\StringReader;
 use KjG_Ticketing\pdf\crossReference\CompressedObjectCrossReferenceTableEntry;
 use KjG_Ticketing\pdf\crossReference\CrossReferenceTable;
 use KjG_Ticketing\pdf\crossReference\CrossReferenceTableEntry;

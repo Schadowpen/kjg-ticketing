@@ -2,8 +2,7 @@
 
 namespace KjG_Ticketing\pdf\object;
 
-use KjG_Ticketing\misc;
-use KjG_Ticketing\misc\StringReader;
+use KjG_Ticketing\pdf\misc\StringReader;
 
 /**
  * Dies ist eine Helferklasse für den ObjectParser. Sie extrahiert einzelne Token, anhand derer der ObjectParser ein Objekt zusammensetzen kann.

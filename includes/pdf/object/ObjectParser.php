@@ -3,8 +3,7 @@
 namespace KjG_Ticketing\pdf\object;
 
 use Exception;
-use KjG_Ticketing\misc;
-use KjG_Ticketing\misc\StringReader;
+use KjG_Ticketing\pdf\misc\StringReader;
 
 /**
  * Parser zum Einlesen von PDF Objekten, ausgenommen indirekte Objekte

@@ -1,6 +1,6 @@
 <?php
 
-namespace KjG_Ticketing\misc;
+namespace KjG_Ticketing\pdf\misc;
 
 /**
  * A range from start (inclusive) until end (exclusive),

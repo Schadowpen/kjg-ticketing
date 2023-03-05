@@ -2,8 +2,8 @@
 
 namespace KjG_Ticketing\pdf\graphics;
 
-use KjG_Ticketing\misc\Range;
-use KjG_Ticketing\misc\StringReader;
+use KjG_Ticketing\pdf\misc\Range;
+use KjG_Ticketing\pdf\misc\StringReader;
 use KjG_Ticketing\pdf\document\ContentStream;
 use KjG_Ticketing\pdf\graphics\operator\AbstractImageOperator;
 use KjG_Ticketing\pdf\graphics\operator\AbstractOperator;

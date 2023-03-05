@@ -1,6 +1,6 @@
 <?php
 
-namespace KjG_Ticketing\misc;
+namespace KjG_Ticketing\pdf\misc;
 /**
  * The purpose of this class is to consecutively read a string.
  * The StringReader can be positioned at any position inside the string and then start reading per byte or per line.
