@@ -1,15 +1,15 @@
 <?php
 
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
-use pdf\object\PdfAbstractObject;
-use pdf\object\PdfName;
-use pdf\object\PdfString;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\object\PdfName;
+use KjG_Ticketing\pdf\object\PdfString;
 
 /**
  * Die Dokumenteninformation, die in dem Info-Eintrag im Trailer Dictionary zu finden sind.
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 class DocumentInfo extends AbstractDocumentObject {
 

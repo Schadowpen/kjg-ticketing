@@ -1,14 +1,14 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
-use pdf\graphics\Point;
+use KjG_Ticketing\pdf\graphics\Point;
 
 /**
  * Operator zum konstruieren eines Pfades.
  * Hier werden mehrere Operatoren in einer Klasse zusammengefasst.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 abstract class PathConstructionOperator extends AbstractOperator {
     public function isGraphicsStateOperator(): bool {

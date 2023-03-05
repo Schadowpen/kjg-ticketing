@@ -1,11 +1,11 @@
 <?php
 
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
 /**
  * Eine Schriftart von TrueType.
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 class FontTrueType extends SimpleFont {
     public static function objectSubtype(): ?string {

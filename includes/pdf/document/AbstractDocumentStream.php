@@ -1,15 +1,15 @@
 <?php
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
-use pdf\indirectObject\PdfStream;
-use pdf\PdfFile;
+use KjG_Ticketing\pdf\indirectObject\PdfStream;
+use KjG_Ticketing\pdf\PdfFile;
 
 /**
  * Abstrakte Klasse für Streams, die zur Dokumentenstruktur gehören.
  * Sie verweisen immer auf ein Dictionary, welches die Metadaten für dieses Objekt bereithält.
  * Zudem wird, als IndirectObject bezeichnet, auf den PdfStream verwiesen, der den Stream beinhaltet.
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 abstract class AbstractDocumentStream extends AbstractDocumentObject {
     /**

@@ -1,14 +1,14 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 
-use pdf\graphics\ColorRGB;
+use KjG_Ticketing\pdf\graphics\ColorRGB;
 
 /**
  * Operator zum Setzen der Farbe für Linien Zeichnen auf einen RGB-Wert
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class ColorRGBFillingOperator extends AbstractOperator {
     /**

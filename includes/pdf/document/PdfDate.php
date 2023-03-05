@@ -1,14 +1,14 @@
 <?php
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
-use pdf\object\PdfAbstractObject;
-use pdf\object\PdfHexString;
-use pdf\object\PdfString;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\object\PdfHexString;
+use KjG_Ticketing\pdf\object\PdfString;
 
 /**
  * Eine Zeitangabe in einer PDF-Datei
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 class PdfDate {
     /**

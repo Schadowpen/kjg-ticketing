@@ -1,13 +1,13 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
-use pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 /**
  * Operator zum setzen des Zeilenabstandes in Text Space Einheiten.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class TextLeadingOperator extends AbstractOperator {
     /**

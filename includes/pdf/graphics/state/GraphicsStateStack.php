@@ -1,16 +1,16 @@
 <?php
 
-namespace pdf\graphics\state;
+namespace KjG_Ticketing\pdf\graphics\state;
 
-use pdf\document\PdfRectangle;
-use pdf\graphics\operator\AbstractOperator;
-use pdf\graphics\operator\PopGraphicsStateOperator;
-use pdf\graphics\operator\PushGraphicsStateOperator;
-use pdf\graphics\TransformationMatrix;
+use KjG_Ticketing\pdf\document\PdfRectangle;
+use KjG_Ticketing\pdf\graphics\operator\AbstractOperator;
+use KjG_Ticketing\pdf\graphics\operator\PopGraphicsStateOperator;
+use KjG_Ticketing\pdf\graphics\operator\PushGraphicsStateOperator;
+use KjG_Ticketing\pdf\graphics\TransformationMatrix;
 
 /**
  * Stack mit den GraphicsStates, genutzt während Rendering
- * @package pdf\graphics
+ * @package KjG_Ticketing\pdf\graphics
  */
 class GraphicsStateStack {
     /**

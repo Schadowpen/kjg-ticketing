@@ -1,13 +1,13 @@
 <?php
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
-use pdf\graphics\Point;
-use pdf\object\PdfArray;
+use KjG_Ticketing\pdf\graphics\Point;
+use KjG_Ticketing\pdf\object\PdfArray;
 
 /**
  * Ein Rectangle aus einem PDF-Dokument
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 class PdfRectangle {
     private $lowerLeftX;

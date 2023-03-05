@@ -1,6 +1,6 @@
 <?php
 
-namespace pdf\object;
+namespace KjG_Ticketing\pdf\object;
 
 use Exception;
 use KjG_Ticketing\misc;
@@ -8,7 +8,7 @@ use KjG_Ticketing\misc\StringReader;
 
 /**
  * Parser zum Einlesen von PDF Objekten, ausgenommen indirekte Objekte
- * @package pdf\object
+ * @package KjG_Ticketing\pdf\object
  */
 class ObjectParser {
     /**

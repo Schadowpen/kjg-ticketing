@@ -1,11 +1,11 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 /**
  * Operator zum Beenden eines Pfades, ohne ihn zu zeichnen.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class PathEndingOperator extends AbstractOperator {
 

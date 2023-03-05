@@ -1,11 +1,11 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 /**
  * Operator zum Beginnen einer Kompabilitätszone, in welcher Fehler abgefangen werden und nur dazu führen, dass die nicht erkannten Operatoren nicht ausgeführt werden.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class BeginCompatibilityOperator extends AbstractOperator {
 

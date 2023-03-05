@@ -1,13 +1,13 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
-use pdf\graphics\TransformationMatrix;
+use KjG_Ticketing\pdf\graphics\TransformationMatrix;
 
 /**
  * Operator zum Setzen der Text Matritzen im TextObjectState
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class TextMatrixOperator extends AbstractOperator {
     /**

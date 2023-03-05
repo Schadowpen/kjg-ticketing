@@ -1,14 +1,14 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
-use pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 /**
  * Operator zum Beginnen einer neuen Zeile in einem Text Objekt.
  * Die Position neue Textzeile ist relativ zur letzten Textzeile angegeben.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class TextNewLineOperator extends AbstractOperator {
     /**

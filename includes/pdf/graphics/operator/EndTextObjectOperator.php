@@ -1,12 +1,12 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 /**
  * Operator zum Beginnen eines Text Objektes. Nur innerhalb eines Text Objektes darf Text gezeichnet werden.
  * Er entfernt den TextObjectState.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class EndTextObjectOperator extends AbstractOperator {
 

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace pdf\crossReference;
+namespace KjG_Ticketing\pdf\crossReference;
 
 
 class CompressedObjectCrossReferenceTableEntry extends CrossReferenceTableEntry {

@@ -1,13 +1,13 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
-use pdf\object\PdfName;
+use KjG_Ticketing\pdf\object\PdfName;
 
 /**
  * Operator zum direkten Zeichnen eines Shading Pattern in den aktuellen User Space. Dabei wird der aktuelle Clipping Path berücksichtigt.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class ShadingOperator extends AbstractOperator {
     /**

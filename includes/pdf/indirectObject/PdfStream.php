@@ -1,18 +1,18 @@
 <?php
 
-namespace pdf\indirectObject;
+namespace KjG_Ticketing\pdf\indirectObject;
 
-use pdf\crossReference\CrossReferenceTableEntry;
-use pdf\object\PdfAbstractObject;
-use pdf\object\PdfArray;
-use pdf\object\PdfDictionary;
-use pdf\object\PdfName;
-use pdf\object\PdfNumber;
-use pdf\PdfFile;
+use KjG_Ticketing\pdf\crossReference\CrossReferenceTableEntry;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\object\PdfArray;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfName;
+use KjG_Ticketing\pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\PdfFile;
 
 /**
  * Ein Stream-Objekt einer Pdf-Datei. Es erweitert ein Indirect Object
- * @package pdf\indirectObject
+ * @package KjG_Ticketing\pdf\indirectObject
  */
 class PdfStream extends PdfIndirectObject {
     /**

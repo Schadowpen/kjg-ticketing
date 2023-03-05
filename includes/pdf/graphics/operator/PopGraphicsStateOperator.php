@@ -1,10 +1,10 @@
 <?php
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 /**
  * Befehl, um den obersten Graphics State auf dem GraphicsStateStack zu entfernen.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class PopGraphicsStateOperator extends AbstractOperator {
 

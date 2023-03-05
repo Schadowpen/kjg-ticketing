@@ -1,6 +1,6 @@
 <?php
 
-namespace pdf\object;
+namespace KjG_Ticketing\pdf\object;
 
 use KjG_Ticketing\misc;
 use KjG_Ticketing\misc\StringReader;
@@ -9,7 +9,7 @@ use KjG_Ticketing\misc\StringReader;
  * Dies ist eine Helferklasse für den ObjectParser. Sie extrahiert einzelne Token, anhand derer der ObjectParser ein Objekt zusammensetzen kann.
  * Token sind prinzipiell entweder ein Steuerzeichen, mit welchem Beginn und Ende von Objekten markiert werden können, oder ein Text aus den anderen Zeichen.
  * Dabei wird jeglicher "white space", also eine Aneinanderreihung von "white space" Zeichen oder auch Kommentare bereits herausgerechnet.
- * @package pdf\object
+ * @package KjG_Ticketing\pdf\object
  */
 class Tokenizer {
     /**

@@ -1,13 +1,13 @@
 <?php
 
-namespace pdf\indirectObject;
+namespace KjG_Ticketing\pdf\indirectObject;
 
-use pdf\object\PdfDictionary;
-use pdf\PdfFile;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\PdfFile;
 
 /**
  * Ein Stream Object, welches bereits in der Pdf-Vorlage existiert
- * @package pdf\indirectObject
+ * @package KjG_Ticketing\pdf\indirectObject
  */
 class ExistingPdfStream extends PdfStream {
 

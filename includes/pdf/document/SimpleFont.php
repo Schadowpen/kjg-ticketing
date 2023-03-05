@@ -1,14 +1,14 @@
 <?php
 
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
-use pdf\object\PdfArray;
-use pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfArray;
+use KjG_Ticketing\pdf\object\PdfDictionary;
 
 /**
  * Überklasse SimpleFont, implementiert die Funktionen für FontType1, FontMultipleMaster, FontType3 und FontTrueType, da diese überall gleich sind.
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 abstract class SimpleFont extends Font {
 

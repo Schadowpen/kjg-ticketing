@@ -1,17 +1,17 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 
-use pdf\graphics\Point;
-use pdf\graphics\state\GraphicsState;
-use pdf\graphics\TransformationMatrix;
+use KjG_Ticketing\pdf\graphics\Point;
+use KjG_Ticketing\pdf\graphics\state\GraphicsState;
+use KjG_Ticketing\pdf\graphics\TransformationMatrix;
 
 /**
  * Abstrakte Superklasse für alle Text-Operatoren, die in einem Content Stream vorkommen können.
  * sie enthält Funktionen, welche für alle TextOperatoren gleich sind.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 abstract class AbstractTextOperator extends AbstractOperator {
     /**

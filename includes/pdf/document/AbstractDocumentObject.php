@@ -1,19 +1,19 @@
 <?php
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
 
-use pdf\indirectObject\PdfIndirectObject;
-use pdf\object\PdfAbstractObject;
-use pdf\object\PdfDictionary;
-use pdf\object\PdfIndirectReference;
-use pdf\PdfFile;
+use KjG_Ticketing\pdf\indirectObject\PdfIndirectObject;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfIndirectReference;
+use KjG_Ticketing\pdf\PdfFile;
 
 /**
  * Abstrakte Klasse für Objekte, die zur Dokumentenstruktur gehören.
  * Sie verweisen immer auf ein Dictionary, welches die Daten für dieses Objekt bereithält.
  * Sollte das Dictionary direkt in einem IndirectObject liegen, kann dieses angegeben werden und Features wie Referenzierung genutzt werden.
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 abstract class AbstractDocumentObject {
     /**

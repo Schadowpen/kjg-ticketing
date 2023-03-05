@@ -1,10 +1,10 @@
 <?php
 
-namespace pdf\object;
+namespace KjG_Ticketing\pdf\object;
 
 /**
  * Ein PDF-Objekt, welches einen String beinhaltet
- * @package pdf\object
+ * @package KjG_Ticketing\pdf\object
  */
 class PdfString extends PdfAbstractObject {
     /**

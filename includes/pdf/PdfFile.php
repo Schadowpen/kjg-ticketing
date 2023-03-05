@@ -1,26 +1,26 @@
 <?php
 
-namespace pdf;
+namespace KjG_Ticketing\pdf;
 
 use KjG_Ticketing\misc;
 use KjG_Ticketing\misc\StringReader;
-use pdf\crossReference\CompressedObjectCrossReferenceTableEntry;
-use pdf\crossReference\CrossReferenceTable;
-use pdf\crossReference\CrossReferenceTableEntry;
-use pdf\crossReference\ExistingCrossReferenceTableEntry;
-use pdf\indirectObject\ExistingPdfStream;
-use pdf\indirectObject\IndirectObjectParser;
-use pdf\indirectObject\ObjectStream;
-use pdf\indirectObject\PdfIndirectObject;
-use pdf\indirectObject\PdfStream;
-use pdf\object\ObjectParser;
-use pdf\object\PdfAbstractObject;
-use pdf\object\PdfArray;
-use pdf\object\PdfDictionary;
-use pdf\object\PdfName;
-use pdf\object\PdfNull;
-use pdf\object\PdfIndirectReference;
-use pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\crossReference\CompressedObjectCrossReferenceTableEntry;
+use KjG_Ticketing\pdf\crossReference\CrossReferenceTable;
+use KjG_Ticketing\pdf\crossReference\CrossReferenceTableEntry;
+use KjG_Ticketing\pdf\crossReference\ExistingCrossReferenceTableEntry;
+use KjG_Ticketing\pdf\indirectObject\ExistingPdfStream;
+use KjG_Ticketing\pdf\indirectObject\IndirectObjectParser;
+use KjG_Ticketing\pdf\indirectObject\ObjectStream;
+use KjG_Ticketing\pdf\indirectObject\PdfIndirectObject;
+use KjG_Ticketing\pdf\indirectObject\PdfStream;
+use KjG_Ticketing\pdf\object\ObjectParser;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\object\PdfArray;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfName;
+use KjG_Ticketing\pdf\object\PdfNull;
+use KjG_Ticketing\pdf\object\PdfIndirectReference;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 /**
  * Klasse zum Einlesen und Bearbeiten einer PDF-Datei

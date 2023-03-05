@@ -1,12 +1,12 @@
 <?php
 
-namespace pdf\crossReference;
+namespace KjG_Ticketing\pdf\crossReference;
 
-use pdf\indirectObject\PdfIndirectObject;
+use KjG_Ticketing\pdf\indirectObject\PdfIndirectObject;
 
 /**
  * Eintrag in einer CrossReferenceTable
- * @package pdf\crossReference
+ * @package KjG_Ticketing\pdf\crossReference
  */
 class CrossReferenceTableEntry {
     /**

@@ -1,11 +1,11 @@
 <?php
 
 
-namespace pdf\graphics\state;
+namespace KjG_Ticketing\pdf\graphics\state;
 
 /**
  * Zusätzlich zum Graphics State gibt es, abhängig davon was für ein Graphisches Objekt man gerade bearbeitet, einige Zusatzinformationen zu speichern.
- * @package pdf\graphics\state
+ * @package KjG_Ticketing\pdf\graphics\state
  */
 abstract class AbstractAdditionalGraphicsState {
 

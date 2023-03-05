@@ -1,14 +1,14 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
-use pdf\graphics\Point;
-use pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\graphics\Point;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 /**
  * Operator zum Beginnen eines Pfades oder Unterpfades mit einem Startpunkt
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class PathBeginOperator extends PathConstructionOperator {
     /**

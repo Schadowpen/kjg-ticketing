@@ -1,17 +1,17 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 
-use pdf\document\ContentStream;
-use pdf\document\XObject;
-use pdf\graphics\Point;
-use pdf\object\PdfName;
+use KjG_Ticketing\pdf\document\ContentStream;
+use KjG_Ticketing\pdf\document\XObject;
+use KjG_Ticketing\pdf\graphics\Point;
+use KjG_Ticketing\pdf\object\PdfName;
 
 /**
  * Operator, welcher ein externes Objekt zeichnet
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class ExternalObjectOperator extends AbstractImageOperator {
     /**

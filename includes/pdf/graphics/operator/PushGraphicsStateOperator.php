@@ -1,10 +1,10 @@
 <?php
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 /**
  * Befehl, um eine Kopie des aktuellen Graphics State auf den GraphicsStateStack zu pushen
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class PushGraphicsStateOperator extends AbstractOperator {
 

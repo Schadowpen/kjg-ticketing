@@ -1,17 +1,17 @@
 <?php
 
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
 
-use pdf\indirectObject\PdfIndirectObject;
-use pdf\object\PdfDictionary;
-use pdf\object\PdfIndirectReference;
-use pdf\PdfFile;
+use KjG_Ticketing\pdf\indirectObject\PdfIndirectObject;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfIndirectReference;
+use KjG_Ticketing\pdf\PdfFile;
 
 /**
  * Eine Schriftart, die beschreibt, wie Text in einer PDF Dargestellt wird
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 abstract class Font extends AbstractDocumentObject {
     /**

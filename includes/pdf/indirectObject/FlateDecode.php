@@ -1,13 +1,13 @@
 <?php
 
 
-namespace pdf\indirectObject;
+namespace KjG_Ticketing\pdf\indirectObject;
 
-use pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfDictionary;
 
 /**
  * Diese Klasse implementiert das kodieren und dekodieren des FlateDecode-Filters in Streams
- * @package pdf\indirectObject
+ * @package KjG_Ticketing\pdf\indirectObject
  */
 class FlateDecode {
     /**
@@ -280,8 +280,6 @@ class FlateDecode {
                 }
 
                 return $uncompressed;
-
-                break;
             default:
                 throw new \Exception( "FlateDecode with Predictor {$predictor} not supported yet" );
         }

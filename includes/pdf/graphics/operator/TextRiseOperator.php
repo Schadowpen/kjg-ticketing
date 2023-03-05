@@ -1,13 +1,13 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
-use pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 /**
  * Operator zum setzen des Höher- oder Tieferstellens von Text
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class TextRiseOperator extends AbstractOperator {
     /**

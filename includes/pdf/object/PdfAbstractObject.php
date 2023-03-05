@@ -1,10 +1,10 @@
 <?php
 
-namespace pdf\object;
+namespace KjG_Ticketing\pdf\object;
 
 /**
  * Abstrakte Repräsentation eines PDF-Objektes, ausgenommen indirekter Objekte
- * @package pdf\object
+ * @package KjG_Ticketing\pdf\object
  */
 abstract class PdfAbstractObject {
     /**

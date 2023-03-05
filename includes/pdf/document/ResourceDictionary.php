@@ -1,17 +1,17 @@
 <?php
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
-use pdf\graphics\operator\ExternalGraphicsStateOperator;
-use pdf\object\PdfAbstractObject;
-use pdf\object\PdfArray;
-use pdf\object\PdfDictionary;
-use pdf\object\PdfName;
-use pdf\PdfFile;
+use KjG_Ticketing\pdf\graphics\operator\ExternalGraphicsStateOperator;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\object\PdfArray;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfName;
+use KjG_Ticketing\pdf\PdfFile;
 
 /**
  * Dictionary mit den in einem Content Stream genutzten Ressourcen.
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 class ResourceDictionary extends AbstractDocumentObject {
     /**

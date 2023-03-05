@@ -1,16 +1,16 @@
 <?php
 
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
 
-use pdf\graphics\Point;
-use pdf\object\PdfIndirectReference;
-use pdf\PdfFile;
+use KjG_Ticketing\pdf\graphics\Point;
+use KjG_Ticketing\pdf\object\PdfIndirectReference;
+use KjG_Ticketing\pdf\PdfFile;
 
 /**
  * Abstrakte Klasse für ein XObjekt, kann entweder ein Image oder ein Form XObjekt sein.
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 abstract class XObject extends AbstractDocumentStream {
 

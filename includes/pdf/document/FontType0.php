@@ -1,7 +1,7 @@
 <?php
 
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
 // Font Type 0 hat keine tatsächliche Implementierung für getCharWidth(), fromUTF8() und toUTF8(), da zu komplex
 
@@ -10,7 +10,7 @@ namespace pdf\document;
  * Diese ist im Unterschied zu anderen Schriftarten sehr komplex, vor allem da Multibyte-Zeichensätze unterstützt werden.
  * Da sie im aktuellen Kontext nicht genutzt wird, wurden für die meisten Funktionen nur Dummyfunktionalitäten implementiert.
  *
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 class FontType0 extends Font {
 

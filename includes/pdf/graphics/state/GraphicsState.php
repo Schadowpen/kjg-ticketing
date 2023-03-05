@@ -1,62 +1,62 @@
 <?php
 
-namespace pdf\graphics\state;
+namespace KjG_Ticketing\pdf\graphics\state;
 
-use pdf\document\GraphicsStateParameterDictionary;
-use pdf\graphics\Color;
-use pdf\graphics\ColorGray;
-use pdf\graphics\operator\AbstractOperator;
-use pdf\graphics\operator\AbstractTextOperator;
-use pdf\graphics\operator\BeginTextObjectOperator;
-use pdf\graphics\operator\ClippingPathEvenOddOperator;
-use pdf\graphics\operator\ClippingPathNonzeroOperator;
-use pdf\graphics\operator\CloseAndStrokePathOperator;
-use pdf\graphics\operator\CloseFillAndStrokePathEvenOddOperator;
-use pdf\graphics\operator\CloseFillAndStrokePathNonzeroOperator;
-use pdf\graphics\operator\ColorFillingOperator;
-use pdf\graphics\operator\ColorRenderingIntentOperator;
-use pdf\graphics\operator\ColorRGBFillingOperator;
-use pdf\graphics\operator\ColorRGBStrokingOperator;
-use pdf\graphics\operator\ColorStrokingOperator;
-use pdf\graphics\operator\ComplexTextOperator;
-use pdf\graphics\operator\EndTextObjectOperator;
-use pdf\graphics\operator\ExternalGraphicsStateOperator;
-use pdf\graphics\operator\FillAndStrokePathEvenOddOperator;
-use pdf\graphics\operator\FillAndStrokePathNonzeroOperator;
-use pdf\graphics\operator\FillPathEvenOddOperator;
-use pdf\graphics\operator\FillPathNonzeroOperator;
-use pdf\graphics\operator\FlatnessOperator;
-use pdf\graphics\operator\LineCapOperator;
-use pdf\graphics\operator\LineDashPatternOperator;
-use pdf\graphics\operator\LineJoinOperator;
-use pdf\graphics\operator\LineWidthOperator;
-use pdf\graphics\operator\MiterLimitOperator;
-use pdf\graphics\operator\ModifyTransformationMatrixOperator;
-use pdf\graphics\operator\PathBeginOperator;
-use pdf\graphics\operator\PathBezierOperator;
-use pdf\graphics\operator\PathCloseOperator;
-use pdf\graphics\operator\PathEndingOperator;
-use pdf\graphics\operator\PathLineOperator;
-use pdf\graphics\operator\PathPaintingOperator;
-use pdf\graphics\operator\PathRectangleOperator;
-use pdf\graphics\operator\StrokePathOperator;
-use pdf\graphics\operator\TextInNewLineOperator;
-use pdf\graphics\operator\TextMatrixOperator;
-use pdf\graphics\operator\TextNewLineAndLeadingOperator;
-use pdf\graphics\operator\TextNewLineOperator;
-use pdf\graphics\operator\TextNextLineOperator;
-use pdf\graphics\operator\TextOperator;
-use pdf\graphics\operator\TextWithSpacesOperator;
-use pdf\graphics\TransformationMatrix;
-use pdf\object\PdfArray;
-use pdf\object\PdfBoolean;
-use pdf\object\PdfDictionary;
-use pdf\object\PdfName;
-use pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\document\GraphicsStateParameterDictionary;
+use KjG_Ticketing\pdf\graphics\Color;
+use KjG_Ticketing\pdf\graphics\ColorGray;
+use KjG_Ticketing\pdf\graphics\operator\AbstractOperator;
+use KjG_Ticketing\pdf\graphics\operator\AbstractTextOperator;
+use KjG_Ticketing\pdf\graphics\operator\BeginTextObjectOperator;
+use KjG_Ticketing\pdf\graphics\operator\ClippingPathEvenOddOperator;
+use KjG_Ticketing\pdf\graphics\operator\ClippingPathNonzeroOperator;
+use KjG_Ticketing\pdf\graphics\operator\CloseAndStrokePathOperator;
+use KjG_Ticketing\pdf\graphics\operator\CloseFillAndStrokePathEvenOddOperator;
+use KjG_Ticketing\pdf\graphics\operator\CloseFillAndStrokePathNonzeroOperator;
+use KjG_Ticketing\pdf\graphics\operator\ColorFillingOperator;
+use KjG_Ticketing\pdf\graphics\operator\ColorRenderingIntentOperator;
+use KjG_Ticketing\pdf\graphics\operator\ColorRGBFillingOperator;
+use KjG_Ticketing\pdf\graphics\operator\ColorRGBStrokingOperator;
+use KjG_Ticketing\pdf\graphics\operator\ColorStrokingOperator;
+use KjG_Ticketing\pdf\graphics\operator\ComplexTextOperator;
+use KjG_Ticketing\pdf\graphics\operator\EndTextObjectOperator;
+use KjG_Ticketing\pdf\graphics\operator\ExternalGraphicsStateOperator;
+use KjG_Ticketing\pdf\graphics\operator\FillAndStrokePathEvenOddOperator;
+use KjG_Ticketing\pdf\graphics\operator\FillAndStrokePathNonzeroOperator;
+use KjG_Ticketing\pdf\graphics\operator\FillPathEvenOddOperator;
+use KjG_Ticketing\pdf\graphics\operator\FillPathNonzeroOperator;
+use KjG_Ticketing\pdf\graphics\operator\FlatnessOperator;
+use KjG_Ticketing\pdf\graphics\operator\LineCapOperator;
+use KjG_Ticketing\pdf\graphics\operator\LineDashPatternOperator;
+use KjG_Ticketing\pdf\graphics\operator\LineJoinOperator;
+use KjG_Ticketing\pdf\graphics\operator\LineWidthOperator;
+use KjG_Ticketing\pdf\graphics\operator\MiterLimitOperator;
+use KjG_Ticketing\pdf\graphics\operator\ModifyTransformationMatrixOperator;
+use KjG_Ticketing\pdf\graphics\operator\PathBeginOperator;
+use KjG_Ticketing\pdf\graphics\operator\PathBezierOperator;
+use KjG_Ticketing\pdf\graphics\operator\PathCloseOperator;
+use KjG_Ticketing\pdf\graphics\operator\PathEndingOperator;
+use KjG_Ticketing\pdf\graphics\operator\PathLineOperator;
+use KjG_Ticketing\pdf\graphics\operator\PathPaintingOperator;
+use KjG_Ticketing\pdf\graphics\operator\PathRectangleOperator;
+use KjG_Ticketing\pdf\graphics\operator\StrokePathOperator;
+use KjG_Ticketing\pdf\graphics\operator\TextInNewLineOperator;
+use KjG_Ticketing\pdf\graphics\operator\TextMatrixOperator;
+use KjG_Ticketing\pdf\graphics\operator\TextNewLineAndLeadingOperator;
+use KjG_Ticketing\pdf\graphics\operator\TextNewLineOperator;
+use KjG_Ticketing\pdf\graphics\operator\TextNextLineOperator;
+use KjG_Ticketing\pdf\graphics\operator\TextOperator;
+use KjG_Ticketing\pdf\graphics\operator\TextWithSpacesOperator;
+use KjG_Ticketing\pdf\graphics\TransformationMatrix;
+use KjG_Ticketing\pdf\object\PdfArray;
+use KjG_Ticketing\pdf\object\PdfBoolean;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfName;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 /**
  * Der (Device Independent) Graphics State, mit welchem ContentStreams arbeiten
- * @package pdf\graphics
+ * @package KjG_Ticketing\pdf\graphics
  */
 class GraphicsState {
     /**

@@ -1,13 +1,13 @@
 <?php
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
-use pdf\graphics\state\GraphicsState;
-use pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\graphics\state\GraphicsState;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
 
 /**
  * Unbekannter oder nicht extra definierter Operator
- * @package pdf\graphics
+ * @package KjG_Ticketing\pdf\graphics
  */
 class UnknownOperator extends AbstractOperator {
     /**

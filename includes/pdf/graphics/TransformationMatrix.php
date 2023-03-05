@@ -1,8 +1,8 @@
 <?php
 
-namespace pdf\graphics;
+namespace KjG_Ticketing\pdf\graphics;
 
-use pdf\object\PdfArray;
+use KjG_Ticketing\pdf\object\PdfArray;
 
 /**
  * Transformations Matrix zum Umrechnen von Koordinaten im User Space zu Device Space.<br/>
@@ -12,7 +12,7 @@ use pdf\object\PdfArray;
  * e f 1 <br/>
  * Koordinaten in Device Space umrechnen:  Xd = Xu * M <br/>
  * Zusätzliche Transformation VOR ausführung dieser Transformation: Mn * M <br/>
- * @package pdf\graphics
+ * @package KjG_Ticketing\pdf\graphics
  */
 class TransformationMatrix {
     protected $a;

@@ -1,20 +1,20 @@
 <?php
 
-namespace pdf\graphics;
+namespace KjG_Ticketing\pdf\graphics;
 
 
-use pdf\document\ContentStream;
-use pdf\document\ResourceDictionary;
-use pdf\graphics\operator\AbstractOperator;
-use pdf\graphics\state\GraphicsStateStack;
-use pdf\indirectObject\PdfStream;
-use pdf\object\PdfDictionary;
-use pdf\PdfFile;
+use KjG_Ticketing\pdf\document\ContentStream;
+use KjG_Ticketing\pdf\document\ResourceDictionary;
+use KjG_Ticketing\pdf\graphics\operator\AbstractOperator;
+use KjG_Ticketing\pdf\graphics\state\GraphicsStateStack;
+use KjG_Ticketing\pdf\indirectObject\PdfStream;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\PdfFile;
 
 /**
  * Diese Klasse dient dazu, einen ContentStream zu generieren.
  * Dazu müssen mit der Funktion addOperator() neue Operatoren an das Ende des ContentStreams angehangen werden.
- * @package pdf\graphics
+ * @package KjG_Ticketing\pdf\graphics
  */
 class GenerateContentStream {
     /**

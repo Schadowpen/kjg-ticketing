@@ -1,14 +1,14 @@
 <?php
 
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
 
-use pdf\object\PdfAbstractObject;
-use pdf\object\PdfArray;
-use pdf\object\PdfBoolean;
-use pdf\object\PdfName;
-use pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\object\PdfArray;
+use KjG_Ticketing\pdf\object\PdfBoolean;
+use KjG_Ticketing\pdf\object\PdfName;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 class GraphicsStateParameterDictionary extends AbstractDocumentObject {
 

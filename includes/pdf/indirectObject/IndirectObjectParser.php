@@ -1,13 +1,13 @@
 <?php
 
-namespace pdf\indirectObject;
+namespace KjG_Ticketing\pdf\indirectObject;
 
-use pdf\object\ObjectParser;
-use pdf\PdfFile;
+use KjG_Ticketing\pdf\object\ObjectParser;
+use KjG_Ticketing\pdf\PdfFile;
 
 /**
  * Parser zum Einlesen von Indirect Objects und Streams (welche Indirect Objects sind)
- * @package pdf\indirectObject
+ * @package KjG_Ticketing\pdf\indirectObject
  */
 class IndirectObjectParser {
     /**

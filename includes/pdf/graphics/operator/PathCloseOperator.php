@@ -1,14 +1,14 @@
 <?php
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 
-use pdf\graphics\Point;
+use KjG_Ticketing\pdf\graphics\Point;
 
 /**
  * Operator zum beenden des aktuellen Unterpfades, indem eine gerade Linie vom letzten Punkt zum Startpunkt des Unterpfades gezeichnet wird.
  * Danach muss ein neuer Unterpfad mit dem m oder re Operatoren geöffnet werden
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class PathCloseOperator extends PathConstructionOperator {
 

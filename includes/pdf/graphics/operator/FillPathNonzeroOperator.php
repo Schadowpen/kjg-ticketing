@@ -1,13 +1,13 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 
 /**
  * Operator, der den aktuellen Pfad füllt. Welche Flächen zu füllen sind und welche nicht, wird nach der Nonzero-Regel bestimmt.
  * Offene Unterpfade, also welche die einen Anfang und ein Ende haben, werden vorher geschlossen
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class FillPathNonzeroOperator extends PathPaintingOperator {
 

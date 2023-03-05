@@ -1,12 +1,12 @@
 <?php
 
-namespace pdf\object;
+namespace KjG_Ticketing\pdf\object;
 
-use pdf\PdfFile;
+use KjG_Ticketing\pdf\PdfFile;
 
 /**
  * Referenz auf ein anderes Indirect Object.
- * @package pdf\object
+ * @package KjG_Ticketing\pdf\object
  * @see PdfFile::getIndirectObject() Um das IndirectObject zu einer IndirectReference zu erhalten
  * @see PdfFile::parseReference() Um ein Objekt, das über eine IndirectReference ausgelagert wurde, zu erhalten.
  */

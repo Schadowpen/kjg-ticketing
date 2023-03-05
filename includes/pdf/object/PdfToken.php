@@ -1,11 +1,11 @@
 <?php
 
-namespace pdf\object;
+namespace KjG_Ticketing\pdf\object;
 
 /**
  * Diese Klasse repräsentiert einen einzelnen Token, der nicht zu einem PDF-Objekt zugeordnet werden kann.
  * Normale PDF-Objekte dürfen keine solcher reinen Token beinhalten, sie können aber beispielsweise in Content Streams auftreten.
- * @package pdf\object
+ * @package KjG_Ticketing\pdf\object
  */
 class PdfToken extends PdfAbstractObject {
     /**

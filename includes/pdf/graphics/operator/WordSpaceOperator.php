@@ -1,14 +1,14 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 
-use pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 /**
  * Operator zum Setzen des Zusätzlichen Platzes zwischen zwei Wörtern im TextState
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class WordSpaceOperator extends AbstractOperator {
     /**

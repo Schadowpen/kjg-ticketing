@@ -1,16 +1,16 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
-use pdf\document\ContentStream;
-use pdf\document\Font;
-use pdf\object\PdfName;
-use pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\document\ContentStream;
+use KjG_Ticketing\pdf\document\Font;
+use KjG_Ticketing\pdf\object\PdfName;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 /**
  * Operator zum Setzen der Schriftart und der Schriftgröße
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class TextFontOperator extends AbstractOperator {
     /**

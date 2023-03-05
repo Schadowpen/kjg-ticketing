@@ -1,12 +1,12 @@
 <?php
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
-use pdf\graphics\TransformationMatrix;
+use KjG_Ticketing\pdf\graphics\TransformationMatrix;
 
 /**
  * Operator, welcher die angegebene Transformationsmatrix mit der bestehenden Transformationsmatrix konkateniert.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class ModifyTransformationMatrixOperator extends AbstractOperator {
     /**

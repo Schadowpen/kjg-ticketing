@@ -1,17 +1,17 @@
 <?php
 
 
-namespace pdf\graphics\state;
+namespace KjG_Ticketing\pdf\graphics\state;
 
-use pdf\graphics\operator\PathBezierOperator;
-use pdf\graphics\operator\PathConstructionOperator;
-use pdf\graphics\operator\PathLineOperator;
-use pdf\graphics\Point;
+use KjG_Ticketing\pdf\graphics\operator\PathBezierOperator;
+use KjG_Ticketing\pdf\graphics\operator\PathConstructionOperator;
+use KjG_Ticketing\pdf\graphics\operator\PathLineOperator;
+use KjG_Ticketing\pdf\graphics\Point;
 
 /**
  * Zusätzlicher Status, der beim Path Construction genutzt wird.
  * In diesem Kontext wird nur der letzte Punkt des Pfades benötigt, die gezeichneten Unterpfade werden nicht getrackt.
- * @package pdf\graphics\state
+ * @package KjG_Ticketing\pdf\graphics\state
  */
 class PathConstructionState extends AbstractAdditionalGraphicsState {
     /**

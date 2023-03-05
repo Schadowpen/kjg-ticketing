@@ -1,17 +1,17 @@
 <?php
 
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
-use pdf\graphics\Point;
-use pdf\graphics\TransformationMatrix;
-use pdf\indirectObject\PdfStream;
-use pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\graphics\Point;
+use KjG_Ticketing\pdf\graphics\TransformationMatrix;
+use KjG_Ticketing\pdf\indirectObject\PdfStream;
+use KjG_Ticketing\pdf\object\PdfDictionary;
 
 /**
  * Ein externes Objekt, welches ähnlich wie ein Content Stream Grafikbefehle beinhalten kann.
  * Es wird hier der Einfachheit halber wie ein Image behandelt.
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 class XObjectForm extends XObject {
     public static function objectSubtype(): ?string {

@@ -1,14 +1,14 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 
-use pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 /**
  * Operator, welcher für gebogene Pfade die Toleranz zwischen gezeichneter Linie und mathematisch korrektem Pfad in Device Pixeln angibt.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class FlatnessOperator extends AbstractOperator {
     /**

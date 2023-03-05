@@ -1,12 +1,12 @@
 <?php
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
-use pdf\graphics\state\GraphicsState;
+use KjG_Ticketing\pdf\graphics\state\GraphicsState;
 
 /**
  * Metadaten zu einem Operatoren, wenn ein ContentStream analysiert wird.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class OperatorMetadata {
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace pdf\object;
+namespace KjG_Ticketing\pdf\object;
 
 /**
  * Ein Pdf-Objekt, welches ein Dictionary beinhaltet.
  * Dies wird in PHP mit einem assoziativen Array realisiert.
- * @package pdf\object
+ * @package KjG_Ticketing\pdf\object
  */
 class PdfDictionary extends PdfAbstractObject {
     /**

@@ -1,21 +1,21 @@
 <?php
 
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
-use pdf\indirectObject\PdfStream;
-use pdf\object\PdfAbstractObject;
-use pdf\object\PdfArray;
-use pdf\object\PdfBoolean;
-use pdf\object\PdfDictionary;
-use pdf\object\PdfIndirectReference;
-use pdf\object\PdfName;
-use pdf\PdfDocument;
+use KjG_Ticketing\pdf\indirectObject\PdfStream;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\object\PdfArray;
+use KjG_Ticketing\pdf\object\PdfBoolean;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfIndirectReference;
+use KjG_Ticketing\pdf\object\PdfName;
+use KjG_Ticketing\pdf\PdfDocument;
 
 /**
  * Repräsentiert den Document Catalog.
  * Es werden nur die benötigten Möglichkeiten des Document Catalog abgebildet.
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 class DocumentCatalog extends AbstractDocumentObject {
 

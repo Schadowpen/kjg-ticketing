@@ -1,19 +1,18 @@
 <?php
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
-use pdf\indirectObject\PdfStream;
-use pdf\object\PdfAbstractObject;
-use pdf\object\PdfArray;
-use pdf\object\PdfDictionary;
-use pdf\object\PdfIndirectReference;
-use pdf\object\PdfName;
-use pdf\object\PdfNumber;
-use phpDocumentor\Reflection\Types\Mixed_;
+use KjG_Ticketing\pdf\indirectObject\PdfStream;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\object\PdfArray;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfIndirectReference;
+use KjG_Ticketing\pdf\object\PdfName;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 /**
  * Eine Seite eines Pdf-Dokumentes.
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 class Page extends AbstractDocumentObject {
     /**

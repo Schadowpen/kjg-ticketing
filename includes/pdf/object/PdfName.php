@@ -1,13 +1,13 @@
 <?php
 
-namespace pdf\object;
+namespace KjG_Ticketing\pdf\object;
 
 use KjG_Ticketing\misc\StringReader;
 use \Exception;
 
 /**
  * Ein PDF-Objekt, welches einen Namen beinhaltet
- * @package pdf\object
+ * @package KjG_Ticketing\pdf\object
  */
 class PdfName extends PdfAbstractObject {
     /**

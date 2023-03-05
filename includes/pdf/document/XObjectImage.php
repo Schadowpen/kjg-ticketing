@@ -1,22 +1,22 @@
 <?php
 
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
-use pdf\graphics\Point;
-use pdf\indirectObject\PdfStream;
-use pdf\object\PdfAbstractObject;
-use pdf\object\PdfArray;
-use pdf\object\PdfBoolean;
-use pdf\object\PdfDictionary;
-use pdf\object\PdfName;
-use pdf\object\PdfNull;
-use pdf\object\PdfNumber;
-use pdf\PdfFile;
+use KjG_Ticketing\pdf\graphics\Point;
+use KjG_Ticketing\pdf\indirectObject\PdfStream;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\object\PdfArray;
+use KjG_Ticketing\pdf\object\PdfBoolean;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfName;
+use KjG_Ticketing\pdf\object\PdfNull;
+use KjG_Ticketing\pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\PdfFile;
 
 /**
  * Ein externes Bild, welches in einen ContentStream eingebaut werden kann.
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 class XObjectImage extends XObject {
     public static function objectSubtype(): ?string {

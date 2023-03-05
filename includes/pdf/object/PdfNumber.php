@@ -1,10 +1,10 @@
 <?php
 
-namespace pdf\object;
+namespace KjG_Ticketing\pdf\object;
 
 /**
  * Ein PDF-Objekt, welches eine Nummer (float oder int) beinhaltet.
- * @package pdf\object
+ * @package KjG_Ticketing\pdf\object
  */
 class PdfNumber extends PdfAbstractObject {
     /**

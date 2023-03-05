@@ -1,15 +1,15 @@
 <?php
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
-use pdf\indirectObject\PdfStream;
-use pdf\object\PdfDictionary;
-use pdf\object\PdfIndirectReference;
-use pdf\PdfFile;
+use KjG_Ticketing\pdf\indirectObject\PdfStream;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfIndirectReference;
+use KjG_Ticketing\pdf\PdfFile;
 
 /**
  * Kapselt einen einzelnen Content Stream.
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 class ContentStream extends AbstractDocumentStream {
     /**

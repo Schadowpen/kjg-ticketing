@@ -1,13 +1,13 @@
 <?php
 
-namespace pdf\indirectObject;
+namespace KjG_Ticketing\pdf\indirectObject;
 
-use pdf\object\PdfAbstractObject;
-use pdf\object\PdfIndirectReference;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\object\PdfIndirectReference;
 
 /**
  * Indirect Object einer Pdf-Datei
- * @package pdf\indirectObject
+ * @package KjG_Ticketing\pdf\indirectObject
  */
 class PdfIndirectObject {
     /**

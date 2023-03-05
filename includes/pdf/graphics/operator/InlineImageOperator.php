@@ -1,17 +1,17 @@
 <?php
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 use Exception;
-use pdf\graphics\Point;
-use pdf\object\ObjectParser;
-use pdf\object\PdfAbstractObject;
-use pdf\object\PdfArray;
-use pdf\object\PdfBoolean;
-use pdf\object\PdfName;
-use pdf\object\PdfNumber;
-use pdf\object\PdfToken;
-use pdf\object\Tokenizer;
+use KjG_Ticketing\pdf\graphics\Point;
+use KjG_Ticketing\pdf\object\ObjectParser;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\object\PdfArray;
+use KjG_Ticketing\pdf\object\PdfBoolean;
+use KjG_Ticketing\pdf\object\PdfName;
+use KjG_Ticketing\pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\object\PdfToken;
+use KjG_Ticketing\pdf\object\Tokenizer;
 
 class InlineImageOperator extends AbstractImageOperator {
     /**

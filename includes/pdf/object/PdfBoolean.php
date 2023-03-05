@@ -1,10 +1,10 @@
 <?php
 
-namespace pdf\object;
+namespace KjG_Ticketing\pdf\object;
 
 /**
  * Repräsentiert ein Boolean Objekt aus einer PDF-Datei
- * @package pdf\object
+ * @package KjG_Ticketing\pdf\object
  */
 class PdfBoolean extends PdfAbstractObject {
     /**

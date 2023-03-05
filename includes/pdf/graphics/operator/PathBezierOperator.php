@@ -1,15 +1,15 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 
-use pdf\graphics\Point;
-use pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\graphics\Point;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 /**
  * Operator zum Zeichnen einer kubischen Bezier-Kurve. Der erste der vier Bezier-Punkte ist der Punkt aus dem letzten Path Construction Operator
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class PathBezierOperator extends PathConstructionOperator {
     /**

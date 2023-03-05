@@ -1,14 +1,14 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
-use pdf\graphics\Point;
-use pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\graphics\Point;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 /**
  * Operator zum Zeichnen einer Linie vom letzten Punkt des Unterpfades zum angegebenen Punkt
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class PathLineOperator extends PathConstructionOperator {
     /**

@@ -1,14 +1,14 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
-use pdf\object\PdfArray;
-use pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\object\PdfArray;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 /**
  * Operator zum setzen des Pattern, wie Linien gestrichelt sein sollen
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class LineDashPatternOperator extends AbstractOperator {
     /**

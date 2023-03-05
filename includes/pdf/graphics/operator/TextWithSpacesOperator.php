@@ -1,22 +1,22 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 
-use pdf\graphics\Point;
-use pdf\graphics\state\GraphicsState;
-use pdf\graphics\TransformationMatrix;
-use pdf\object\PdfArray;
-use pdf\object\PdfNumber;
-use pdf\object\PdfString;
+use KjG_Ticketing\pdf\graphics\Point;
+use KjG_Ticketing\pdf\graphics\state\GraphicsState;
+use KjG_Ticketing\pdf\graphics\TransformationMatrix;
+use KjG_Ticketing\pdf\object\PdfArray;
+use KjG_Ticketing\pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\object\PdfString;
 
 /**
  * Operator zum zeichnen von Text.
  * Bei diesem Text ist zwischen einzelnen Textstücken angegeben, wie weit ein horizontaler Abstand zwischen den beiden Textstücken sein soll.
  * Diese Abstände sind in Glyph Space (also tausendstel Text Space) angegeben und so zu lesen, dass positive Werte die Textstücke näher zusammenrücken.
  * Die Textstücke und Abstände bilden zusammen ein Array, bestehend aus strings und numbers.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class TextWithSpacesOperator extends AbstractTextOperator {
     /**

@@ -1,12 +1,12 @@
 <?php
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
-use pdf\graphics\state\GraphicsState;
+use KjG_Ticketing\pdf\graphics\state\GraphicsState;
 
 /**
  * Abstrakte Klasse für einen Operatoren, der in einem ContentStream vorkommt
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 abstract class AbstractOperator {
     /**

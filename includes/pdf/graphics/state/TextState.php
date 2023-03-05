@@ -1,26 +1,26 @@
 <?php
 
-namespace pdf\graphics\state;
+namespace KjG_Ticketing\pdf\graphics\state;
 
-use pdf\document\Font;
-use pdf\document\GraphicsStateParameterDictionary;
-use pdf\graphics\operator\AbstractOperator;
-use pdf\graphics\operator\CharacterSpaceOperator;
-use pdf\graphics\operator\TextFontOperator;
-use pdf\graphics\operator\TextLeadingOperator;
-use pdf\graphics\operator\TextRenderModeOperator;
-use pdf\graphics\operator\TextRiseOperator;
-use pdf\graphics\operator\TextScaleOperator;
-use pdf\graphics\operator\WordSpaceOperator;
-use pdf\object\PdfAbstractObject;
-use pdf\object\PdfBoolean;
-use pdf\object\PdfDictionary;
-use pdf\object\PdfIndirectReference;
-use pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\document\Font;
+use KjG_Ticketing\pdf\document\GraphicsStateParameterDictionary;
+use KjG_Ticketing\pdf\graphics\operator\AbstractOperator;
+use KjG_Ticketing\pdf\graphics\operator\CharacterSpaceOperator;
+use KjG_Ticketing\pdf\graphics\operator\TextFontOperator;
+use KjG_Ticketing\pdf\graphics\operator\TextLeadingOperator;
+use KjG_Ticketing\pdf\graphics\operator\TextRenderModeOperator;
+use KjG_Ticketing\pdf\graphics\operator\TextRiseOperator;
+use KjG_Ticketing\pdf\graphics\operator\TextScaleOperator;
+use KjG_Ticketing\pdf\graphics\operator\WordSpaceOperator;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\object\PdfBoolean;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfIndirectReference;
+use KjG_Ticketing\pdf\object\PdfNumber;
 
 /**
  * TextState innerhalb eines GraphicsState
- * @package pdf\graphics
+ * @package KjG_Ticketing\pdf\graphics
  */
 class TextState {
     /**

@@ -1,12 +1,12 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 /**
  * Operator zum hinzufügen des aktuellen Path zum Clipping Path. Der Path wird nach der Nonzero-Methode verarbeitet.
  * Dieser Operator sollte direkt vor einem Path Painting Operator aufgerufen werden.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class ClippingPathNonzeroOperator extends AbstractOperator {
 

@@ -1,11 +1,11 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 /**
  * Operator zum Beginnen einer neuen Zeile in einem Text Objekt. Diese Zeile ist entsprechend dem Text Leading tiefer
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class TextNextLineOperator extends AbstractOperator {
 

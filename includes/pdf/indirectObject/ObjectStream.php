@@ -1,17 +1,17 @@
 <?php
 
 
-namespace pdf\indirectObject;
+namespace KjG_Ticketing\pdf\indirectObject;
 
-use pdf\object\PdfDictionary;
-use pdf\object\PdfName;
-use pdf\object\PdfNumber;
-use pdf\PdfFile;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfName;
+use KjG_Ticketing\pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\PdfFile;
 
 /**
  * Klasse zum Aufbauen eines neuen ObjectStreams mit einigen Objekten.
  * Es wird angenommen, dass nur die Funktion addIndirectObject() von außen benutzt wird.
- * @package pdf\indirectObject
+ * @package KjG_Ticketing\pdf\indirectObject
  */
 class ObjectStream extends PdfStream {
     protected $objectStreamNumbers = "";

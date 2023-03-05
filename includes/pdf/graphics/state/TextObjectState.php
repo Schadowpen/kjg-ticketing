@@ -1,16 +1,16 @@
 <?php
 
 
-namespace pdf\graphics\state;
+namespace KjG_Ticketing\pdf\graphics\state;
 
-use pdf\graphics\operator\AbstractOperator;
-use pdf\graphics\operator\TextNewLineAndLeadingOperator;
-use pdf\graphics\operator\TextNewLineOperator;
-use pdf\graphics\TransformationMatrix;
+use KjG_Ticketing\pdf\graphics\operator\AbstractOperator;
+use KjG_Ticketing\pdf\graphics\operator\TextNewLineAndLeadingOperator;
+use KjG_Ticketing\pdf\graphics\operator\TextNewLineOperator;
+use KjG_Ticketing\pdf\graphics\TransformationMatrix;
 
 /**
  * AdditionalGraphicsState, der nur innerhalb eines Text Objekts Verwendung finden soll.
- * @package pdf\graphics\state
+ * @package KjG_Ticketing\pdf\graphics\state
  */
 class TextObjectState extends AbstractAdditionalGraphicsState {
     /**

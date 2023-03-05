@@ -1,11 +1,11 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 /**
  * Operator zum Setzen des Farbraums und/oder Farbe für Flächen zeichnen
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class ColorFillingOperator extends UnknownOperator {
     public function isGraphicsStateOperator(): bool {

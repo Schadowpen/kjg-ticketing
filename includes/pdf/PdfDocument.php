@@ -1,10 +1,10 @@
 <?php
 
-namespace pdf;
+namespace KjG_Ticketing\pdf;
 
-use pdf\document\DocumentCatalog;
-use pdf\document\DocumentInfo;
-use pdf\document\PageTree;
+use KjG_Ticketing\pdf\document\DocumentCatalog;
+use KjG_Ticketing\pdf\document\DocumentInfo;
+use KjG_Ticketing\pdf\document\PageTree;
 
 /**
  * Klasse zum Analysieren und Bearbeiten einer PDF auf Dokumentenebene

@@ -1,17 +1,17 @@
 <?php
 
-namespace pdf\document;
+namespace KjG_Ticketing\pdf\document;
 
 
-use pdf\indirectObject\PdfIndirectObject;
-use pdf\object\PdfArray;
-use pdf\object\PdfDictionary;
-use pdf\object\PdfNumber;
-use pdf\PdfFile;
+use KjG_Ticketing\pdf\indirectObject\PdfIndirectObject;
+use KjG_Ticketing\pdf\object\PdfArray;
+use KjG_Ticketing\pdf\object\PdfDictionary;
+use KjG_Ticketing\pdf\object\PdfNumber;
+use KjG_Ticketing\pdf\PdfFile;
 
 /**
  * Baum (oder eher Liste) mit allen Seiten in einem Pdf-Dokument.
- * @package pdf\document
+ * @package KjG_Ticketing\pdf\document
  */
 class PageTree extends AbstractDocumentObject {
     /**

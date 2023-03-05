@@ -1,10 +1,10 @@
 <?php
 
-namespace pdf\object;
+namespace KjG_Ticketing\pdf\object;
 
 /**
  * Ein PDF-Objekt, welches ein Array beinhaltet
- * @package pdf\object
+ * @package KjG_Ticketing\pdf\object
  */
 class PdfArray extends PdfAbstractObject {
     /**

@@ -1,19 +1,19 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 
-use pdf\graphics\Point;
-use pdf\graphics\state\GraphicsState;
-use pdf\graphics\TransformationMatrix;
-use pdf\object\PdfAbstractObject;
-use pdf\object\PdfHexString;
-use pdf\object\PdfString;
+use KjG_Ticketing\pdf\graphics\Point;
+use KjG_Ticketing\pdf\graphics\state\GraphicsState;
+use KjG_Ticketing\pdf\graphics\TransformationMatrix;
+use KjG_Ticketing\pdf\object\PdfAbstractObject;
+use KjG_Ticketing\pdf\object\PdfHexString;
+use KjG_Ticketing\pdf\object\PdfString;
 
 /**
  * Operator zum Zeichnen von Text in einer neuen Zeile
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class TextInNewLineOperator extends AbstractTextOperator {
     /**
@@ -34,7 +34,7 @@ class TextInNewLineOperator extends AbstractTextOperator {
         parent::__construct( $operatorMetadata );
         if ( ! ( $text instanceof PdfString ) && ! ( $text instanceof PdfHexString ) ) {
             $textClassName = get_class( $text );
-            throw new \Exception( "Argument 1 passed to pdf\graphics\operator\TextInNewLineOperator::__construct() must be an instance of pdf\object\PdfString or pdf\object\PdfHexString, instance of {$textClassName} given" );
+            throw new \Exception( "Argument 1 passed to KjG_Ticketing\pdf\graphics\operator\TextInNewLineOperator::__construct() must be an instance of KjG_Ticketing\pdf\object\PdfString or KjG_Ticketing\pdf\object\PdfHexString, instance of {$textClassName} given" );
         }
         $this->text = $text;
     }

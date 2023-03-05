@@ -1,17 +1,17 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 
-use pdf\document\ContentStream;
-use pdf\document\GraphicsStateParameterDictionary;
-use pdf\object\PdfIndirectReference;
-use pdf\object\PdfName;
+use KjG_Ticketing\pdf\document\ContentStream;
+use KjG_Ticketing\pdf\document\GraphicsStateParameterDictionary;
+use KjG_Ticketing\pdf\object\PdfIndirectReference;
+use KjG_Ticketing\pdf\object\PdfName;
 
 /**
  * Operator, welcher ein externes Dictionary mit Graphics State einlädt
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 class ExternalGraphicsStateOperator extends AbstractOperator {
     /**

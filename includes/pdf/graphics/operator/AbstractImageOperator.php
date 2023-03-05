@@ -1,16 +1,16 @@
 <?php
 
 
-namespace pdf\graphics\operator;
+namespace KjG_Ticketing\pdf\graphics\operator;
 
 
-use pdf\graphics\Point;
+use KjG_Ticketing\pdf\graphics\Point;
 
 
 /**
  * Abstrakte Superklasse für alle Bild-Operatoren, die in einem Content Stream vorkommen können.
  * Das können InlineImages, aber auch XObjects sein.
- * @package pdf\graphics\operator
+ * @package KjG_Ticketing\pdf\graphics\operator
  */
 abstract class AbstractImageOperator extends AbstractOperator {
 

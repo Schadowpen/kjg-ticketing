@@ -1,7 +1,7 @@
 <?php
 //require_once "CrossReferenceTableEntry.php";
 
-namespace pdf\crossReference;
+namespace KjG_Ticketing\pdf\crossReference;
 
 class CrossReferenceTable {
     /**
