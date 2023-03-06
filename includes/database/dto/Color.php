@@ -2,7 +2,6 @@
 
 namespace KjG_Ticketing\database\dto;
 
-use KjG_Ticketing\pdf\graphics\ColorGray;
 use KjG_Ticketing\pdf\graphics\ColorRGB;
 
 /**
@@ -34,15 +33,11 @@ class Color {
         $this->blue = $blue;
     }
 
-    public function to_PDF_color(): \KjG_Ticketing\pdf\graphics\Color {
-        if ( $this->red === $this->green && $this->green === $this->blue ) {
-            return new ColorGray( ( (float) $this->red ) / 255.0 );
-        } else {
-            return new ColorRGB(
-                ( (float) $this->red ) / 255.0,
-                ( (float) $this->green ) / 255.0,
-                ( (float) $this->blue ) / 255.0
-            );
-        }
+    public function to_PDF_color(): ColorRGB {
+        return new ColorRGB(
+            ( (float) $this->red ) / 255.0,
+            ( (float) $this->green ) / 255.0,
+            ( (float) $this->blue ) / 255.0
+        );
     }
 }
