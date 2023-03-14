@@ -2,7 +2,7 @@
 
 namespace KjG_Ticketing\ticket_generation;
 
-use KjG_Ticketing\database\DatabaseConnection;
+use KjG_Ticketing\database\AbstractDatabaseConnection;
 use KjG_Ticketing\pdf\misc\StringReader;
 use KjG_Ticketing\pdf\document\FontType0;
 use KjG_Ticketing\pdf\document\Page;
@@ -17,11 +17,11 @@ class TicketTemplateAnalyzer {
     protected PdfDocument $pdfDocument;
 
     /**
-     * @param DatabaseConnection $databaseConnection Connection to database to get the ticket template
+     * @param AbstractDatabaseConnection $databaseConnection Connection to database to get the ticket template
      *
      * @throws \Exception If the ticket template cannot be read or used as template.
      */
-    public function __construct( DatabaseConnection $databaseConnection ) {
+    public function __construct( AbstractDatabaseConnection $databaseConnection ) {
         $ticket_template = $databaseConnection->get_ticket_template();
         if ( $ticket_template === null ) {
             throw new \Exception( "Could not find ticket template in database" );

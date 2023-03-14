@@ -4,6 +4,7 @@ use KjG_Ticketing\api\Overview;
 use KjG_Ticketing\api\ProcessesWithInfo;
 use KjG_Ticketing\api\SeatingPlan;
 use KjG_Ticketing\api\ShowsWithStates;
+use KjG_Ticketing\api\TicketTemplatePositions;
 use KjG_Ticketing\api\VisitorsXlsx;
 use KjG_Ticketing\ApiHelper;
 use KjG_Ticketing\database\DatabaseOverview;
@@ -116,8 +117,12 @@ class KjG_Ticketing_Public {
         KjG_Ticketing_Security::validate_AJAX_read_permission();
         ApiHelper::validateDatabaseUsageAllowed( true, true, true );
         $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
-        $ticket_template_analyzer = new TicketTemplateAnalyzer( $dbc );
-        wp_send_json( $ticket_template_analyzer->getAvailableFonts() );
+        try {
+            $ticket_template_analyzer = new TicketTemplateAnalyzer( $dbc );
+            wp_send_json( $ticket_template_analyzer->getAvailableFonts() );
+        } catch ( Exception $exception ) {
+            wp_die( "Error: " . $exception->getMessage() . "\n" . $exception->getTraceAsString(), 500 );
+        }
     }
 
     public function get_entrances(): void {
@@ -223,8 +228,14 @@ class KjG_Ticketing_Public {
     }
 
     public function get_ticket_template_positions(): void {
-        // TODO implement
-        wp_die( "Error: not yet implemented", 501 );
+        KjG_Ticketing_Security::validate_AJAX_read_permission();
+        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
+        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        try {
+            wp_send_json( TicketTemplatePositions::get( $dbc ) );
+        } catch ( Exception $exception ) {
+            wp_die( "Error: " . $exception->getMessage() . "\n" . $exception->getTraceAsString(), 500 );
+        }
     }
 
     // |----------------------|
