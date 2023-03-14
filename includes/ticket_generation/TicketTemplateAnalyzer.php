@@ -1,6 +1,6 @@
 <?php
 
-namespace generation;
+namespace KjG_Ticketing\ticket_generation;
 
 use KjG_Ticketing\database\DatabaseConnection;
 use KjG_Ticketing\pdf\misc\StringReader;

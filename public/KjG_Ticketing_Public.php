@@ -9,6 +9,7 @@ use KjG_Ticketing\ApiHelper;
 use KjG_Ticketing\database\DatabaseOverview;
 use KjG_Ticketing\DownloadHelper;
 use KjG_Ticketing\KjG_Ticketing_Security;
+use KjG_Ticketing\ticket_generation\TicketTemplateAnalyzer;
 
 /**
  * The public-facing functionality of the plugin.
@@ -112,8 +113,11 @@ class KjG_Ticketing_Public {
     }
 
     public function get_available_fonts(): void {
-        // TODO implement
-        wp_die( "Error: not yet implemented", 501 );
+        KjG_Ticketing_Security::validate_AJAX_read_permission();
+        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
+        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        $ticket_template_analyzer = new TicketTemplateAnalyzer( $dbc );
+        wp_send_json( $ticket_template_analyzer->getAvailableFonts() );
     }
 
     public function get_entrances(): void {
