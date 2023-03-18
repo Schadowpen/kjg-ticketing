@@ -7,8 +7,6 @@ More detailed information about requirements etc. is written in `kjg-ticketing.p
 
 # Installation (for development)
 
-TODO
-
 ## Install and run a WordPress Server on your machine
 
 1. Install and run a software bundle with Apache, MySQL and PHP (like LAMP or XAMPP) on your machine.
@@ -42,6 +40,22 @@ Then the plugin should already occur on the WordPress Plugins Dashboard, where y
 
 When using PHPStorm as IDE, please refer
 to [this page](https://www.jetbrains.com/help/phpstorm/using-wordpress-content-management-system.html).
+
+## Postman
+
+Postman supports to automatically sync your changes to a Postman API to GitHub.
+For more information about this,
+click [here](https://learning.postman.com/docs/designing-and-developing-your-api/versioning-an-api/using-external-git-repo/)
+
+For this Repository, a separate `postman` branch exists to which should be the main branch for all updates to the
+Postman API. The Postman API is stored in the `postman` folder (which is by the way the default folder where Postman
+stores APIs).
+
+A logged in WordPress user is necessary for all requests, which is authenticated via Cookies.
+So ensure to get all necessary Cookies from your Browser.
+
+For API requests, a Postman collection exists called `kjg-ticketing API`.
+It includes all public AJAX requests as well as all download requests.
 
 # Create a release
 
