@@ -1,13 +1,14 @@
 {
 	"info": {
-		"_postman_id": "9318a3d0-8a52-4b1d-906a-1324a9240767",
+		"_postman_id": "44937a17-af36-4e2f-a36a-7b4e3872768c",
 		"name": "kjg-ticketing API",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "3188751-44937a17-af36-4e2f-a36a-7b4e3872768c"
 	},
 	"item": [
 		{
 			"name": "Get Seating Plan",
-			"id": "fcb21f5f-848a-4f21-a4de-eadcab154e2b",
+			"id": "f123784f-fc26-4acc-92e0-3b10fa2cd5f9",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -29,7 +30,16 @@
 						}
 					]
 				},
-				"url": "{{Wordpress_root}}/wp-admin/admin-ajax.php"
+				"url": {
+					"raw": "{{Wordpress_root}}/wp-admin/admin-ajax.php",
+					"host": [
+						"{{Wordpress_root}}"
+					],
+					"path": [
+						"wp-admin",
+						"admin-ajax.php"
+					]
+				}
 			},
 			"response": []
 		}
@@ -58,13 +68,13 @@
 	],
 	"variable": [
 		{
-			"id": "0bde74b6-a091-44ad-a353-dcbc3f52a798",
+			"id": "773aef9b-ca79-43a6-8578-a9e802c3a930",
 			"key": "WP_NONCE",
 			"value": "e13e2826e8",
 			"type": "string"
 		},
 		{
-			"id": "76a877f6-7192-42aa-913d-4bfa8c0fc9a4",
+			"id": "5e1c9862-5e17-41a2-8281-bc2097a95282",
 			"key": "Wordpress_root",
 			"value": "http://localhost/wordpress",
 			"type": "string"
