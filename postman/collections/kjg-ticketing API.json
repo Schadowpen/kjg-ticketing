@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "44937a17-af36-4e2f-a36a-7b4e3872768c",
+		"name": "kjg-ticketing API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "3188751-44937a17-af36-4e2f-a36a-7b4e3872768c"
+	},
+	"item": [
+		{
+			"name": "Get Seating Plan",
+			"id": "f123784f-fc26-4acc-92e0-3b10fa2cd5f9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "_ajax_nonce",
+							"value": "{{WP_NONCE}}",
+							"type": "text"
+						},
+						{
+							"key": "action",
+							"value": "kjg_ticketing_get_seating_plan",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Wordpress_root}}/wp-admin/admin-ajax.php",
+					"host": [
+						"{{Wordpress_root}}"
+					],
+					"path": [
+						"wp-admin",
+						"admin-ajax.php"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "baece275-5223-4205-b3b7-69d7a540af5d",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "88a84434-0531-4aa7-8ece-42490dfab6dd",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "773aef9b-ca79-43a6-8578-a9e802c3a930",
+			"key": "WP_NONCE",
+			"value": "e13e2826e8",
+			"type": "string"
+		},
+		{
+			"id": "5e1c9862-5e17-41a2-8281-bc2097a95282",
+			"key": "Wordpress_root",
+			"value": "http://localhost/wordpress",
+			"type": "string"
+		}
+	]
+}
