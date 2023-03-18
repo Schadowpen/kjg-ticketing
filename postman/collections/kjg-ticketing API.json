@@ -7,6 +7,49 @@
 	},
 	"item": [
 		{
+			"name": "Get Archived Databases",
+			"id": "fc4c330e-3385-4ad0-a00b-4de7527c4ac1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "_ajax_nonce",
+							"value": "{{WP_NONCE}}",
+							"type": "text"
+						},
+						{
+							"key": "action",
+							"value": "kjg_ticketing_get_archived_databases",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Wordpress_root}}/wp-admin/admin-ajax.php?XDEBUG_SESSION=Postman",
+					"host": [
+						"{{Wordpress_root}}"
+					],
+					"path": [
+						"wp-admin",
+						"admin-ajax.php"
+					],
+					"query": [
+						{
+							"key": "XDEBUG_SESSION",
+							"value": "Postman"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get Seating Plan",
 			"id": "f123784f-fc26-4acc-92e0-3b10fa2cd5f9",
 			"protocolProfileBehavior": {
@@ -54,7 +97,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "b8674350-c9fd-40dd-83c3-aa09b35af65c",
+				"id": "f0a9d763-7519-41d3-afd3-f1bd0a06e1cb",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -64,7 +107,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "c7a0ce02-501b-451d-ad7f-64db5b5b8280",
+				"id": "0b7ba24d-2ed9-4ef6-b2cc-32208e6a805c",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -74,13 +117,13 @@
 	],
 	"variable": [
 		{
-			"id": "1d47730e-0270-455c-b9b2-8f8165977a93",
+			"id": "b00ee33e-f074-48dd-adb1-907f48f49540",
 			"key": "WP_NONCE",
 			"value": "208af8d3cc",
 			"type": "string"
 		},
 		{
-			"id": "1002aa5a-012b-4245-bc15-4049f172b85a",
+			"id": "1d94fddb-4591-4c84-afb7-78dac3d8cf4d",
 			"key": "Wordpress_root",
 			"value": "http://localhost/wordpress",
 			"type": "string"
