@@ -58,13 +58,13 @@
 	],
 	"variable": [
 		{
-			"id": "96e1d387-c26f-4e13-b2ae-7d9b82de159b",
+			"id": "be563051-bebb-42d1-a680-66df45d4fb66",
 			"key": "WP_NONCE",
 			"value": "e13e2826e8",
 			"type": "string"
 		},
 		{
-			"id": "7ebd32c3-6ada-404a-b00e-950fbc84a60f",
+			"id": "1fc3b921-5e37-46f0-99c4-5dfb94136edc",
 			"key": "Wordpress_root",
 			"value": "localhost/wordpress",
 			"type": "string"
