@@ -17,5 +17,41 @@
 			},
 			"response": []
 		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "12458fcd-2373-4f56-b3c7-e210b7a75acf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5dd0cc34-593d-4a0e-b4c7-f249d45877ed",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "4a2bdb28-37e8-4bf1-8d1a-d859ae2f7238",
+			"key": "WP_NONCE",
+			"value": "e13e2826e8",
+			"type": "string"
+		},
+		{
+			"id": "7664e84e-4831-45df-96d9-affe9d4aaec9",
+			"key": "Wordpress_root",
+			"value": "localhost/wordpress/",
+			"type": "string"
+		}
 	]
 }
