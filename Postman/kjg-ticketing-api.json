@@ -38,7 +38,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "1348b8db-ed3c-411f-9a60-39d77c7377da",
+				"id": "baece275-5223-4205-b3b7-69d7a540af5d",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -48,7 +48,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "9c772626-c8c4-4ebe-8aca-6834b886a74f",
+				"id": "88a84434-0531-4aa7-8ece-42490dfab6dd",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -58,15 +58,15 @@
 	],
 	"variable": [
 		{
-			"id": "be563051-bebb-42d1-a680-66df45d4fb66",
+			"id": "0bde74b6-a091-44ad-a353-dcbc3f52a798",
 			"key": "WP_NONCE",
 			"value": "e13e2826e8",
 			"type": "string"
 		},
 		{
-			"id": "1fc3b921-5e37-46f0-99c4-5dfb94136edc",
+			"id": "76a877f6-7192-42aa-913d-4bfa8c0fc9a4",
 			"key": "Wordpress_root",
-			"value": "localhost/wordpress",
+			"value": "http://localhost/wordpress",
 			"type": "string"
 		}
 	]
