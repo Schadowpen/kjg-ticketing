@@ -12,8 +12,24 @@
 				"disableBodyPruning": true
 			},
 			"request": {
-				"method": "GET",
-				"header": []
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "_ajax_nonce",
+							"value": "{{WP_NONCE}}",
+							"type": "text"
+						},
+						{
+							"key": "action",
+							"value": "kjg_ticketing_get_seating_plan",
+							"type": "text"
+						}
+					]
+				},
+				"url": "{{Wordpress_root}}/wp-admin/admin-ajax.php"
 			},
 			"response": []
 		}
@@ -42,13 +58,13 @@
 	],
 	"variable": [
 		{
-			"id": "2e4096de-7c7a-4a70-a244-b7843595ecd9",
+			"id": "f200fed1-0493-4364-9e58-ac47238474ee",
 			"key": "WP_NONCE",
 			"value": "e13e2826e8",
 			"type": "string"
 		},
 		{
-			"id": "6089bd67-bb1a-4191-94ea-eba2eda846a7",
+			"id": "389d6a90-b17e-4fed-b162-30cd65d97d9a",
 			"key": "Wordpress_root",
 			"value": "localhost/wordpress/",
 			"type": "string"
