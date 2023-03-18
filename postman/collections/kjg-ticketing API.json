@@ -31,13 +31,19 @@
 					]
 				},
 				"url": {
-					"raw": "{{Wordpress_root}}/wp-admin/admin-ajax.php",
+					"raw": "{{Wordpress_root}}/wp-admin/admin-ajax.php?XDEBUG_SESSION=Postman",
 					"host": [
 						"{{Wordpress_root}}"
 					],
 					"path": [
 						"wp-admin",
 						"admin-ajax.php"
+					],
+					"query": [
+						{
+							"key": "XDEBUG_SESSION",
+							"value": "Postman"
+						}
 					]
 				}
 			},
@@ -48,7 +54,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "baece275-5223-4205-b3b7-69d7a540af5d",
+				"id": "b8674350-c9fd-40dd-83c3-aa09b35af65c",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -58,7 +64,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "88a84434-0531-4aa7-8ece-42490dfab6dd",
+				"id": "c7a0ce02-501b-451d-ad7f-64db5b5b8280",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -68,13 +74,13 @@
 	],
 	"variable": [
 		{
-			"id": "773aef9b-ca79-43a6-8578-a9e802c3a930",
+			"id": "1d47730e-0270-455c-b9b2-8f8165977a93",
 			"key": "WP_NONCE",
-			"value": "e13e2826e8",
+			"value": "208af8d3cc",
 			"type": "string"
 		},
 		{
-			"id": "5e1c9862-5e17-41a2-8281-bc2097a95282",
+			"id": "1002aa5a-012b-4245-bc15-4049f172b85a",
 			"key": "Wordpress_root",
 			"value": "http://localhost/wordpress",
 			"type": "string"
