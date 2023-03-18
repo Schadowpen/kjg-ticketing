@@ -53,6 +53,8 @@ stores APIs).
 
 A logged in WordPress user is necessary for all requests, which is authenticated via Cookies.
 So ensure to get all necessary Cookies from your Browser.
+Also, update the `WP_NONCE` environment variable on the `kjg-ticketing API` collection with the latest WordPress nonce
+from the admin page.
 
 For API requests, a Postman collection exists called `kjg-ticketing API`.
 It includes all public AJAX requests as well as all download requests.
