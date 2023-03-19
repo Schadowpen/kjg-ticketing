@@ -50,6 +50,54 @@
 			"response": []
 		},
 		{
+			"name": "Get Available Fonts",
+			"id": "563c7604-1e02-450e-8ecd-c8cedbad51d6",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "_ajax_nonce",
+							"value": "{{WP_NONCE}}",
+							"type": "text"
+						},
+						{
+							"key": "action",
+							"value": "kjg_ticketing_get_available_fonts",
+							"type": "text"
+						},
+						{
+							"key": "archive",
+							"value": "Die Zauberhafte Welt von Oz",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Wordpress_root}}/wp-admin/admin-ajax.php?XDEBUG_SESSION=Postman",
+					"host": [
+						"{{Wordpress_root}}"
+					],
+					"path": [
+						"wp-admin",
+						"admin-ajax.php"
+					],
+					"query": [
+						{
+							"key": "XDEBUG_SESSION",
+							"value": "Postman"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Get Seating Plan",
 			"id": "f123784f-fc26-4acc-92e0-3b10fa2cd5f9",
 			"protocolProfileBehavior": {
