@@ -74,6 +74,56 @@
 						{
 							"key": "archive",
 							"value": "Die Zauberhafte Welt von Oz",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "template",
+							"value": "Der Glöckner von Nôtre Dame",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "{{Wordpress_root}}/wp-admin/admin-ajax.php?XDEBUG_SESSION=Postman",
+					"host": [
+						"{{Wordpress_root}}"
+					],
+					"path": [
+						"wp-admin",
+						"admin-ajax.php"
+					],
+					"query": [
+						{
+							"key": "XDEBUG_SESSION",
+							"value": "Postman"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Template Databases",
+			"id": "583f24f5-d3d0-4407-9eb1-5f80fae42128",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "_ajax_nonce",
+							"value": "{{WP_NONCE}}",
+							"type": "text"
+						},
+						{
+							"key": "action",
+							"value": "kjg_ticketing_get_template_databases",
 							"type": "text"
 						}
 					]
@@ -118,6 +168,12 @@
 							"key": "action",
 							"value": "kjg_ticketing_get_seating_plan",
 							"type": "text"
+						},
+						{
+							"key": "archive",
+							"value": "Die Zauberhafte Welt von Oz",
+							"type": "text",
+							"disabled": true
 						}
 					]
 				},
