@@ -65,7 +65,7 @@ class DatabaseOverview {
         $current_event_id = Options::get_current_event_id();
         if ( $current_event_id ) {
             $sql = $wpdb->prepare( "SELECT name FROM " . DatabaseConnection::get_table_name_events()
-                                   . " WHERE id IS NOT %d", $current_event_id );
+                                   . " WHERE NOT id = %d", $current_event_id );
             $all_event_names = $wpdb->get_col( $sql );
         } else {
             $all_event_names = $wpdb->get_col( "SELECT name FROM " . DatabaseConnection::get_table_name_events() );
