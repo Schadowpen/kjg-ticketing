@@ -12,17 +12,17 @@ class TicketImageConfig {
     public const CONTENT_QR_CODE = "qr_code";
     public const CONTENT_SEATING_PLAN = "seating_plan";
 
-    public ?int $pdf_operator_number;
-    public ?string $pdf_operator_name;
-    public ?bool $pdf_resource_deletable;
-    public ?int $pdf_content_stream_start_operator_index;
-    public ?int $pdf_content_stream_num_operators;
+    public ?int $pdf_operator_number = null;
+    public ?string $pdf_operator_name = null;
+    public ?bool $pdf_resource_deletable = null;
+    public ?int $pdf_content_stream_start_operator_index = null;
+    public ?int $pdf_content_stream_num_operators = null;
     public Point $lower_left_corner;
     public Point $lower_right_corner;
     public Point $upper_left_corner;
-    public ?string $font;
-    public ?float $font_size;
-    public ?float $line_width;
+    public ?string $font = null;
+    public ?float $font_size = null;
+    public ?float $line_width = null;
 
     public static function from_DB( \stdClass $db_row ): TicketImageConfig {
         $ticket_image_config = new TicketImageConfig();
@@ -55,8 +55,6 @@ class TicketImageConfig {
             $this->font = (string) $db_row->font;
             $this->font_size = floatval( $db_row->font_size );
         }
-        if ( $db_row->line_width != null ) {
-            $this->line_width = floatval( $db_row->line_width );
-        }
+        $this->line_width = $db_row->line_width != null ? floatval( $db_row->line_width ) : null;
     }
 }

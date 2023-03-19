@@ -5,7 +5,7 @@ namespace KjG_Ticketing\database\dto;
 class Event {
     public int $id;
     public string $name;
-    public ?bool $archived;
+    public ?bool $archived = null;
     public float $ticket_price;
     public float $shipping_price;
     public float $seating_plan_width;
@@ -18,7 +18,7 @@ class Event {
         $event = new Event();
         $event->id = intval( $db_row->id );
         $event->name = (string) $db_row->name;
-        if ( $db_row->archived != null ) {
+        if ( isset( $db_row->archived ) && $db_row->archived != null ) {
             $event->archived = intval( $db_row->archived ) === 1;
         }
         $event->ticket_price = floatval( $db_row->ticket_price );

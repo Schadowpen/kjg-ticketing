@@ -2,6 +2,7 @@
 
 namespace KjG_Ticketing\database;
 
+use KjG_Ticketing\database\dto\Event;
 use KjG_Ticketing\database\dto\SeatGroup;
 
 /**
@@ -12,6 +13,28 @@ class TemplateDatabaseConnection extends AbstractDatabaseConnection {
     public static function get_table_name_events(): string {
         return "kjg_ticketing_template_events";
     }
+
+    public function get_event( bool $echoErrors = true ): Event|false {
+        global $wpdb;
+        $sql = $wpdb->prepare(
+            "SELECT id, name, ticket_price, shipping_price, seating_plan_width, seating_plan_length, seating_plan_length_unit FROM "
+            . static::get_table_name_events() . " WHERE id = %d",
+            $this->event_id
+        );
+        $row = $wpdb->get_row( $sql, OBJECT );
+
+        if ( ! $row ) {
+            if ( $echoErrors ) {
+                echo "Error: Could not read event from database\n";
+            }
+
+            return false;
+        }
+
+        return Event::from_DB( $row );
+    }
+
+    // --------------------------------------------------
 
     protected static function get_table_name_ticket_text_config(): string {
         return "kjg_ticketing_template_ticket_text_config";

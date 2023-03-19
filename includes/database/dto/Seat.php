@@ -29,9 +29,7 @@ class Seat {
         $seat->rotation = floatval( $db_row->rotation );
         $seat->width = floatval( $db_row->width );
         $seat->length = floatval( $db_row->length );
-        if ( $db_row->entrance_id != null ) {
-            $seat->entrance_id = intval( $db_row->entrance_id );
-        }
+        $seat->entrance_id = $db_row->entrance_id != null ? intval( $db_row->entrance_id ) : null;
 
         return $seat;
     }

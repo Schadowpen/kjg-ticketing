@@ -12,10 +12,10 @@ class Entrance {
     public float $y2;
     public float $x3;
     public float $y3;
-    public ?string $text;
-    public ?float $text_position_x;
-    public ?float $text_position_y;
-    public ?int $entrance_id;
+    public ?string $text = null;
+    public ?float $text_position_x = null;
+    public ?float $text_position_y = null;
+    public ?int $entrance_id = null;
 
     public static function from_DB( \stdClass $db_row ): Entrance {
         $entrance = new Entrance();
@@ -33,9 +33,7 @@ class Entrance {
             $entrance->text_position_x = floatval( $db_row->text_position_x );
             $entrance->text_position_y = floatval( $db_row->text_position_y );
         }
-        if ( $db_row->entrance_id != null ) {
-            $entrance->entrance_id = intval( $db_row->entrance_id );
-        }
+        $entrance->entrance_id = $db_row->entrance_id != null ? intval( $db_row->entrance_id ) : null;
 
         return $entrance;
     }

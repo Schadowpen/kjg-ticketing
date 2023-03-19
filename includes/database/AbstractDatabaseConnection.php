@@ -49,25 +49,9 @@ abstract class AbstractDatabaseConnection {
 
     public static abstract function get_table_name_events(): string;
 
-    public function get_event( bool $echoErrors = true ): Event|false {
-        global $wpdb;
-        $sql = $wpdb->prepare(
-            "SELECT id, name, archived, ticket_price, shipping_price, seating_plan_width, seating_plan_length, seating_plan_length_unit FROM "
-            . static::get_table_name_events() . " WHERE id = %d",
-            $this->event_id
-        );
-        $row = $wpdb->get_row( $sql, OBJECT );
-
-        if ( ! $row ) {
-            if ( $echoErrors ) {
-                echo "Error: Could not read event from database\n";
-            }
-
-            return false;
-        }
-
-        return Event::from_DB( $row );
-    }
+    // This function is abstract because the table definitions differ between events and template events.
+    // - The template events table does not have an "archived" column
+    public abstract function get_event( bool $echoErrors = true ): Event|false;
 
     /**
      * Deletes the whole event associated with this databaseConnection.

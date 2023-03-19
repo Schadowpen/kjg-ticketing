@@ -5,16 +5,16 @@ namespace KjG_Ticketing\database\dto;
 use stdClass;
 
 class TicketConfig {
-    public ?TicketImageConfig $qr_code_config;
-    public ?TicketSeatingPlanConfig $seating_plan_config;
-    public ?TicketTextConfig $date_text_config;
-    public ?TicketTextConfig $time_text_config;
-    public ?TicketTextConfig $seat_block_text_config;
-    public ?TicketTextConfig $seat_row_text_config;
-    public ?TicketTextConfig $seat_number_text_config;
-    public ?TicketTextConfig $price_text_config;
-    public ?TicketTextConfig $payment_state_text_config;
-    public ?TicketTextConfig $process_id_text_config;
+    public ?TicketImageConfig $qr_code_config = null;
+    public ?TicketSeatingPlanConfig $seating_plan_config = null;
+    public ?TicketTextConfig $date_text_config = null;
+    public ?TicketTextConfig $time_text_config = null;
+    public ?TicketTextConfig $seat_block_text_config = null;
+    public ?TicketTextConfig $seat_row_text_config = null;
+    public ?TicketTextConfig $seat_number_text_config = null;
+    public ?TicketTextConfig $price_text_config = null;
+    public ?TicketTextConfig $payment_state_text_config = null;
+    public ?TicketTextConfig $process_id_text_config = null;
 
     /**
      * @param stdClass[] $text_config_db_rows All rows from the ticket_text_config table with the same event_id.

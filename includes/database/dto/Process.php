@@ -40,7 +40,7 @@ class Process {
      *
      * TODO is this field optional or shall we make it required?
      */
-    public ?array $additional_entries;
+    public ?array $additional_entries = null;
 
     /**
      * @param stdClass $db_row

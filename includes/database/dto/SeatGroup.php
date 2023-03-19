@@ -33,9 +33,7 @@ class SeatGroup {
         $seat_group->rotation = floatval( $db_row->rotation );
         $seat_group->seat_width = floatval( $db_row->seat_width );
         $seat_group->seat_length = floatval( $db_row->seat_length );
-        if ( $db_row->entrance_id != null ) {
-            $seat_group->entrance_id = intval( $db_row->entrance_id );
-        }
+        $seat_group->entrance_id = $db_row->entrance_id != null ? intval( $db_row->entrance_id ) : null;
 
         return $seat_group;
     }

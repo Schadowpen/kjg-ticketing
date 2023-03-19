@@ -45,7 +45,7 @@ class DatabaseOverview {
         global $wpdb;
 
         $events = $wpdb->get_results(
-            "SELECT id, name, archived, ticket_price, shipping_price, seating_plan_width, seating_plan_length, seating_plan_length_unit FROM "
+            "SELECT id, name, ticket_price, shipping_price, seating_plan_width, seating_plan_length, seating_plan_length_unit FROM "
             . TemplateDatabaseConnection::get_table_name_events(),
             OBJECT
         );

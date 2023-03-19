@@ -9,10 +9,10 @@ class SeatingPlanArea {
     public float $width;
     public float $length;
     public string $color;
-    public ?string $text;
-    public ?float $text_position_x;
-    public ?float $text_position_y;
-    public ?string $text_color;
+    public ?string $text = null;
+    public ?float $text_position_x = null;
+    public ?float $text_position_y = null;
+    public ?string $text_color = null;
 
     public static function from_DB( \stdClass $db_row ): SeatingPlanArea {
         $seating_plan_area = new SeatingPlanArea();
