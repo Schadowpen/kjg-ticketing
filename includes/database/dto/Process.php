@@ -65,12 +65,12 @@ class Process {
         $process->ticket_generated = intval( $db_row->ticket_generated ) === 1;
 
         if ( $additional_entries != null ) {
-            $process->additional_entries = array_filter(
+            $process->additional_entries = array_values( array_filter(
                 $additional_entries,
                 function ( ProcessAdditionalEntry $entry ) use ( $process ) {
                     return $entry->process_id === $process->id;
                 }
-            );
+            ) );
         }
 
         return $process;

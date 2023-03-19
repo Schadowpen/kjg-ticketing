@@ -105,9 +105,7 @@ class DatabaseOverview {
     }
 
     public function getArchiveDatabaseConnection( string $archiveName, bool $echoErrors = true ): DatabaseConnection|false {
-        $eventsWithName = array_filter( $this->getEvents(), function ( $event ) use ( $archiveName ) {
-            return $event->name == $archiveName;
-        } );
+        $eventsWithName = $this->getEventsWithName( $this->getEvents(), $archiveName );
 
         $numEventsWithName = count( $eventsWithName );
         if ( $numEventsWithName < 1 ) {
@@ -130,9 +128,7 @@ class DatabaseOverview {
     }
 
     public function getTemplateDatabaseConnection( string $templateName, bool $echoErrors = true ): false|TemplateDatabaseConnection {
-        $eventsWithName = array_filter( $this->getTemplateEvents(), function ( $event ) use ( $templateName ) {
-            return $event->name == $templateName;
-        } );
+        $eventsWithName = $this->getEventsWithName( $this->getTemplateEvents(), $templateName );
 
         $numEventsWithName = count( $eventsWithName );
         if ( $numEventsWithName < 1 ) {
@@ -152,6 +148,20 @@ class DatabaseOverview {
         }
 
         return new TemplateDatabaseConnection( $eventsWithName[0]->id );
+    }
+
+    /**
+     * @param Event[] $events
+     * @param string $eventName
+     *
+     * @return Event[] Usually a single event with the given name, but can theoretically also be zero or multiple events.
+     */
+    private function getEventsWithName( array $events, string $eventName ): array {
+        $eventsWithName = array_filter( $events, function ( $event ) use ( $eventName ) {
+            return $event->name == $eventName;
+        } );
+
+        return array_values( $eventsWithName );
     }
 
     /**
