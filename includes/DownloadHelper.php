@@ -2,6 +2,9 @@
 
 namespace KjG_Ticketing;
 
+use KjG_Ticketing\database\DatabaseConnection;
+use KjG_Ticketing\database\DatabaseOverview;
+
 /**
  * Tools especially for download links.
  *
@@ -18,5 +21,18 @@ class DownloadHelper {
         }
 
         return intval( $_GET["show_id"] );
+    }
+
+    public static function getDatabaseConnection( DatabaseOverview $dbo ): DatabaseConnection {
+        if ( isset( $_GET['archive'] ) ) {
+            $dbc = $dbo->getArchiveDatabaseConnection( $_GET['archive'] );
+        } else {
+            $dbc = $dbo->getCurrentDatabaseConnection();
+        }
+        if ( ! $dbc ) {
+            wp_die();
+        }
+
+        return $dbc;
     }
 }

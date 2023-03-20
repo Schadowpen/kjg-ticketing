@@ -45,7 +45,7 @@ class KjG_Ticketing_Public {
     public function __construct( string $plugin_name, string $version ) {
 
         $this->plugin_name = $plugin_name;
-        $this->version = $version;
+        $this->version     = $version;
 
     }
 
@@ -135,7 +135,7 @@ class KjG_Ticketing_Public {
     public function get_event(): void {
         KjG_Ticketing_Security::validate_AJAX_no_permission();
         ApiHelper::validateDatabaseUsageAllowed( true, true, true );
-        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        $dbc   = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
         $event = $dbc->get_event();
         if ( ! $event ) {
             wp_die();
@@ -250,7 +250,7 @@ class KjG_Ticketing_Public {
         KjG_Ticketing_Security::validate_download_permission();
         $show_id = DownloadHelper::validate_and_get_show_id_if_present();
         ApiHelper::validateDatabaseUsageAllowed( true, true, false );
-        $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
+        $dbc = DownloadHelper::getDatabaseConnection( new DatabaseOverview() );
         VisitorsXlsx::get( $dbc, $show_id );
     }
 
