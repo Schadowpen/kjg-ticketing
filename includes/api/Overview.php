@@ -19,21 +19,21 @@ class Overview {
 
     public static function get( DatabaseConnection $dbc ): mixed {
         // read database
-        $event = $dbc->get_event();
-        $seats = $dbc->get_seats();
-        $shows = $dbc->get_shows();
+        $event       = $dbc->get_event();
+        $seats       = $dbc->get_seats();
+        $shows       = $dbc->get_shows();
         $seat_states = $dbc->get_seat_states();
-        $processes = $dbc->get_processes();
+        $processes   = $dbc->get_processes();
 
         // Connect data to output
-        $seat_count = count( $seats );
-        $output = new Overview();
-        $output->event_name = $event->name;
-        $output->ticket_price = $event->ticket_price;
+        $seat_count             = count( $seats );
+        $output                 = new Overview();
+        $output->event_name     = $event->name;
+        $output->ticket_price   = $event->ticket_price;
         $output->shipping_price = $event->shipping_price;
 
         // Calculate revenue by mail
-        $output->shipping_revenue = 0;
+        $output->shipping_revenue      = 0;
         $output->paid_shipping_revenue = 0;
         for ( $i = 0; $i < count( $processes ); $i ++ ) {
             if ( $processes[ $i ]->shipping == Process::SHIPPING_MAIL ) {
@@ -45,7 +45,6 @@ class Overview {
         }
 
         // Calculate for every show
-        $output->data = [];
         for ( $i = 0; $i < count( $shows ); $i ++ ) {
             $overview_per_show = new OverviewPerShow( $shows[ $i ], $seat_count );
 
@@ -106,8 +105,8 @@ class Overview {
                                         $overview_per_show->num_seats_TripleA ++;
                                     } else {
                                         $overview_per_show->num_seats_booked ++;
-                                        $ticket_price = $processes[ $j ]->get_ticket_price( $event );
-                                        $overview_per_show->revenue += $ticket_price;
+                                        $ticket_price                    = $processes[ $j ]->get_ticket_price( $event );
+                                        $overview_per_show->revenue      += $ticket_price;
                                         $overview_per_show->paid_revenue += $ticket_price;
                                     }
                                     break;
