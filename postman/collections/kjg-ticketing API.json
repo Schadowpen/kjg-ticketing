@@ -878,6 +878,53 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Download Visitors Excel Spreadsheet",
+			"id": "cc2847fc-d22f-467b-97e7-4e0e353fe6f8",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Wordpress_root}}/wp-load.php?XDEBUG_SESSION=Postman&_wpnonce={{WP_NONCE}}&action=kjg_ticketing_download_visitors_xlsx",
+					"host": [
+						"{{Wordpress_root}}"
+					],
+					"path": [
+						"wp-load.php"
+					],
+					"query": [
+						{
+							"key": "XDEBUG_SESSION",
+							"value": "Postman"
+						},
+						{
+							"key": "_wpnonce",
+							"value": "{{WP_NONCE}}"
+						},
+						{
+							"key": "action",
+							"value": "kjg_ticketing_download_visitors_xlsx"
+						},
+						{
+							"key": "show_id",
+							"value": "1",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "archive",
+							"value": "Die Zauberhafte Welt von Oz",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -904,13 +951,13 @@
 	],
 	"variable": [
 		{
-			"id": "46aac588-de0d-4b49-9187-9be1f12a95ee",
+			"id": "ef8ef813-2698-4e60-a842-b2f5ed5a7366",
 			"key": "WP_NONCE",
 			"value": "208af8d3cc",
 			"type": "string"
 		},
 		{
-			"id": "753ec8d9-9886-48a6-9325-c663445739ef",
+			"id": "070d088f-96f4-4b92-a3d4-e200d185801a",
 			"key": "Wordpress_root",
 			"value": "http://localhost/wordpress",
 			"type": "string"
