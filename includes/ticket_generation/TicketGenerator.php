@@ -250,7 +250,7 @@ class TicketGenerator {
         }
         if ( $this->seat_states === null ) {
             if ( ! ( $this->databaseConnection instanceof DatabaseConnection ) ) {
-                wp_die( "Error: Cannot load seat states from template database", 500 );
+                throw new Exception( "Cannot load seat states from template database" );
             }
             $this->seat_states = $this->databaseConnection->get_seat_states();
         }
