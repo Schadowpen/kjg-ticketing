@@ -7,9 +7,13 @@ class Show {
     public string $date;
     public string $time;
 
+    private function __construct() {
+        // use static functions instead of constructor
+    }
+
     public static function from_DB( \stdClass $db_row ): Show {
-        $show = new Show();
-        $show->id = intval( $db_row->id );
+        $show       = new Show();
+        $show->id   = intval( $db_row->id );
         $show->date = (string) $db_row->show_date;
         $show->time = (string) $db_row->show_time;
 

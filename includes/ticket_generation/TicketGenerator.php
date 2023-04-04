@@ -201,11 +201,11 @@ class TicketGenerator {
      * TicketGenerator constructor.
      *
      * @param DatabaseConnection $databaseConnection Connection to the database to obtain all necessary data.
-     * @param Process $vorgang Single process for which a ticket should be generated
+     * @param Process $process Single process for which a ticket should be generated
      */
-    public function __construct( DatabaseConnection $databaseConnection, Process $vorgang ) {
+    public function __construct( DatabaseConnection $databaseConnection, Process $process ) {
         $this->databaseConnection = $databaseConnection;
-        $this->process = $vorgang;
+        $this->process            = $process;
     }
 
     /**
@@ -282,7 +282,7 @@ class TicketGenerator {
         if ( $pdfDocument->getPageList()->getPageCount() !== 1 ) {
             throw new \Exception( "Only PDF-Files with one Page can be used as Template" );
         }
-        $templatePage = $pdfDocument->getPageList()->getPage( 0 );
+        $templatePage          = $pdfDocument->getPageList()->getPage( 0 );
         $templateContentStream = $templatePage->getContents();
         $pdfDocument->getPageList()->removePage( 0 );
 
@@ -314,7 +314,7 @@ class TicketGenerator {
             new GraphicsStateStack( new TransformationMatrix(), $templatePage->getCropBox() ),
             $templateContentStream
         );
-        $qrCodeConfig = @$this->ticket_config->qr_code_config;
+        $qrCodeConfig          = @$this->ticket_config->qr_code_config;
         if ( $qrCodeConfig !== null && isset( $qrCodeConfig->pdf_content_stream_start_operator_index ) ) {
             $analyzedContentStream->deleteOperators(
                 $qrCodeConfig->pdf_content_stream_start_operator_index,
@@ -372,10 +372,10 @@ class TicketGenerator {
             $seatGrayOperator = $this->getImageOperator( __DIR__ . "/../../images/seat_gray.png", $templateContentStream );
             if ( $this->process->payment_state === Process::PAYMENT_STATE_PAID ) {
                 $seatLightColoredOperator = $this->getImageOperator( __DIR__ . "/../../images/seat_lightgreen.png", $templateContentStream );
-                $seatColoredOperator = $this->getImageOperator( __DIR__ . "/../../images/seat_green_selected.png", $templateContentStream );
+                $seatColoredOperator      = $this->getImageOperator( __DIR__ . "/../../images/seat_green_selected.png", $templateContentStream );
             } else {
                 $seatLightColoredOperator = $this->getImageOperator( __DIR__ . "/../../images/seat_lightyellow.png", $templateContentStream );
-                $seatColoredOperator = $this->getImageOperator( __DIR__ . "/../../images/seat_yellow_selected.png", $templateContentStream );
+                $seatColoredOperator      = $this->getImageOperator( __DIR__ . "/../../images/seat_yellow_selected.png", $templateContentStream );
             }
 
             // Add data from $seats and $seat_states
@@ -386,12 +386,12 @@ class TicketGenerator {
                     if ( $seat_state->block === $seat->block
                          && $seat_state->reihe === $seat->row
                          && $seat_state->platz === $seat->number ) {
-                        $seat_state->position_x = $seat->position_x;
-                        $seat_state->position_y = $seat->position_y;
-                        $seat_state->rotation = $seat->rotation;
+                        $seat_state->position_x  = $seat->position_x;
+                        $seat_state->position_y  = $seat->position_y;
+                        $seat_state->rotation    = $seat->rotation;
                         $seat_state->entrance_id = $seat->entrance_id;
-                        $seat_state->width = $seat->width;
-                        $seat_state->length = $seat->length;
+                        $seat_state->width       = $seat->width;
+                        $seat_state->length      = $seat->length;
                     }
                 }
             }
@@ -408,9 +408,9 @@ class TicketGenerator {
 
         // Startkonfiguration setzen
         $seating_plan_start_content_stream = GenerateContentStream::generateNew( $analyzedContentStream->getLastGraphicsStateStack(), $templateContentStream->getResourceDictionary(), $pdfFile );
-        $graphicsState = $seating_plan_start_content_stream->getLastGraphicsStateStack()->getGraphicsState();
-        $textState = $graphicsState->getTextState();
-        $transformationMatrix = $graphicsState->getCurrentTransformationMatrix();
+        $graphicsState                     = $seating_plan_start_content_stream->getLastGraphicsStateStack()->getGraphicsState();
+        $textState                         = $graphicsState->getTextState();
+        $transformationMatrix              = $graphicsState->getCurrentTransformationMatrix();
         if ( $transformationMatrix != new TransformationMatrix() ) {
             $seating_plan_start_content_stream->addOperator( new ModifyTransformationMatrixOperator( $transformationMatrix->invers() ) );
         }
@@ -456,7 +456,7 @@ class TicketGenerator {
 
             // Line width, font and font size
             $seating_plan_start_content_stream->addOperator( new LineWidthOperator( new PdfNumber( $seating_plan_config->line_width / $seating_plan_scale ) ) );
-            $font = $seating_plan_start_content_stream->getContentStream()->getResourceDictionary()->getFont( $seating_plan_font_name );
+            $font             = $seating_plan_start_content_stream->getContentStream()->getResourceDictionary()->getFont( $seating_plan_font_name );
             $currentTextState = $seating_plan_start_content_stream->getLastGraphicsStateStack()->getGraphicsState()->getTextState();
             if ( $currentTextState->getTextFont() !== $font || $currentTextState->getTextFontSize()->getValue() !== $seating_plan_config->font_size / $seating_plan_scale ) {
                 $seating_plan_start_content_stream->addOperator( new TextFontOperator( new PdfName( $seating_plan_font_name ), $font, new PdfNumber( $seating_plan_config->font_size / $seating_plan_scale ) ) );
@@ -649,7 +649,7 @@ class TicketGenerator {
     private function getFontName( TicketTextConfig|TicketSeatingPlanConfig $textConfig, ContentStream $templateContentStream ): ?string {
         $fontName = $templateContentStream->getResourceDictionary()->getFontNameByBaseName( $textConfig->font );
         if ( $fontName === null ) {
-            $font = Font::getStandard14Font( $textConfig->font, $templateContentStream->getPdfFile() );
+            $font     = Font::getStandard14Font( $textConfig->font, $templateContentStream->getPdfFile() );
             $fontName = $templateContentStream->getResourceDictionary()->addFont( $font );
         }
 
@@ -666,7 +666,7 @@ class TicketGenerator {
      * @throws \Exception When the PNG file cannot be read or converted
      */
     private function getImageOperator( string $pngFile, ContentStream $templateContentStream ): ExternalObjectOperator {
-        $xObject = XObjectImage::createFromPNG( $pngFile, $templateContentStream->getPdfFile() );
+        $xObject     = XObjectImage::createFromPNG( $pngFile, $templateContentStream->getPdfFile() );
         $xObjectName = new PdfName( $templateContentStream->getResourceDictionary()->addXObject( $xObject ) );
 
         return new ExternalObjectOperator( $xObjectName, $xObject );
@@ -734,7 +734,7 @@ class TicketGenerator {
             $contentStream->addOperator( new ColorRGBFillingOperator( $color ) );
         }
 
-        $font = $graphicsState->getTextState()->getTextFont();
+        $font     = $graphicsState->getTextState()->getTextFont();
         $fontSize = $graphicsState->getTextState()->getTextFontSize();
 
         $textOperator = new TextOperator( new PdfString( $font->fromUTF8( $text ) ) );
@@ -775,7 +775,7 @@ class TicketGenerator {
             $contentStream->addOperator( new ColorRGBStrokingOperator( $color ) );
         }
         // Arrow at the end of the entrance
-        $endPoint = new Point( $entrance->x3, $this->event->seating_plan_length - $entrance->y3 );
+        $endPoint      = new Point( $entrance->x3, $this->event->seating_plan_length - $entrance->y3 );
         $previousPoint = new Point( $entrance->x2, $this->event->seating_plan_length - $entrance->y2 );
         if ( $previousPoint == $endPoint ) {
             $previousPoint = new Point( $entrance->x1, $this->event->seating_plan_length - $entrance->y1 );
@@ -785,8 +785,8 @@ class TicketGenerator {
         }
         if ( $endPoint != $previousPoint ) {
             $distance = $endPoint->distanceTo( $previousPoint );
-            $dx = ( $previousPoint->x - $endPoint->x ) / $distance / 2;
-            $dy = ( $previousPoint->y - $endPoint->y ) / $distance / 2;
+            $dx       = ( $previousPoint->x - $endPoint->x ) / $distance / 2;
+            $dy       = ( $previousPoint->y - $endPoint->y ) / $distance / 2;
             $contentStream->addOperator( new PathBeginOperator( new PdfNumber( $endPoint->x + $dx * 0.5 + $dy * 0.5 ), new PdfNumber( $endPoint->y + $dy * 0.5 - $dx * 0.5 ) ) );
             $contentStream->addOperator( new PathLineOperator( new PdfNumber( $endPoint->x ), new PdfNumber( $endPoint->y ) ) );
             $contentStream->addOperator( new PathLineOperator( new PdfNumber( $endPoint->x + $dx * 0.5 - $dy * 0.5 ), new PdfNumber( $endPoint->y + $dy * 0.5 + $dx * 0.5 ) ) );
@@ -899,7 +899,7 @@ class TicketGenerator {
      * @throws \Exception If the text cannot be added
      */
     private function addText( TicketTextConfig $textConfig, string $fontName, GenerateContentStream $targetContentStream, string $text ): void {
-        $font = $targetContentStream->getContentStream()->getResourceDictionary()->getFont( $fontName );
+        $font             = $targetContentStream->getContentStream()->getResourceDictionary()->getFont( $fontName );
         $currentTextState = $targetContentStream->getLastGraphicsStateStack()->getGraphicsState()->getTextState();
         if ( $currentTextState->getTextFont() !== $font || $currentTextState->getTextFontSize()->getValue() !== $textConfig->font_size ) {
             $targetContentStream->addOperator( new TextFontOperator( new PdfName( $fontName ), $font, new PdfNumber( $textConfig->font_size ) ) );
@@ -949,27 +949,27 @@ class TicketGenerator {
         // linke untere Ecke in Ursprung verschieben
         $transformationMatrix = TransformationMatrix::translation( $imageConfig->lower_left_corner->x, $imageConfig->lower_left_corner->y );
         // Rotation, sodass X-Achsen aufeinanderliegen
-        $wx = $imageConfig->lower_right_corner->x - $imageConfig->lower_left_corner->x;
-        $wy = $imageConfig->lower_right_corner->y - $imageConfig->lower_left_corner->y;
-        $originalWidth = sqrt( $wx * $wx + $wy * $wy );
-        $hx = $imageConfig->upper_left_corner->x - $imageConfig->lower_left_corner->x;
-        $hy = $imageConfig->upper_left_corner->y - $imageConfig->lower_left_corner->y;
-        $originalHeight = sqrt( $hx * $hx + $hy * $hy );
+        $wx                   = $imageConfig->lower_right_corner->x - $imageConfig->lower_left_corner->x;
+        $wy                   = $imageConfig->lower_right_corner->y - $imageConfig->lower_left_corner->y;
+        $originalWidth        = sqrt( $wx * $wx + $wy * $wy );
+        $hx                   = $imageConfig->upper_left_corner->x - $imageConfig->lower_left_corner->x;
+        $hy                   = $imageConfig->upper_left_corner->y - $imageConfig->lower_left_corner->y;
+        $originalHeight       = sqrt( $hx * $hx + $hy * $hy );
         $transformationMatrix = $transformationMatrix->addTransformation( TransformationMatrix::rotation( atan2( $wy, $wx ) ) );
         // Abschrägung der Y-Achse herausrechnen
-        $newUpperLeftCorner = $transformationMatrix->invers()->transformPoint( new Point( $imageConfig->upper_left_corner->x, $imageConfig->upper_left_corner->y ) );
+        $newUpperLeftCorner   = $transformationMatrix->invers()->transformPoint( new Point( $imageConfig->upper_left_corner->x, $imageConfig->upper_left_corner->y ) );
         $transformationMatrix = $transformationMatrix->addTransformation( new TransformationMatrix( 1, 0, $newUpperLeftCorner->x / $newUpperLeftCorner->y, 1 ) );
         $transformationMatrix = $transformationMatrix->addTransformation( TransformationMatrix::scaling( 1, $newUpperLeftCorner->y / $originalHeight ) );
         // Skalieren und dabei Seitenverhältnis bewahren
         if ( $originalWidth / $originalHeight > $targetWidth / $targetHeight ) {
-            $scaling = $originalHeight / $targetHeight;
+            $scaling              = $originalHeight / $targetHeight;
             $transformationMatrix = $transformationMatrix->addTransformation( TransformationMatrix::scaling( $scaling, $scaling ) );
-            $xOffset = ( $originalWidth / $scaling - $targetWidth ) / 2.0;
+            $xOffset              = ( $originalWidth / $scaling - $targetWidth ) / 2.0;
             $transformationMatrix = $transformationMatrix->addTransformation( TransformationMatrix::translation( $xOffset, 0 ) );
         } else {
-            $scaling = $originalWidth / $targetWidth;
+            $scaling              = $originalWidth / $targetWidth;
             $transformationMatrix = $transformationMatrix->addTransformation( TransformationMatrix::scaling( $scaling, $scaling ) );
-            $yOffset = ( $originalHeight / $scaling - $targetHeight ) / 2.0;
+            $yOffset              = ( $originalHeight / $scaling - $targetHeight ) / 2.0;
             $transformationMatrix = $transformationMatrix->addTransformation( TransformationMatrix::translation( 0, $yOffset ) );
         }
 
@@ -990,7 +990,7 @@ class TicketGenerator {
         }
 
         global $ticketsFolder;
-        $filePath = $ticketsFolder . $this->getTicketName();
+        $filePath     = $ticketsFolder . $this->getTicketName();
         $writtenBytes = @file_put_contents( $filePath, $this->generatedTicket );
         if ( $writtenBytes === false ) {
             throw new \Exception( "Failed to write PDF-File to {$filePath}" );

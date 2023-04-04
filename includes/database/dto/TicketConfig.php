@@ -16,6 +16,10 @@ class TicketConfig {
     public ?TicketTextConfig $payment_state_text_config = null;
     public ?TicketTextConfig $process_id_text_config = null;
 
+    public function __construct() {
+        // nothing to do, everything is null by default
+    }
+
     /**
      * @param stdClass[] $text_config_db_rows All rows from the ticket_text_config table with the same event_id.
      * Please query database with "ORDER BY id" to get stable results when duplicate entries exist.
@@ -32,7 +36,7 @@ class TicketConfig {
 
         foreach ( $text_config_db_rows as $text_config_row ) {
             $text_config = TicketTextConfig::from_DB( $text_config_row );
-            $content = (string) $text_config_row->content;
+            $content     = (string) $text_config_row->content;
             switch ( $content ) {
                 case TicketTextConfig::CONTENT_DATE:
                     $ticket_config->date_text_config = $text_config;

@@ -17,14 +17,18 @@ class SeatState {
     public string $state;
     public ?int $process_id;
 
+    private function __construct() {
+        // use static functions instead of constructor
+    }
+
     public static function from_DB( \stdClass $db_row ): SeatState {
-        $seat_state = new SeatState();
-        $seat_state->seat_block = (string) $db_row->seat_block;
-        $seat_state->seat_row = (string) $db_row->seat_row;
+        $seat_state              = new SeatState();
+        $seat_state->seat_block  = (string) $db_row->seat_block;
+        $seat_state->seat_row    = (string) $db_row->seat_row;
         $seat_state->seat_number = intval( $db_row->seat_number );
-        $seat_state->show_id = intval( $db_row->show_id );
-        $seat_state->state = (string) $db_row->state;
-        $seat_state->process_id = $db_row->process_id != null ? intval( $db_row->process_id ) : null;
+        $seat_state->show_id     = intval( $db_row->show_id );
+        $seat_state->state       = (string) $db_row->state;
+        $seat_state->process_id  = $db_row->process_id != null ? intval( $db_row->process_id ) : null;
 
         return $seat_state;
     }

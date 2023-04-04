@@ -11,6 +11,10 @@ class ProcessAdditionalEntry {
      */
     protected ?string $data_type;
 
+    private function __construct() {
+        // use static functions instead of constructor
+    }
+
     /**
      * @return bool|float|int|string
      */
@@ -26,16 +30,16 @@ class ProcessAdditionalEntry {
     }
 
     public static function from_DB( \stdClass $db_row, string $data_type ): ProcessAdditionalEntry {
-        $entry = new ProcessAdditionalEntry();
+        $entry             = new ProcessAdditionalEntry();
         $entry->process_id = intval( $db_row->process_id );
-        $entry->field_id = intval( $db_row->field_id );
-        $entry->value = match ( $data_type ) {
+        $entry->field_id   = intval( $db_row->field_id );
+        $entry->value      = match ( $data_type ) {
             ProcessAdditionalField::DATA_TYPE_BOOLEAN => intval( $db_row->boolean_value ) === 1,
             ProcessAdditionalField::DATA_TYPE_INT => intval( $db_row->integer_value ),
             ProcessAdditionalField::DATA_TYPE_FLOAT => floatval( $db_row->float_value ),
             default => (string) $db_row->string_value,
         };
-        $entry->data_type = $data_type;
+        $entry->data_type  = $data_type;
 
         return $entry;
     }

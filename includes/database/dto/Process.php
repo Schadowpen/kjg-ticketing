@@ -42,6 +42,10 @@ class Process {
      */
     public ?array $additional_entries = null;
 
+    private function __construct() {
+        // use static functions instead of constructor
+    }
+
     /**
      * @param stdClass $db_row
      * @param array|null $additional_entries The given array will be filtered for entries with the correct process_id,
@@ -50,18 +54,18 @@ class Process {
      * @return Process
      */
     public static function from_DB( stdClass $db_row, array|null $additional_entries = null ): Process {
-        $process = new Process();
-        $process->id = $db_row->id;
-        $process->first_name = $db_row->first_name != null ? (string) $db_row->first_name : null;
-        $process->last_name = $db_row->last_name != null ? (string) $db_row->last_name : null;
-        $process->address = $db_row->address != null ? (string) $db_row->address : null;
-        $process->phone = $db_row->phone != null ? (string) $db_row->phone : null;
-        $process->email = $db_row->email != null ? (string) $db_row->email : null;
-        $process->ticket_price = $db_row->ticket_price != null ? floatval( $db_row->ticket_price ) : null;
-        $process->payment_method = (string) $db_row->payment_method;
-        $process->payment_state = (string) $db_row->payment_state;
-        $process->shipping = (string) $db_row->shipping;
-        $process->comment = $db_row->comment != null ? (string) $db_row->comment : null;
+        $process                   = new Process();
+        $process->id               = $db_row->id;
+        $process->first_name       = $db_row->first_name != null ? (string) $db_row->first_name : null;
+        $process->last_name        = $db_row->last_name != null ? (string) $db_row->last_name : null;
+        $process->address          = $db_row->address != null ? (string) $db_row->address : null;
+        $process->phone            = $db_row->phone != null ? (string) $db_row->phone : null;
+        $process->email            = $db_row->email != null ? (string) $db_row->email : null;
+        $process->ticket_price     = $db_row->ticket_price != null ? floatval( $db_row->ticket_price ) : null;
+        $process->payment_method   = (string) $db_row->payment_method;
+        $process->payment_state    = (string) $db_row->payment_state;
+        $process->shipping         = (string) $db_row->shipping;
+        $process->comment          = $db_row->comment != null ? (string) $db_row->comment : null;
         $process->ticket_generated = intval( $db_row->ticket_generated ) === 1;
 
         if ( $additional_entries != null ) {
