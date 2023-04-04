@@ -8,7 +8,6 @@ use KjG_Ticketing\api\TicketTemplatePositions;
 use KjG_Ticketing\api\VisitorsXlsx;
 use KjG_Ticketing\ApiHelper;
 use KjG_Ticketing\database\DatabaseOverview;
-use KjG_Ticketing\DownloadHelper;
 use KjG_Ticketing\KjG_Ticketing_Security;
 use KjG_Ticketing\ticket_generation\TicketTemplateAnalyzer;
 
@@ -66,7 +65,7 @@ class KjG_Ticketing_Public {
          * class.
          */
 
-        wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/kjg-ticketing-public.css', array(), $this->version, 'all' );
+        wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/kjg-ticketing-public.css', array(), $this->version );
 
         // TODO only enqueue styles for certain hooks
     }
@@ -88,7 +87,7 @@ class KjG_Ticketing_Public {
          * class.
          */
 
-        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kjg-ticketing-public.js', array( 'jquery' ), $this->version, false );
+        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/kjg-ticketing-public.js', array( 'jquery' ), $this->version );
 
         wp_localize_script(
             $this->plugin_name,
@@ -115,8 +114,9 @@ class KjG_Ticketing_Public {
 
     public function get_available_fonts(): void {
         KjG_Ticketing_Security::validate_AJAX_read_permission();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
-        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $api_helper->validateDatabaseUsageAllowed( true, true, true );
+        $dbc = $api_helper->getAbstractDatabaseConnection();
         try {
             $ticket_template_analyzer = new TicketTemplateAnalyzer( $dbc );
             wp_send_json( $ticket_template_analyzer->getAvailableFonts() );
@@ -127,15 +127,17 @@ class KjG_Ticketing_Public {
 
     public function get_entrances(): void {
         KjG_Ticketing_Security::validate_AJAX_no_permission();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
-        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $api_helper->validateDatabaseUsageAllowed( true, true, true );
+        $dbc = $api_helper->getAbstractDatabaseConnection();
         wp_send_json( $dbc->get_entrances() );
     }
 
     public function get_event(): void {
         KjG_Ticketing_Security::validate_AJAX_no_permission();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
-        $dbc   = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $api_helper->validateDatabaseUsageAllowed( true, true, true );
+        $dbc   = $api_helper->getAbstractDatabaseConnection();
         $event = $dbc->get_event();
         if ( ! $event ) {
             wp_die();
@@ -145,72 +147,82 @@ class KjG_Ticketing_Public {
 
     public function get_overview(): void {
         KjG_Ticketing_Security::validate_AJAX_read_permission();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, false );
-        $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $api_helper->validateDatabaseUsageAllowed( true, true, false );
+        $dbc = $api_helper->getDatabaseConnection();
         wp_send_json( Overview::get( $dbc ) );
     }
 
     public function get_process(): void {
         KjG_Ticketing_Security::validate_AJAX_read_permission();
-        $process_id = ApiHelper::validate_and_get_process_id();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, false );
-        $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $process_id = $api_helper->validate_and_get_process_id();
+        $api_helper->validateDatabaseUsageAllowed( true, true, false );
+        $dbc = $api_helper->getDatabaseConnection();
         wp_send_json( $dbc->get_process( $process_id ) );
     }
 
     public function get_processes_with_info(): void {
         KjG_Ticketing_Security::validate_AJAX_read_permission();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, false );
-        $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $api_helper->validateDatabaseUsageAllowed( true, true, false );
+        $dbc = $api_helper->getDatabaseConnection();
         wp_send_json( ProcessesWithInfo::get( $dbc ) );
     }
 
     public function get_seating_plan(): void {
         KjG_Ticketing_Security::validate_AJAX_no_permission();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, false );
-        $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $api_helper->validateDatabaseUsageAllowed( true, true, false );
+        $dbc = $api_helper->getDatabaseConnection();
         wp_send_json( SeatingPlan::get( $dbc ) );
     }
 
     public function get_seating_plan_areas(): void {
         KjG_Ticketing_Security::validate_AJAX_no_permission();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
-        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $api_helper->validateDatabaseUsageAllowed( true, true, true );
+        $dbc = $api_helper->getAbstractDatabaseConnection();
         wp_send_json( $dbc->get_seating_plan_areas() );
     }
 
     public function get_seats(): void {
         KjG_Ticketing_Security::validate_AJAX_no_permission();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
-        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $api_helper->validateDatabaseUsageAllowed( true, true, true );
+        $dbc = $api_helper->getAbstractDatabaseConnection();
         wp_send_json( $dbc->get_seats() );
     }
 
     public function get_seat_groups(): void {
         KjG_Ticketing_Security::validate_AJAX_read_permission();
-        ApiHelper::validateDatabaseUsageAllowed( false, false, true );
-        $dbc = ApiHelper::getTemplateDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $api_helper->validateDatabaseUsageAllowed( false, false, true );
+        $dbc = $api_helper->getTemplateDatabaseConnection();
         wp_send_json( $dbc->get_seat_groups() );
     }
 
     public function get_seat_states(): void {
         KjG_Ticketing_Security::validate_AJAX_read_permission();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, false );
-        $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $api_helper->validateDatabaseUsageAllowed( true, true, false );
+        $dbc = $api_helper->getDatabaseConnection();
         wp_send_json( $dbc->get_seat_states() );
     }
 
     public function get_shows(): void {
         KjG_Ticketing_Security::validate_AJAX_no_permission();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
-        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $api_helper->validateDatabaseUsageAllowed( true, true, true );
+        $dbc = $api_helper->getAbstractDatabaseConnection();
         wp_send_json( $dbc->get_shows() );
     }
 
     public function get_shows_with_states(): void {
         KjG_Ticketing_Security::validate_AJAX_read_permission();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, false );
-        $dbc = ApiHelper::getDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $api_helper->validateDatabaseUsageAllowed( true, true, false );
+        $dbc = $api_helper->getDatabaseConnection();
         wp_send_json( ShowsWithStates::get( $dbc ) );
     }
 
@@ -222,15 +234,17 @@ class KjG_Ticketing_Public {
 
     public function get_ticket_config(): void {
         KjG_Ticketing_Security::validate_AJAX_read_permission();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
-        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $api_helper->validateDatabaseUsageAllowed( true, true, true );
+        $dbc = $api_helper->getAbstractDatabaseConnection();
         wp_send_json( $dbc->get_ticket_config() );
     }
 
     public function get_ticket_template_positions(): void {
         KjG_Ticketing_Security::validate_AJAX_read_permission();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, true );
-        $dbc = ApiHelper::getAbstractDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper();
+        $api_helper->validateDatabaseUsageAllowed( true, true, true );
+        $dbc = $api_helper->getAbstractDatabaseConnection();
         try {
             wp_send_json( TicketTemplatePositions::get( $dbc ) );
         } catch ( Exception $exception ) {
@@ -248,9 +262,10 @@ class KjG_Ticketing_Public {
         }
 
         KjG_Ticketing_Security::validate_download_permission();
-        $show_id = DownloadHelper::validate_and_get_show_id_if_present();
-        ApiHelper::validateDatabaseUsageAllowed( true, true, false );
-        $dbc = DownloadHelper::getDatabaseConnection( new DatabaseOverview() );
+        $api_helper = new ApiHelper( true );
+        $show_id    = $api_helper->validate_and_get_show_id_if_present();
+        $api_helper->validateDatabaseUsageAllowed( true, true, false );
+        $dbc = $api_helper->getDatabaseConnection();
         VisitorsXlsx::get( $dbc, $show_id );
     }
 
