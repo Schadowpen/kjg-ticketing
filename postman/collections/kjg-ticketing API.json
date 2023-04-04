@@ -925,13 +925,60 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Download Demo Ticket",
+			"id": "c2f60968-e663-46db-8a29-cce9d6f51d7e",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{Wordpress_root}}/wp-load.php?XDEBUG_SESSION=Postman&_wpnonce={{WP_NONCE}}&action=kjg_ticketing_download_demo_ticket",
+					"host": [
+						"{{Wordpress_root}}"
+					],
+					"path": [
+						"wp-load.php"
+					],
+					"query": [
+						{
+							"key": "XDEBUG_SESSION",
+							"value": "Postman"
+						},
+						{
+							"key": "_wpnonce",
+							"value": "{{WP_NONCE}}"
+						},
+						{
+							"key": "action",
+							"value": "kjg_ticketing_download_demo_ticket"
+						},
+						{
+							"key": "archive",
+							"value": "Die Zauberhafte Welt von Oz",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "template",
+							"value": "Der Glöckner von Nôtre Dame",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "60b1c918-c8b8-43e9-a22b-ed9f2c9b249a",
+				"id": "0ecea03b-20a7-4fc8-9406-d78ef076db60",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -941,7 +988,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "a0b21de5-bbb1-4550-97cd-f99dea139158",
+				"id": "df801470-858a-4fc8-8aab-40ed3869a019",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -951,13 +998,13 @@
 	],
 	"variable": [
 		{
-			"id": "ef8ef813-2698-4e60-a842-b2f5ed5a7366",
+			"id": "6eeb78c6-b930-4a62-aff4-a1b19ba60e4f",
 			"key": "WP_NONCE",
 			"value": "208af8d3cc",
 			"type": "string"
 		},
 		{
-			"id": "070d088f-96f4-4b92-a3d4-e200d185801a",
+			"id": "94a1cc87-4c0c-4285-a8bf-df7bb89fd4b8",
 			"key": "Wordpress_root",
 			"value": "http://localhost/wordpress",
 			"type": "string"
