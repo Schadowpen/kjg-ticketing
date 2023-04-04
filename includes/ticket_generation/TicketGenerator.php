@@ -2,7 +2,11 @@
 
 namespace KjG_Ticketing\ticket_generation;
 
+use DateTime;
+use Exception;
+use KjG_Ticketing\database\AbstractDatabaseConnection;
 use KjG_Ticketing\database\DatabaseConnection;
+use KjG_Ticketing\database\DatabaseOverview;
 use KjG_Ticketing\database\dto\Entrance;
 use KjG_Ticketing\database\dto\Event;
 use KjG_Ticketing\database\dto\Process;
@@ -14,6 +18,7 @@ use KjG_Ticketing\database\dto\TicketConfig;
 use KjG_Ticketing\database\dto\TicketImageConfig;
 use KjG_Ticketing\database\dto\TicketSeatingPlanConfig;
 use KjG_Ticketing\database\dto\TicketTextConfig;
+use KjG_Ticketing\database\TemplateDatabaseConnection;
 use KjG_Ticketing\pdf\misc\StringReader;
 use KjG_Ticketing\pdf\document\ContentStream;
 use KjG_Ticketing\pdf\document\Font;
@@ -62,6 +67,7 @@ use KjG_Ticketing\pdf\object\PdfNumber;
 use KjG_Ticketing\pdf\object\PdfString;
 use KjG_Ticketing\pdf\PdfDocument;
 use KjG_Ticketing\pdf\PdfFile;
+use QRcode;
 
 require_once __DIR__ . "/../../lib/phpqrcode/qrlib.php";
 
@@ -71,9 +77,9 @@ require_once __DIR__ . "/../../lib/phpqrcode/qrlib.php";
 class TicketGenerator {
     /**
      * Connection to the database to get the necessary data.
-     * @var DatabaseConnection
+     * If a {@link TemplateDatabaseConnection} is passed, not all data can be loaded.
      */
-    protected DatabaseConnection $databaseConnection;
+    protected AbstractDatabaseConnection $databaseConnection;
     /**
      * Single process for which a ticket should be generated
      */
@@ -200,23 +206,24 @@ class TicketGenerator {
     /**
      * TicketGenerator constructor.
      *
-     * @param DatabaseConnection $databaseConnection Connection to the database to obtain all necessary data.
+     * @param AbstractDatabaseConnection $databaseConnection Connection to the database to obtain all necessary data.
+     * If a {@link TemplateDatabaseConnection} is passed, not all data can be loaded.
      * @param Process $process Single process for which a ticket should be generated
      */
-    public function __construct( DatabaseConnection $databaseConnection, Process $process ) {
+    public function __construct( AbstractDatabaseConnection $databaseConnection, Process $process ) {
         $this->databaseConnection = $databaseConnection;
         $this->process            = $process;
     }
 
     /**
      * Load all data that has not yet been loaded.
-     * @throws \Exception
+     * @throws Exception
      */
     public function loadData(): void {
         if ( $this->event === null ) {
             $this->event = $this->databaseConnection->get_event();
             if ( $this->event === false ) {
-                throw new \Exception( "Could not read event from database" );
+                throw new Exception( "Could not read event from database" );
             }
         }
         if ( $this->seating_plan_areas === null ) {
@@ -231,13 +238,20 @@ class TicketGenerator {
         if ( $this->ticket_template === null ) {
             $this->ticket_template = $this->databaseConnection->get_ticket_template();
             if ( $this->ticket_template === null ) {
-                throw new \Exception( "Could not read ticket template from database" );
+                throw new Exception( "Could not read ticket template from database" );
             }
         }
         if ( $this->seats === null ) {
-            $this->seats = $this->databaseConnection->get_seats();
+            if ( $this->databaseConnection instanceof TemplateDatabaseConnection ) {
+                $this->seats = DatabaseOverview::getSeatsIncludingSeatGroups( $this->databaseConnection );
+            } else {
+                $this->seats = $this->databaseConnection->get_seats();
+            }
         }
         if ( $this->seat_states === null ) {
+            if ( ! ( $this->databaseConnection instanceof DatabaseConnection ) ) {
+                wp_die( "Error: Cannot load seat states from template database", 500 );
+            }
             $this->seat_states = $this->databaseConnection->get_seat_states();
         }
         if ( $this->shows === null ) {
@@ -247,7 +261,7 @@ class TicketGenerator {
 
     /**
      * Generates a ticket and stores it in $this->generatedTicket.
-     * @throws \Exception When the ticket could not get generated
+     * @throws Exception When the ticket could not get generated
      * @see TicketGenerator::saveTicket() to store the ticket at a well-known place
      * @see TicketGenerator::getTicketContent() to obtain the generated ticket as string
      */
@@ -280,14 +294,14 @@ class TicketGenerator {
 
         // extract and delete template
         if ( $pdfDocument->getPageList()->getPageCount() !== 1 ) {
-            throw new \Exception( "Only PDF-Files with one Page can be used as Template" );
+            throw new Exception( "Only PDF-Files with one Page can be used as Template" );
         }
         $templatePage          = $pdfDocument->getPageList()->getPage( 0 );
         $templateContentStream = $templatePage->getContents();
         $pdfDocument->getPageList()->removePage( 0 );
 
         // Set document info
-        $lastModified = PdfDate::parseDateTime( new \DateTime( 'now' ) );
+        $lastModified = PdfDate::parseDateTime( new DateTime( 'now' ) );
         $pdfDocument->getDocumentCatalog()->setPieceInfo( "tickets", new PdfDictionary( [
             "LastModified"  => $lastModified,
             "ProcessId"     => new PdfNumber( $this->process->id ),
@@ -609,7 +623,7 @@ class TicketGenerator {
                 $text_modules_content_stream->addOperator( new ModifyTransformationMatrixOperator( $qrCodeTransformationMatrix ) );
                 $text_modules_content_stream->addOperator(
                     InlineImageOperator::getFromQRCode(
-                        \QRcode::text( json_encode( [
+                        QRcode::text( json_encode( [
                             "date"          => $show->date,
                             "time"          => $show->time,
                             "seat_block"    => $seat_state->seat_block,
@@ -644,7 +658,7 @@ class TicketGenerator {
      * @param ContentStream $templateContentStream ContentStream, in whose ResourceDictionary we are looking for the font.
      *
      * @return string|null Name with which the font can be found in the ResourceDictionary.
-     * @throws \Exception When the font is neither inside the ResourceDictionary nor part of the standard 14 fonts
+     * @throws Exception When the font is neither inside the ResourceDictionary nor part of the standard 14 fonts
      */
     private function getFontName( TicketTextConfig|TicketSeatingPlanConfig $textConfig, ContentStream $templateContentStream ): ?string {
         $fontName = $templateContentStream->getResourceDictionary()->getFontNameByBaseName( $textConfig->font );
@@ -663,7 +677,7 @@ class TicketGenerator {
      * @param ContentStream $templateContentStream ContentStream where the PNG file should be added to the Resource Dictionary
      *
      * @return ExternalObjectOperator Operator which renders the image, can be put into the Content Stream
-     * @throws \Exception When the PNG file cannot be read or converted
+     * @throws Exception When the PNG file cannot be read or converted
      */
     private function getImageOperator( string $pngFile, ContentStream $templateContentStream ): ExternalObjectOperator {
         $xObject     = XObjectImage::createFromPNG( $pngFile, $templateContentStream->getPdfFile() );
@@ -679,7 +693,7 @@ class TicketGenerator {
      * @param Seat $seat
      * @param GenerateContentStream $contentStream ContentStream which is currently responsible for rendering the seating plan
      *
-     * @throws \Exception In theory, it cannot be thrown
+     * @throws Exception In theory, it cannot be thrown
      */
     private function draw_seat( ExternalObjectOperator $seatOperator, $seat, GenerateContentStream $contentStream ): void {
         $contentStream->addOperator( new PushGraphicsStateOperator() );
@@ -698,9 +712,9 @@ class TicketGenerator {
      * @param SeatingPlanArea $seating_plan_area
      * @param GenerateContentStream $contentStream ContentStream which is currently responsible for rendering the seating plan
      *
-     * @throws \Exception In theory, it cannot be thrown
+     * @throws Exception In theory, it cannot be thrown
      */
-    private function draw_seating_plan_area( SeatingPlanArea $seating_plan_area, GenerateContentStream $contentStream ) {
+    private function draw_seating_plan_area( SeatingPlanArea $seating_plan_area, GenerateContentStream $contentStream ): void {
         $color = ColorRGB::fromHex( $seating_plan_area->color );
         if ( $contentStream->getLastGraphicsStateStack()->getGraphicsState()->getColorFilling() != $color ) {
             $contentStream->addOperator( new ColorRGBFillingOperator( $color ) );
@@ -726,7 +740,7 @@ class TicketGenerator {
      * @param float $seating_plan_scale Factor, by which the seating plan was scaled to match the seating plan length units with the PDF's Device Space.
      * @param GenerateContentStream $contentStream ContentStream which is currently responsible for rendering the seating plan
      *
-     * @throws \Exception If the text cannot be drawn
+     * @throws Exception If the text cannot be drawn
      */
     private function draw_text( string $text, float $x, float $y, ColorRGB $color, float $seating_plan_scale, GenerateContentStream $contentStream ): void {
         $graphicsState = $contentStream->getLastGraphicsStateStack()->getGraphicsState();
@@ -754,7 +768,7 @@ class TicketGenerator {
      * @param float $seating_plan_scale Factor, by which the seating plan was scaled to match the seating plan length units with the PDF's Device Space.
      * @param GenerateContentStream $contentStream ContentStream which is currently responsible for rendering the seating plan
      *
-     * @throws \Exception If the entrance cannot be drawn
+     * @throws Exception If the entrance cannot be drawn
      */
     private function draw_entrance( int $entrance_id, float $seating_plan_scale, GenerateContentStream $contentStream ): void {
         // Find entrance
@@ -830,9 +844,9 @@ class TicketGenerator {
      * @param float $seating_plan_scale Factor, by which the seating plan was scaled to match the seating plan length units with the PDF's Device Space.
      * @param GenerateContentStream $contentStream ContentStream which is currently responsible for rendering the seating plan
      *
-     * @throws \Exception If the entrance cannot be drawn
+     * @throws Exception If the entrance cannot be drawn
      */
-    private function draw_entrance_connected( $next_entrance, float $seating_plan_scale, GenerateContentStream $contentStream ) {
+    private function draw_entrance_connected( $next_entrance, float $seating_plan_scale, GenerateContentStream $contentStream ): void {
         // finde aktuellen Eingang
         $entrance = null;
         foreach ( $this->entrances as $e ) {
@@ -896,7 +910,7 @@ class TicketGenerator {
      * @param GenerateContentStream $targetContentStream ContentStream to which the necessary Operators should be added
      * @param string $text Text that should be added
      *
-     * @throws \Exception If the text cannot be added
+     * @throws Exception If the text cannot be added
      */
     private function addText( TicketTextConfig $textConfig, string $fontName, GenerateContentStream $targetContentStream, string $text ): void {
         $font             = $targetContentStream->getContentStream()->getResourceDictionary()->getFont( $fontName );
@@ -980,7 +994,7 @@ class TicketGenerator {
 
     /**
      * Speichert die Theaterkarten in der Vorgesehenen PDF-Datei
-     * @throws \Exception
+     * @throws Exception
      * @see TicketGenerator::getTicketURL() URL, unter der die Theaterkarte gespeichert wurde
      * @deprecated Tickets are now generated on demand
      */
@@ -993,7 +1007,7 @@ class TicketGenerator {
         $filePath     = $ticketsFolder . $this->getTicketName();
         $writtenBytes = @file_put_contents( $filePath, $this->generatedTicket );
         if ( $writtenBytes === false ) {
-            throw new \Exception( "Failed to write PDF-File to {$filePath}" );
+            throw new Exception( "Failed to write PDF-File to $filePath" );
         }
     }
 
@@ -1012,7 +1026,7 @@ class TicketGenerator {
      *
      * @deprecated Tickets are now generated on demand
      */
-    public function deleteExistingTicket( string $theaterkarte = null ) {
+    public function deleteExistingTicket( string $theaterkarte = null ): void {
         if ( $theaterkarte === null ) {
             $theaterkarte = $this->process->theaterkarte;
         }
@@ -1056,17 +1070,17 @@ class TicketGenerator {
      * @param int $show_id
      *
      * @return Show
-     * @throws \Exception When this function was called and $this->shows is still null
+     * @throws Exception When this function was called and $this->shows is still null
      */
     private function get_show( int $show_id ): Show {
         if ( $this->shows === null ) {
-            throw new \Exception( "Shows were not yet loaded from database" );
+            throw new Exception( "Shows were not yet loaded from database" );
         }
         foreach ( $this->shows as $show ) {
             if ( $show->id === $show_id ) {
                 return $show;
             }
         }
-        throw new \Exception( "Show with ID $show_id not found in database" );
+        throw new Exception( "Show with ID $show_id not found in database" );
     }
 }

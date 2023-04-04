@@ -32,4 +32,16 @@ class SeatState {
 
         return $seat_state;
     }
+
+    public static function new( Seat $seat, Show $show, string $state, Process|null $process ): SeatState {
+        $seat_state              = new SeatState();
+        $seat_state->seat_block  = $seat->block;
+        $seat_state->seat_row    = $seat->row;
+        $seat_state->seat_number = $seat->number;
+        $seat_state->show_id     = $show->id;
+        $seat_state->state       = $state;
+        $seat_state->process_id  = $process?->id;
+
+        return $seat_state;
+    }
 }

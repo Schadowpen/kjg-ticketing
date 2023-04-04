@@ -1,5 +1,6 @@
 <?php
 
+use KjG_Ticketing\api\DemoTicket;
 use KjG_Ticketing\api\Overview;
 use KjG_Ticketing\api\ProcessesWithInfo;
 use KjG_Ticketing\api\SeatingPlan;
@@ -255,6 +256,17 @@ class KjG_Ticketing_Public {
     // |----------------------|
     // |  Download endpoints  |
     // |----------------------|
+
+    public function download_demo_ticket(): void {
+        if ( $_GET['action'] !== "kjg_ticketing_download_demo_ticket" ) {
+            return; // don't execute download action by accident
+        }
+
+        KjG_Ticketing_Security::validate_download_permission();
+        $api_helper = new ApiHelper( true );
+        $api_helper->validateDatabaseUsageAllowed( true, true, true );
+        DemoTicket::get( $api_helper->getAbstractDatabaseConnection() );
+    }
 
     public function download_visitors_xlsx(): void {
         if ( $_GET['action'] !== "kjg_ticketing_download_visitors_xlsx" ) {

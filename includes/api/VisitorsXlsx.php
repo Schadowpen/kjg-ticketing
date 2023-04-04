@@ -23,16 +23,16 @@ class VisitorsXlsx {
         $for_single_show = $show_id !== null;
 
         // read database
-        $event = $dbc->get_event();
+        $event                     = $dbc->get_event();
         $process_additional_fields = $dbc->get_process_additional_fields();
-        $shows = $dbc->get_shows();
-        $seat_states = $dbc->get_seat_states();
-        $processes = $dbc->get_processes();
+        $shows                     = $dbc->get_shows();
+        $seat_states               = $dbc->get_seat_states();
+        $processes                 = $dbc->get_processes();
 
         // print as XLSX file
         try {
             $spreadsheet = new Spreadsheet();
-            $sheet = $spreadsheet->getActiveSheet();
+            $sheet       = $spreadsheet->getActiveSheet();
             if ( $for_single_show ) {
                 $sheet->setCellValue( 'A1', __( "First name", "kjg-ticketing" ) )
                       ->setCellValue( 'B1', __( "Last name", "kjg-ticketing" ) )
@@ -123,7 +123,7 @@ class VisitorsXlsx {
             $writer = new Xlsx( $spreadsheet );
             header( 'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' );
             if ( $for_single_show ) {
-                $show = self::get_show( $shows, $show_id );
+                $show     = self::get_show( $shows, $show_id );
                 $fileName = __( "Visitor", "kjg-ticketing" ) . ' ' . $event->name . ' ' . $show->date . ' ' . $show->time . '.xlsx';
             } else {
                 $fileName = __( "Visitor", "kjg-ticketing" ) . ' ' . $event->name . '.xlsx';
@@ -131,9 +131,10 @@ class VisitorsXlsx {
             header( 'Content-Disposition: attachment; filename="' . $fileName . '"' );
             $writer->save( "php://output" );
         } catch ( \PhpOffice\PhpSpreadsheet\Writer\Exception|\PhpOffice\PhpSpreadsheet\Exception $e ) {
-            wp_die( "Error: {$e->getMessage()}\n", 500 );
+            wp_die( "Error: {$e->getMessage()}\n{$e->getTraceAsString()}", 500 );
+        } finally {
+            exit();
         }
-        exit();
     }
 
     /**

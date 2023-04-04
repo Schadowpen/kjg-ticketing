@@ -24,17 +24,17 @@ class Process {
     public const SHIPPING_EMAIL = "email";
 
     public int $id;
-    public ?string $first_name;
-    public ?string $last_name;
-    public ?string $address;
-    public ?string $phone;
-    public ?string $email;
-    public ?float $ticket_price;
+    public ?string $first_name = null;
+    public ?string $last_name = null;
+    public ?string $address = null;
+    public ?string $phone = null;
+    public ?string $email = null;
+    public ?float $ticket_price = null;
     public string $payment_method;
     public string $payment_state;
     public string $shipping;
-    public ?string $comment;
-    public bool $ticket_generated;
+    public ?string $comment = null;
+    public bool $ticket_generated = false;
     /**
      * @var ProcessAdditionalEntry[]
      *
@@ -76,6 +76,20 @@ class Process {
                 }
             ) );
         }
+
+        return $process;
+    }
+
+    public static function create_demo_process(): Process {
+        $process                 = new Process();
+        $process->id             = 0;
+        $process->first_name     = "Max";
+        $process->last_name      = "Mustermann";
+        $process->email          = "max.mustermann@mustermail.de";
+        $process->ticket_price   = - 100;
+        $process->payment_method = self::PAYMENT_METHOD_CASH;
+        $process->payment_state  = self::PAYMENT_STATE_OPEN;
+        $process->shipping       = self::SHIPPING_EMAIL;
 
         return $process;
     }

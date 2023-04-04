@@ -163,6 +163,7 @@ class KjG_Ticketing {
         $this->loader->add_action( 'wp_ajax_kjg_ticketing_get_ticket_template_positions', $plugin_public, 'get_ticket_template_positions' );
 
         // Downloads
+        $this->loader->add_action( 'init', $plugin_public, 'download_demo_ticket' );
         $this->loader->add_action( 'init', $plugin_public, 'download_visitors_xlsx' );
 
     }
