@@ -2,6 +2,7 @@
 
 namespace KjG_Ticketing\database;
 
+use Exception;
 use KjG_Ticketing\database\dto\Entrance;
 use KjG_Ticketing\database\dto\Event;
 use KjG_Ticketing\database\dto\ProcessAdditionalField;
@@ -9,6 +10,8 @@ use KjG_Ticketing\database\dto\Seat;
 use KjG_Ticketing\database\dto\SeatingPlanArea;
 use KjG_Ticketing\database\dto\Show;
 use KjG_Ticketing\database\dto\TicketConfig;
+use KjG_Ticketing\database\dto\TicketImageConfig;
+use KjG_Ticketing\database\dto\TicketTextConfig;
 
 /**
  * An abstract definition of a database connection that can be either a connection to a specific event
@@ -36,13 +39,77 @@ abstract class AbstractDatabaseConnection {
      */
     protected function get_table_contents( string $table_name, callable $dto_mapper ): array {
         global $wpdb;
-        $sql = $wpdb->prepare(
+        $sql        = $wpdb->prepare(
             "SELECT * FROM $table_name WHERE event_id = %d",
             $this->event_id
         );
         $table_rows = $wpdb->get_results( $sql );
 
         return array_map( $dto_mapper, $table_rows );
+    }
+
+    /**
+     * Inserts a new row into a table
+     *
+     * @param string $table_name
+     * @param array $data see {@see \wpdb::insert()}, should not contain unique ID
+     * @param ?array $format see {@see \wpdb::insert()}, should not contain unique ID
+     *
+     * @return int The new ID for the inserted row from the AUTO_INCREMENT column
+     * @throws Exception
+     */
+    protected function insert_table_row( string $table_name, array $data, array $format = null ): int {
+        global $wpdb;
+
+        $data["event_id"] = $this->event_id;
+        if ( $format != null ) {
+            $format["event_id"] = "%d";
+        }
+
+        $rowsInserted = $wpdb->insert(
+            $table_name,
+            $data,
+            $format,
+        );
+        if ( $rowsInserted === false ) {
+            throw new Exception( "Could not insert new row into $table_name table" );
+        }
+        if ( $rowsInserted !== 1 ) {
+            throw new Exception( "Tried to insert 1 row into $table_name table, but $rowsInserted rows were inserted" );
+        }
+
+        return $wpdb->insert_id;
+    }
+
+    /**
+     * Deletes a single row in this table.
+     *
+     * @param string $table_name
+     * @param array $where for documentation see {@see \wpdb::delete()}
+     * @param ?array $where_format for documentation see {@see \wpdb::delete()}
+     *
+     * @throws Exception
+     */
+    protected function delete_table_row( string $table_name, array $where, array $where_format = null ): void {
+        global $wpdb;
+
+        $where["event_id"] = $this->event_id;
+        if ( $where_format != null ) {
+            $where_format["event_id"] = "%d";
+        }
+
+        $rowsDeleted = $wpdb->delete(
+            $table_name,
+            $where,
+            $where_format
+        );
+
+        if ( ! $rowsDeleted ) {
+            throw new Exception( "Could not delete entry from database table $table_name" );
+        }
+        if ( $rowsDeleted > 1 ) {
+            throw new Exception( "During attempt of deleting 1 row from database table $table_name, $rowsDeleted rows were deleted" );
+        }
     }
 
     // --------------------------------------------------
@@ -52,6 +119,26 @@ abstract class AbstractDatabaseConnection {
     // This function is abstract because the table definitions differ between events and template events.
     // - The template events table does not have an "archived" column
     public abstract function get_event( bool $echoErrors = true ): Event|false;
+
+    /**
+     * @throws Exception
+     */
+    public function set_event( Event $event ): void {
+        global $wpdb;
+
+        $is_template = $this instanceof TemplateDatabaseConnection;
+        $result      = $wpdb->update(
+            static::get_table_name_events(),
+            $event->to_DB_data( $is_template ),
+            array( "id" => $this->event_id ),
+            Event::to_DB_format( $is_template ),
+            array( "id" => "%d" )
+        );
+
+        if ( $result === false ) {
+            throw new Exception( "Could not write event with ID $this->event_id to database" );
+        }
+    }
 
     /**
      * Deletes the whole event associated with this databaseConnection.
@@ -66,7 +153,7 @@ abstract class AbstractDatabaseConnection {
     public function delete_event( bool $echoErrors = true ): bool {
         global $wpdb;
         $rowsDeleted = $wpdb->delete(
-            self::get_table_name_events(),
+            static::get_table_name_events(),
             array(
                 "id" => $this->event_id
             )
@@ -100,6 +187,22 @@ abstract class AbstractDatabaseConnection {
         return $wpdb->get_var( $sql );
     }
 
+    /**
+     * @throws Exception
+     */
+    public function set_ticket_template( string|null $ticket_template ): void {
+        global $wpdb;
+        $result = $wpdb->update(
+            static::get_table_name_events(),
+            array( "ticket_template" => $ticket_template ),
+            array( "id" => $this->event_id )
+        );
+
+        if ( $result === false ) {
+            throw new Exception( "Could not write ticket template to database" );
+        }
+    }
+
     // --------------------------------------------------
 
     protected static abstract function get_table_name_ticket_text_config(): string;
@@ -114,6 +217,47 @@ abstract class AbstractDatabaseConnection {
         return $wpdb->get_results( $sql );
     }
 
+    /**
+     * @throws Exception
+     */
+    protected function set_ticket_text_config( ?TicketTextConfig $ticket_text_config, string $content ): void {
+        global $wpdb;
+        if ( $ticket_text_config == null ) {
+            $this->delete_table_row(
+                static::get_table_name_ticket_text_config(),
+                array( "content" => $content, ),
+                array( "content" => "%s" )
+            );
+
+            return;
+        }
+
+        $result = $wpdb->update(
+            static::get_table_name_ticket_text_config(),
+            $ticket_text_config->to_DB_data(),
+            array(
+                "event_id" => $this->event_id,
+                "content"  => $content,
+            ),
+            TicketTextConfig::to_DB_format(),
+            array(
+                "event_id" => "%d",
+                "content"  => "%s",
+            )
+        );
+
+        if ( $result === false ) {
+            $result = $wpdb->insert(
+                static::get_table_name_ticket_text_config(),
+                $ticket_text_config->to_DB_data(),
+                TicketTextConfig::to_DB_format()
+            );
+            if ( $result === false ) {
+                throw new Exception( "Could not upsert ticket_text_config for $content" );
+            }
+        }
+    }
+
     protected static abstract function get_table_name_ticket_image_config(): string;
 
     protected function get_ticket_image_configs(): array {
@@ -126,11 +270,69 @@ abstract class AbstractDatabaseConnection {
         return $wpdb->get_results( $sql );
     }
 
+    /**
+     * @throws Exception
+     */
+    protected function set_ticket_image_config( ?TicketImageConfig $ticket_image_config, string $content ): void {
+        global $wpdb;
+        if ( $ticket_image_config == null ) {
+            $this->delete_table_row(
+                static::get_table_name_ticket_image_config(),
+                array( "content" => $content, ),
+                array( "content" => "%s" )
+            );
+
+            return;
+        }
+
+        $result = $wpdb->update(
+            static::get_table_name_ticket_image_config(),
+            $ticket_image_config->to_DB_data(),
+            array(
+                "event_id" => $this->event_id,
+                "content"  => $content,
+            ),
+            $ticket_image_config->to_DB_format(),
+            array(
+                "event_id" => "%d",
+                "content"  => "%s",
+            )
+        );
+
+        if ( $result === false ) {
+            $result = $wpdb->insert(
+                static::get_table_name_ticket_text_config(),
+                $ticket_image_config->to_DB_data(),
+                $ticket_image_config->to_DB_format()
+            );
+            if ( $result === false ) {
+                throw new Exception( "Could not upsert ticket_image_config for $content" );
+            }
+        }
+    }
+
     public function get_ticket_config(): TicketConfig {
-        $text_configs = $this->get_ticket_text_configs();
+        $text_configs  = $this->get_ticket_text_configs();
         $image_configs = $this->get_ticket_image_configs();
 
         return TicketConfig::from_DB( $text_configs, $image_configs );
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function set_ticket_config( TicketConfig $ticket_config ): void {
+        $this->set_ticket_image_config( $ticket_config->qr_code_config, TicketImageConfig::CONTENT_QR_CODE );
+        $this->set_ticket_image_config( $ticket_config->seating_plan_config, TicketImageConfig::CONTENT_SEATING_PLAN );
+
+        $this->set_ticket_text_config( $ticket_config->date_text_config, TicketTextConfig::CONTENT_DATE );
+        $this->set_ticket_text_config( $ticket_config->time_text_config, TicketTextConfig::CONTENT_TIME );
+        $this->set_ticket_text_config( $ticket_config->seat_block_text_config, TicketTextConfig::CONTENT_SEAT_BLOCK );
+        $this->set_ticket_text_config( $ticket_config->seat_row_text_config, TicketTextConfig::CONTENT_SEAT_ROW );
+        $this->set_ticket_text_config( $ticket_config->seat_number_text_config, TicketTextConfig::CONTENT_SEAT_NUMBER );
+        $this->set_ticket_text_config( $ticket_config->price_text_config, TicketTextConfig::CONTENT_PRICE );
+        $this->set_ticket_text_config( $ticket_config->payment_state_text_config, TicketTextConfig::CONTENT_PAYMENT_STATE );
+        $this->set_ticket_text_config( $ticket_config->process_id_text_config, TicketTextConfig::CONTENT_PROCESS_ID );
     }
 
     // --------------------------------------------------
@@ -149,6 +351,18 @@ abstract class AbstractDatabaseConnection {
         );
     }
 
+    /**
+     * @return int The new ID of the SeatingPlanArea (old ID is preserved in input SeatingPlanArea)
+     * @throws Exception
+     */
+    public function insert_seating_plan_area( SeatingPlanArea $seating_plan_area ): int {
+        return $this->insert_table_row(
+            static::get_table_name_seating_plan_areas(),
+            $seating_plan_area->to_DB_data(),
+            $seating_plan_area->to_DB_format(),
+        );
+    }
+
     // --------------------------------------------------
 
     protected static abstract function get_table_name_entrances(): string;
@@ -162,6 +376,18 @@ abstract class AbstractDatabaseConnection {
             function ( $table_row ) {
                 return Entrance::from_DB( $table_row );
             }
+        );
+    }
+
+    /**
+     * @return int The new ID of the Entrance (old ID is preserved in input Entrance)
+     * @throws Exception
+     */
+    public function insert_entrance( Entrance $entrance ): int {
+        return $this->insert_table_row(
+            static::get_table_name_entrances(),
+            $entrance->to_DB_data(),
+            $entrance->to_DB_format()
         );
     }
 

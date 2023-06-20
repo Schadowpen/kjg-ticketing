@@ -33,4 +33,36 @@ class Event {
 
         return $event;
     }
+
+    public function to_DB_data( bool $is_template ): array {
+        $data = array(
+            "name"                     => $this->name,
+            "ticket_price"             => $this->ticket_price,
+            "shipping_price"           => $this->shipping_price,
+            "seating_plan_width"       => $this->seating_plan_width,
+            "seating_plan_length"      => $this->seating_plan_length,
+            "seating_plan_length_unit" => $this->seating_plan_length_unit,
+        );
+        if ( ! $is_template ) {
+            $data["archived"] = $this->archived === null ? false : $this->archived;
+        }
+
+        return $data;
+    }
+
+    public static function to_DB_format( bool $is_template ): array {
+        $format = array(
+            "name"                     => "%s",
+            "ticket_price"             => "%f",
+            "shipping_price"           => "%f",
+            "seating_plan_width"       => "%f",
+            "seating_plan_length"      => "%f",
+            "seating_plan_length_unit" => "%s",
+        );
+        if ( ! $is_template ) {
+            $format["archived"] = "%d";
+        }
+
+        return $format;
+    }
 }

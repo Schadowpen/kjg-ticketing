@@ -2,6 +2,7 @@
 
 namespace KjG_Ticketing\database;
 
+use Exception;
 use KjG_Ticketing\database\dto\Event;
 use KjG_Ticketing\database\dto\Seat;
 use KjG_Ticketing\database\dto\SeatGroup;
@@ -64,8 +65,8 @@ class DatabaseOverview {
 
         $current_event_id = Options::get_current_event_id();
         if ( $current_event_id ) {
-            $sql = $wpdb->prepare( "SELECT name FROM " . DatabaseConnection::get_table_name_events()
-                                   . " WHERE NOT id = %d", $current_event_id );
+            $sql             = $wpdb->prepare( "SELECT name FROM " . DatabaseConnection::get_table_name_events()
+                                               . " WHERE NOT id = %d", $current_event_id );
             $all_event_names = $wpdb->get_col( $sql );
         } else {
             $all_event_names = $wpdb->get_col( "SELECT name FROM " . DatabaseConnection::get_table_name_events() );
@@ -210,12 +211,98 @@ class DatabaseOverview {
     }
 
     public function copyDatabase( AbstractDatabaseConnection $from, AbstractDatabaseConnection $to, bool $echoErrors = true ): bool {
-        // TODO implement database copy
-        if ( $echoErrors ) {
-            echo "Error: DatabaseOverview::copyDatabase is not yet implemented\n";
+        try {
+            $newEventId = $this->copy_event( $from, $to, $echoErrors );
+            $to->set_ticket_template( $from->get_ticket_template() );
+            $to->set_ticket_config( $from->get_ticket_config() );
+            $this->copy_seating_plan_areas( $from, $to );
+            $entrance_mapping = $this->copy_entrances( $from, $to );
+
+            // TODO implement database copy
+            if ( $echoErrors ) {
+                echo "Error: DatabaseOverview::copyDatabase is not yet implemented\n";
+            }
+
+            return false;
+
+        } catch ( Exception $e ) {
+            $to->delete_event( $echoErrors );
+
+            if ( $echoErrors ) {
+                echo "Error: " . $e->getMessage() . "\n";
+            }
+
+            return false;
         }
 
-        return false;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function copy_event( AbstractDatabaseConnection $from, AbstractDatabaseConnection $to, bool $echoErrors ): int {
+        $copiedEvent = $from->get_event( $echoErrors );
+        if ( ! $copiedEvent ) {
+            throw new Exception();
+        }
+        $targetEvent = $to->get_event( $echoErrors );
+        if ( ! $targetEvent ) {
+            throw new Exception();
+        }
+        $copiedEvent->id       = $targetEvent->id;
+        $copiedEvent->name     = $targetEvent->name;
+        $copiedEvent->archived = $targetEvent->archived;
+        $to->set_event( $copiedEvent );
+
+        return $targetEvent->id;
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function copy_seating_plan_areas( AbstractDatabaseConnection $from, AbstractDatabaseConnection $to ): void {
+        $seating_plan_areas = $from->get_seating_plan_areas();
+        foreach ( $seating_plan_areas as $seating_plan_area ) {
+            $to->insert_seating_plan_area( $seating_plan_area );
+        }
+    }
+
+    /**
+     * @return IdMapping[]
+     * @throws Exception
+     */
+    private function copy_entrances( AbstractDatabaseConnection $from, AbstractDatabaseConnection $to ): array {
+        $entrances        = $from->get_entrances();
+        $entrance_mapping = array();
+
+        $new_entrance_mappings_found = true;
+        while ( count( $entrances ) > count( $entrance_mapping ) && $new_entrance_mappings_found ) {
+            $new_entrance_mappings_found = false;
+
+            foreach ( $entrances as $entrance ) {
+                if ( IdMapping::find_new_ID( $entrance_mapping, $entrance->id ) !== false ) {
+                    continue; // skip entrances that were already copied over
+                }
+
+                if ( $entrance->entrance_id != null ) {
+                    $new_ID = IdMapping::find_new_ID( $entrance_mapping, $entrance->entrance_id );
+                    if ( $new_ID === false ) {
+                        continue;
+                    }
+                    $entrance->entrance_id = $new_ID;
+                }
+
+                $new_ID                      = $to->insert_entrance( $entrance );
+                $entrance_mapping[]          = new IdMapping( $entrance->id, $new_ID );
+                $new_entrance_mappings_found = true;
+            }
+        }
+
+        if ( count( $entrances ) > count( $entrance_mapping ) ) {
+            throw new Exception( "Could not copy all entrances over, probably due to corrupted entrance_id values" );
+        }
+
+        return $entrance_mapping;
     }
 
     /**
@@ -246,12 +333,12 @@ class DatabaseOverview {
      * @return Seat[]
      */
     public static function getSeatsIncludingSeatGroups( TemplateDatabaseConnection $dbc ): array {
-        $seats = $dbc->get_seats();
+        $seats       = $dbc->get_seats();
         $seat_groups = $dbc->get_seat_groups();
 
         foreach ( $seat_groups as $seat_group ) {
             $seats_from_seat_group = $seat_group->split_into_seats();
-            $seats = array_merge( $seats, $seats_from_seat_group );
+            $seats                 = array_merge( $seats, $seats_from_seat_group );
         }
 
         return $seats;

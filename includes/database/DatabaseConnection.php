@@ -28,7 +28,7 @@ class DatabaseConnection extends AbstractDatabaseConnection {
 
         if ( ! $row ) {
             if ( $echoErrors ) {
-                echo "Error: Could not read event from database\n";
+                echo "Error: Could not read event with ID $this->event_id from database\n";
             }
 
             return false;
@@ -81,7 +81,7 @@ class DatabaseConnection extends AbstractDatabaseConnection {
 
     public function get_process( int $process_id ): Process|null {
         global $wpdb;
-        $sql = $wpdb->prepare(
+        $sql    = $wpdb->prepare(
             "SELECT * FROM " . static::get_table_name_processes() . " WHERE event_id = %d AND id = %d",
             $this->event_id,
             $process_id
@@ -113,7 +113,7 @@ class DatabaseConnection extends AbstractDatabaseConnection {
      */
     protected function get_all_processes_additional_entries(): array {
         global $wpdb;
-        $sql = $wpdb->prepare(
+        $sql        = $wpdb->prepare(
             "SELECT * FROM " . static::get_table_name_process_additional_entries() . " WHERE event_id = %d",
             $this->event_id
         );
@@ -127,7 +127,7 @@ class DatabaseConnection extends AbstractDatabaseConnection {
      */
     protected function get_process_additional_entries( int $process_id ): array {
         global $wpdb;
-        $sql = $wpdb->prepare(
+        $sql        = $wpdb->prepare(
             "SELECT * FROM " . static::get_table_name_process_additional_entries() . " WHERE event_id = %d AND process_id = %d",
             $this->event_id,
             $process_id

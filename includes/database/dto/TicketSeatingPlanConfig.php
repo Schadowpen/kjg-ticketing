@@ -22,4 +22,22 @@ class TicketSeatingPlanConfig extends TicketImageConfig {
 
         return $config;
     }
+
+    public function to_DB_data(): array {
+        $data = parent::to_DB_data();
+
+        $data["seating_plan_seat_numbers_visible"] = $this->seat_numbers_visible;
+        $data["seating_plan_connect_arrows"]       = $this->connect_entrance_arrows;
+
+        return $data;
+    }
+
+    public function to_DB_format(): array {
+        $format = parent::to_DB_format();
+
+        $format["seating_plan_seat_numbers_visible"] = "%d";
+        $format["seating_plan_connect_arrows"]       = "%d";
+
+        return $format;
+    }
 }

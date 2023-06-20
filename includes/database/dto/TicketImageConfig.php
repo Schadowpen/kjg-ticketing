@@ -61,4 +61,42 @@ class TicketImageConfig {
         }
         $this->line_width = $db_row->line_width != null ? floatval( $db_row->line_width ) : null;
     }
+
+    public function to_DB_data(): array {
+        return array(
+            "lower_left_corner_x"                     => $this->lower_left_corner->x,
+            "lower_left_corner_y"                     => $this->lower_left_corner->y,
+            "lower_right_corner_x"                    => $this->lower_right_corner->x,
+            "lower_right_corner_y"                    => $this->lower_right_corner->y,
+            "upper_left_corner_x"                     => $this->upper_left_corner->x,
+            "upper_left_corner_y"                     => $this->upper_left_corner->y,
+            "line_width"                              => $this->line_width,
+            "pdf_operator_number"                     => $this->pdf_operator_number,
+            "pdf_operator_name"                       => $this->pdf_operator_name,
+            "pdf_resource_deletable"                  => $this->pdf_resource_deletable,
+            "pdf_content_stream_start_operator_index" => $this->pdf_content_stream_start_operator_index,
+            "pdf_content_stream_num_operators"        => $this->pdf_content_stream_num_operators,
+            "font"                                    => $this->font,
+            "font_size"                               => $this->font_size,
+        );
+    }
+
+    public function to_DB_format(): array {
+        return array(
+            "lower_left_corner_x"                     => "%f",
+            "lower_left_corner_y"                     => "%f",
+            "lower_right_corner_x"                    => "%f",
+            "lower_right_corner_y"                    => "%f",
+            "upper_left_corner_x"                     => "%f",
+            "upper_left_corner_y"                     => "%f",
+            "line_width"                              => "%f",
+            "pdf_operator_number"                     => "%d",
+            "pdf_operator_name"                       => "%s",
+            "pdf_resource_deletable"                  => "%d",
+            "pdf_content_stream_start_operator_index" => "%d",
+            "pdf_content_stream_num_operators"        => "%d",
+            "font"                                    => "%s",
+            "font_size"                               => "%f",
+        );
+    }
 }

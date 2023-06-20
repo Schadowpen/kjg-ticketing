@@ -41,4 +41,38 @@ class Entrance {
 
         return $entrance;
     }
+
+    public function to_DB_data(): array {
+        return array(
+            "x0"              => $this->x0,
+            "y0"              => $this->y0,
+            "x1"              => $this->x1,
+            "y1"              => $this->y1,
+            "x2"              => $this->x2,
+            "y2"              => $this->y2,
+            "x3"              => $this->x3,
+            "y3"              => $this->y3,
+            "text"            => $this->text,
+            "text_position_x" => $this->text_position_x,
+            "text_position_y" => $this->text_position_y,
+            "entrance_id"     => $this->entrance_id,
+        );
+    }
+
+    public static function to_DB_format(): array {
+        return array(
+            "x0"              => "%f",
+            "y0"              => "%f",
+            "x1"              => "%f",
+            "y1"              => "%f",
+            "x2"              => "%f",
+            "y2"              => "%f",
+            "x3"              => "%f",
+            "y3"              => "%f",
+            "text"            => "%s",
+            "text_position_x" => "%f",
+            "text_position_y" => "%f",
+            "entrance_id"     => "%d",
+        );
+    }
 }

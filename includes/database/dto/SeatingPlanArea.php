@@ -35,4 +35,32 @@ class SeatingPlanArea {
 
         return $seating_plan_area;
     }
+
+    public function to_DB_data(): array {
+        return array(
+            "position_x"      => $this->position_x,
+            "position_y"      => $this->position_y,
+            "width"           => $this->width,
+            "length"          => $this->length,
+            "color"           => $this->color,
+            "text"            => $this->text,
+            "text_position_x" => $this->text_position_x,
+            "text_position_y" => $this->text_position_y,
+            "text_color"      => $this->text_color,
+        );
+    }
+
+    public function to_DB_format() {
+        return array(
+            "position_x"      => "%f",
+            "position_y"      => "%f",
+            "width"           => "%f",
+            "length"          => "%f",
+            "color"           => "%s",
+            "text"            => "%s",
+            "text_position_x" => "%f",
+            "text_position_y" => "%f",
+            "text_color"      => "%s",
+        );
+    }
 }

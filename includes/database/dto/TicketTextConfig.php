@@ -50,4 +50,30 @@ class TicketTextConfig {
 
         return $ticket_text_config;
     }
+
+    public function to_DB_data(): array {
+        return array(
+            "position_x"  => $this->position->x,
+            "position_y"  => $this->position->y,
+            "alignment"   => $this->alignment,
+            "font"        => $this->font,
+            "font_size"   => $this->font_size,
+            "color_red"   => $this->color->red,
+            "color_green" => $this->color->green,
+            "color_blue"  => $this->color->blue,
+        );
+    }
+
+    public static function to_DB_format(): array {
+        return array(
+            "position_x"  => "%f",
+            "position_y"  => "%f",
+            "alignment"   => "%s",
+            "font"        => "%s",
+            "font_size"   => "%f",
+            "color_red"   => "%d",
+            "color_green" => "%d",
+            "color_blue"  => "%d",
+        );
+    }
 }
