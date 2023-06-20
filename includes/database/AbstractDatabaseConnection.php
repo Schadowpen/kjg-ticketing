@@ -232,14 +232,16 @@ abstract class AbstractDatabaseConnection {
             return;
         }
 
+        $data   = $ticket_text_config->to_DB_data();
+        $format = TicketTextConfig::to_DB_format();
         $result = $wpdb->update(
             static::get_table_name_ticket_text_config(),
-            $ticket_text_config->to_DB_data(),
+            $data,
             array(
                 "event_id" => $this->event_id,
                 "content"  => $content,
             ),
-            TicketTextConfig::to_DB_format(),
+            $format,
             array(
                 "event_id" => "%d",
                 "content"  => "%s",
@@ -247,14 +249,13 @@ abstract class AbstractDatabaseConnection {
         );
 
         if ( $result === false ) {
-            $result = $wpdb->insert(
+            $data["content"]   = $content;
+            $format["content"] = "%s";
+            $this->insert_table_row(
                 static::get_table_name_ticket_text_config(),
-                $ticket_text_config->to_DB_data(),
-                TicketTextConfig::to_DB_format()
+                $data,
+                $format
             );
-            if ( $result === false ) {
-                throw new Exception( "Could not upsert ticket_text_config for $content" );
-            }
         }
     }
 
@@ -285,14 +286,16 @@ abstract class AbstractDatabaseConnection {
             return;
         }
 
+        $data   = $ticket_image_config->to_DB_data();
+        $format = $ticket_image_config->to_DB_format();
         $result = $wpdb->update(
             static::get_table_name_ticket_image_config(),
-            $ticket_image_config->to_DB_data(),
+            $data,
             array(
                 "event_id" => $this->event_id,
                 "content"  => $content,
             ),
-            $ticket_image_config->to_DB_format(),
+            $format,
             array(
                 "event_id" => "%d",
                 "content"  => "%s",
@@ -300,14 +303,13 @@ abstract class AbstractDatabaseConnection {
         );
 
         if ( $result === false ) {
-            $result = $wpdb->insert(
-                static::get_table_name_ticket_text_config(),
-                $ticket_image_config->to_DB_data(),
-                $ticket_image_config->to_DB_format()
+            $data["content"]   = $content;
+            $format["content"] = "%s";
+            $this->insert_table_row(
+                static::get_table_name_ticket_image_config(),
+                $data,
+                $format
             );
-            if ( $result === false ) {
-                throw new Exception( "Could not upsert ticket_image_config for $content" );
-            }
         }
     }
 
